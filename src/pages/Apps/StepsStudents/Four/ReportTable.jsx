@@ -1,6 +1,5 @@
 import { showObservations } from "../utils/ShowObservations";
 const ReportTable = ({ approval }) => {
-    console.log(approval);
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

@@ -1,138 +1,175 @@
-
-import PdfBase from './PdfBase';
-import { Text, View } from '@react-pdf/renderer';
+import PdfBaseStyles from './styles/PdfBaseStyles';
+import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import styles from './styles/PdfThreeCStyles';
-import { formatISODateToSimpleDate, formatNumberWithZero, getWrittenDateFromInput, getYear } from '../utils/Dates';
+import Logo from './BANNER2025.png';
+import WatermarkLogo from './marcaAgua.png';
+import { formatNumberWithZero, getWrittenDateFromInput, getYear, getWrittenDate } from '../utils/Dates';
+import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfThreeC = ({ jury, info }) => {
+const PdfThreeC = ({ infoStep, institutionalInfo, incrementFields }) => {
     const anio = getYear();
+    const THREE_STEP_INFO = infoStep;
 
-    const updatedDate = jury?.updatedAt ? formatISODateToSimpleDate(jury.updatedAt) : "Fecha no disponible";
-    const requestDate = getWrittenDateFromInput(updatedDate);
-    const fut = getWrittenDateFromInput(jury.futDate);
-    const createdAt = getWrittenDateFromInput(jury.createdAt);
-    const firstStudent = jury?.projectApprovalStepTwo?.titleReservationStepOne?.student;
-    const secondStudent = jury?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo;
+    const TWO_STEP_INFO = infoStep?.projectApprovalStepTwo;
+    const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
+    const coadviser = TWO_STEP_INFO?.coadviser || {};
 
-    const studentsText = secondStudent
-        ? `Bachilleres ${firstStudent?.firstNames || "Nombre no disponible"} ${firstStudent?.middleName || ""} ${firstStudent?.lastName || "Apellido no disponible"} y ${secondStudent?.firstNames || "Nombre no disponible"
-        } ${secondStudent?.middleName || ""} ${secondStudent?.lastName || "Apellido no disponible"}`
-        : `Bachiller ${firstStudent?.firstNames || "Nombre no disponible"} ${firstStudent?.middleName || ""} ${firstStudent?.lastName || "Apellido no disponible"}`;
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
+    const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(THREE_STEP_INFO);
+    const { title, career } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    const commemorativeText = info.commemorativeText;
+    const firstStudent = FIRST_STEP_INFO?.student;
+    const secondStudent = FIRST_STEP_INFO?.studentTwo;
+
+    const firstStudentNames = `${firstStudent?.firstNames} ${firstStudent?.lastName} ${firstStudent?.middleName || ''}`;
+    const secondStudentNames = `${secondStudent?.firstNames} ${secondStudent?.lastName} ${secondStudent?.middleName || ''}`;
+
+    const fut = getWrittenDateFromInput(infoStep?.futDate);
+
+    const commemorativeText = institutionalInfo?.commemorativeText;
     return (
-        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={jury.registrationNumber}>
-
-            <Text style={styles.textHeader}>
-                Tamburco, {requestDate}
-            </Text>
-
-            {/* Fecha y número de carta */}
-            <Text style={styles.h1}>
-                CARTA Nº {jury.id}-{anio}-DUI-FI-UNAMBA.
-            </Text>
-            {/* Dirigido a */}
-            <Text style={{ fontSize: 12 }}>Señor:</Text>
-            <Text style={{ fontSize: 11 }}>{jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.career?.faculty?.deanFacultyName}</Text>
-            <Text style={[styles.bold, { fontSize: 12 }]}>Decano de la Facultad de Ingeniería – UNAMBA</Text>
-            <Text><Text style={[styles.underline, { fontSize: 9 }]}>CIUDAD</Text>.-.</Text>
-            <View style={styles.semiTable}>
-                {/* Row 1 */}
-                <View style={[styles.semiTableRow, { marginVertical: 10 }]}>
-                    <Text style={[styles.semiTableColHeader, styles.bold]}>ASUNTO:</Text>
-                    <View style={styles.semiTableCol}>
-                        <Text>
-                            <Text style={styles.bold}> Remito Informe de Tesis del Bach.
-                                {`${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.firstNames} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.middleName} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.lastName} `}, para su PRIMERA revisión.</Text>
-                        </Text>
-                    </View>
-                </View>
-                {/* Referencias */}
-
-                <View style={styles.semiTableRow}>
-                    <Text style={[styles.semiTableColHeader, styles.bold]}>Ref.:</Text>
-                    <View style={styles.semiTableCol}>
-                        <Text>
-                            <Text>FUT de fecha {fut}</Text>
-                            <Text style={styles.bold}>                                                   REG. Nº {formatNumberWithZero(jury.registrationNumber)}</Text>
-                        </Text>
-                        <Text>RESOLUCIÓN N° {jury.registrationNumber}-DFI-UNAMBA</Text>
-                        <Text>RESOLUCIÓN Nº {jury.secondRegistrationNumber}-DFI-UNAMBA</Text>
-                    </View>
-                </View>
-            </View>
-            {/* Cuerpo del texto */}
-            <View style={styles.section}>
-                <Text style={styles.text}>
-                    De mi mayor consideración:                    </Text>
-                <Text style={{ marginTop: 10, lineHeight: 1.2 }}>
-                    Es grato dirigirme a su despacho, para saludarlo cordialmente,
-                    y a la vez solicitar la resolución de ratificación de designación
-                    de jurados a favor del Bachiller <Text style={styles.bold}> {jury?.projectApprovalStepTwo?.adviser?.firstNames || ""} {jury?.projectApprovalStepTwo?.adviser?.middleName || ""} {jury?.projectApprovalStepTwo?.adviser?.lastName || ""}
-                    </Text>del Proyecto de tesis denominado:
-                    <Text style={styles.bold}>{studentsText},</Text> y en
-                    reunión llevada a cabo el día {createdAt} con la Comisión
-                    de Investigación de la <Text style={styles.bold}>EAP. {jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.career.name}</Text>, se realizó el
-                    respectivo sorteo para la ratificación de <Text style={styles.bold}>Designación de Jurados</Text>
-                    quedando conformado por los docentes que detallo a continuación:
-                </Text>
-                <View style={styles.section}>
-                    <View style={[styles.table, styles.bold, { marginVertical: 10 }]}>
-                        {/* Presidente */}
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableColHeader}>
-                                {jury?.president?.firstNames || ""} {jury?.president?.middleName || ""} {jury?.president?.lastName || ""}
-                            </Text>
-                            <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Presidente</Text>
-                            </View>
-                        </View>
-
-                        {/* Primer Miembro */}
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableColHeader}>
-                                {jury?.firstMember?.firstNames || ""} {jury?.firstMember?.middleName || ""} {jury?.firstMember?.lastName || ""}
-                            </Text>
-                            <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Primer Miembro</Text>
-                            </View>
-                        </View>
-
-                        {/* Segundo Miembro */}
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableColHeader}>
-                                {jury?.secondMember?.firstNames || ""} {jury?.secondMember?.middleName || ""} {jury?.secondMember?.lastName || ""}
-                            </Text>
-                            <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Segundo Miembro</Text>
-                            </View>
-                        </View>
-
-                        {/* Accesitario */}
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableColHeader}>
-                                {jury?.accessory?.firstNames || ""} {jury?.accessory?.middleName || ""} {jury?.accessory?.lastName || ""}
-                            </Text>
-                            <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Accesitario</Text>
-                            </View>
-                        </View>
-
-                        {/* Asesor */}
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableColHeader}>
-                                {jury?.projectApprovalStepTwo?.adviser?.firstNames || ""} {jury?.projectApprovalStepTwo?.adviser?.middleName || ""} {jury?.projectApprovalStepTwo?.adviser?.lastName || ""}
-                            </Text>
-                            <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Asesor</Text>
-                            </View>
+        <Document>
+            <Page size="A4">
+                <View>
+                    <View style={PdfBaseStyles.header}>
+                        <View style={PdfBaseStyles.headerSection}>
+                            <Image style={PdfBaseStyles.banner} src={Logo} />
                         </View>
                     </View>
-                </View>
-                <Text> Esperando que, la presente tenga la debida atención me despido de Usted.</Text>
-            </View>
+                    <View style={PdfBaseStyles.container}>
+                        <View>
+                            <Text style={PdfBaseStyles.headerSection}>{commemorativeText}</Text>
+                            <View style={{ textAlign: 'justify' }}>
+                                <Text style={styles.textHeader}>Tamburco, {getWrittenDate()}</Text>
 
-        </PdfBase>
+                                {/* Fecha y número de carta */}
+                                <Text style={styles.h1}>
+                                    CARTA Nº {incrementFields.carta}-{anio}-DUI-FI-UNAMBA.
+                                </Text>
+                                {/* Dirigido a */}
+                                <Text style={{ fontSize: 12 }}>Señor:</Text>
+                                <Text style={{ fontSize: 11 }}>{institutionalInfo?.deanName}</Text>
+                                <Text style={[styles.bold, { fontSize: 12 }]}>Decano de la Facultad de Ingeniería – UNAMBA</Text>
+                                <Text>
+                                    <Text style={[styles.underline, { fontSize: 9 }]}>CIUDAD</Text>.-.
+                                </Text>
+                                <View style={styles.semiTable}>
+                                    {/* Row 1 */}
+                                    <View style={[styles.semiTableRow, { marginVertical: 10 }]}>
+                                        <Text style={[styles.semiTableColHeader, styles.bold]} wrap={false}>
+                                            ASUNTO:
+                                        </Text>
+                                        <View style={styles.semiTableCol}>
+                                            <Text>
+                                                <Text style={styles.bold}>
+                                                    {' '}
+                                                    Remito Informe de Tesis del Bach.
+                                                    {secondStudent ? `${firstStudentNames} y Bach. ${secondStudentNames}` : firstStudentNames}, para su PRIMERA revisión.
+                                                </Text>
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    {/* Referencias */}
+
+                                    <View style={styles.semiTableRow}>
+                                        <Text style={[styles.semiTableColHeader, styles.bold]}>Ref.:</Text>
+                                        <View style={styles.semiTableCol}>
+                                            <Text>
+                                                <Text>FUT de fecha {fut}</Text>
+                                                <Text style={styles.bold}> REG. Nº {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
+                                            </Text>
+                                            {typeof infoStep?.additionalInputs === 'string' &&
+                                                infoStep.additionalInputs.length > 0 &&
+                                                infoStep.additionalInputs.split(',').map((input, idx) => <Text key={idx}>{input.trim()}</Text>)}
+                                        </View>
+                                    </View>
+                                </View>
+                                {/* Cuerpo del texto */}
+                                <View style={styles.section}>
+                                    <Text style={styles.text}>De mi mayor consideración: </Text>
+                                    <Text style={{ marginTop: 10, lineHeight: 1.2 }}>
+                                        Es grato dirigirme a su despacho, para saludarlo cordialmente, y a la vez solicitar la resolución de aprobación de designación de jurados a favor del Bach.
+                                        <Text style={styles.bold}> {firstStudentNames}</Text> quien presentó la tesis titulada:
+                                        <Text style={styles.bold}>{title},</Text> y en reunión llevada a cabo el día {getWrittenDateFromInput(infoStep?.secondNumberDeanResolution)}{' '}
+                                        con la Comisión de Investigación de la <Text style={styles.bold}>EAP. {career}</Text>, se realizó el respectivo sorteo para la{' '}
+                                        <Text style={styles.bold}>Designación de Jurados </Text>
+                                        quedando conformado por los docentes que detallo a continuación:
+                                    </Text>
+                                    <View style={styles.section}>
+                                        <View style={[styles.table, styles.bold, { marginVertical: 10 }]}>
+                                            {/* Presidente */}
+                                            <View style={styles.tableRow}>
+                                                <Text style={styles.tableColHeader}>{presidentNames}</Text>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.bold}>PRESIDENTE</Text>
+                                                </View>
+                                            </View>
+
+                                            {/* Primer Miembro */}
+                                            <View style={styles.tableRow}>
+                                                <Text style={styles.tableColHeader}>{firstMemberNames}</Text>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.bold}>PRIMER MIEMBRO</Text>
+                                                </View>
+                                            </View>
+
+                                            {/* Segundo Miembro */}
+                                            <View style={styles.tableRow}>
+                                                <Text style={styles.tableColHeader}>{secondMemberNames}</Text>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.bold}>SEGUNDO MIEMBRO</Text>
+                                                </View>
+                                            </View>
+
+                                            {/* Accesitario */}
+                                            <View style={styles.tableRow}>
+                                                <Text style={styles.tableColHeader}>{accessoryNames}</Text>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.bold}>ACCESITARIO</Text>
+                                                </View>
+                                            </View>
+
+                                            {/* Asesor */}
+                                            <View style={styles.tableRow}>
+                                                <Text style={styles.tableColHeader}>{adviserNames}</Text>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.bold}>ASESOR</Text>
+                                                </View>
+                                            </View>
+                                            {coadviser && (
+                                                <View style={styles.tableRow}>
+                                                    <Text style={styles.tableColHeader}>{coAdviserNames}</Text>
+                                                    <View style={styles.tableCol}>
+                                                        <Text style={styles.bold}>SEGUNDO ASESOR</Text>
+                                                    </View>
+                                                </View>
+                                            )}
+                                        </View>
+                                    </View>
+                                    <Text> Esperando que, la presente tenga la debida atención me despido de Usted.</Text>
+                                    <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]}>Atentamente,</Text>
+                                </View>
+                            </View>
+                            <View style={PdfBaseStyles.watermarkContainer}>
+                                <Image src={WatermarkLogo} style={PdfBaseStyles.watermarkImage} />
+                            </View>
+                        </View>
+                        <View style={PdfBaseStyles.footerText}>
+                            <Text>C. c.</Text>
+                            <Text>Archivo</Text>
+                            <Text>REG. N° {formatNumberWithZero(infoStep?.reg || incrementFields.regNumber)}</Text>
+                            {typeof infoStep?.textattached === 'string' &&
+                                infoStep.textattached.length > 0 &&
+                                infoStep.textattached.split(',').map((input, idx) => <Text key={idx}>{input.trim()}</Text>)}
+                            <View style={PdfBaseStyles.hr} />
+                            <View style={PdfBaseStyles.footerInfo}>
+                                <Text>Av. Inca Garcilaso de la Vega S/N Tamburco, Abancay | (083) 636 050 | www.unamba.edu.pe</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Page>
+        </Document>
     );
 };
 

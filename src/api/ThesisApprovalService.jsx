@@ -1,13 +1,10 @@
 import axios from 'axios';
 import AppEnvironments from '../config/AppEnvironments';
 
-// URL base de la API
 const THESISAPPROVAL_API_URL = `${AppEnvironments.baseUrl}api/v1/aprobacion_tesis/`;
 
-// Obtener token de autenticación almacenado en localStorage
 const getAuthToken = () => localStorage.getItem('token');
 
-// Generar cabeceras de autorización
 const getAuthHeaders = () => {
     const token = getAuthToken();
     if (!token) {
@@ -20,7 +17,6 @@ const getAuthHeaders = () => {
     };
 };
 
-// Función para manejar errores
 const handleError = (error) => {
     console.error(
         'API Error:',
@@ -31,7 +27,6 @@ const handleError = (error) => {
     );
 };
 
-// Servicio para obtener todos los registros
 const getAllThesisApprovals = async () => {
     try {
         const response = await axios.get(THESISAPPROVAL_API_URL, getAuthHeaders());
@@ -41,7 +36,6 @@ const getAllThesisApprovals = async () => {
     }
 };
 
-// Servicio para obtener un registro por ID
 const getThesisApprovalById = async (id) => {
     try {
         const response = await axios.get(`${THESISAPPROVAL_API_URL}${id}`, getAuthHeaders());
@@ -51,7 +45,6 @@ const getThesisApprovalById = async (id) => {
     }
 };
 
-// Servicio para guardar un nuevo registro
 const saveThesisApproval = async (thesisApproval) => {
     try {
         const response = await axios.post(THESISAPPROVAL_API_URL, thesisApproval, getAuthHeaders());
@@ -69,7 +62,6 @@ const getThesisByStudentCode = async (studentCode) => {
         throw error;
     }
 };
-// Servicio para actualizar un registro existente
 const updateThesisApproval = async (id, thesisApproval) => {
     try {
         const response = await axios.put(`${THESISAPPROVAL_API_URL}${id}`, thesisApproval, getAuthHeaders());
@@ -79,7 +71,6 @@ const updateThesisApproval = async (id, thesisApproval) => {
     }
 };
 
-// Servicio para eliminar un registro por ID
 const deleteThesisApproval = async (id) => {
     try {
         const response = await axios.delete(`${THESISAPPROVAL_API_URL}${id}`, getAuthHeaders());
@@ -89,7 +80,6 @@ const deleteThesisApproval = async (id) => {
     }
 };
 
-// Exportar servicios
 export default {
     getAllThesisApprovals,
     getThesisApprovalById,

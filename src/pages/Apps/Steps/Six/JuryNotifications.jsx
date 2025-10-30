@@ -55,7 +55,6 @@ const JuryNotifications = () => {
 
     const handleSave = async (updatedNotificationData, notificationId) => {
         try {
-            console.log('Enviando datos al servidor:', updatedNotificationData);
             await juryNotificationService.editJuryNotification(notificationId, updatedNotificationData);
             Swal.fire('Éxito', 'Notificación actualizada correctamente.', 'success');
             await fetchNotifications();

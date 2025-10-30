@@ -43,7 +43,6 @@ const ConstancyThesis = () => {
         try {
             const thesis = await constancyThesisService.getAllConstancyThesis();
             setCurrentThesis(thesis);
-            console.log(thesis);
         } catch (error) {
             console.error('Error al obtener las constancias de tesis:', error);
             setApiError('Error al cargar las constancias de tesis.');
@@ -81,8 +80,6 @@ const ConstancyThesis = () => {
             const normalizedFullName = normalizeText(fullName);
             const studentCodeMatch = normalizeText(thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.studentCode).includes(normalizedSearch);
             const matchesSearch = normalizedFullName.includes(normalizedSearch) || studentCodeMatch;
-
-            // Filtrar por carrera si `selectedCareer` está seleccionado
             const matchesCareer = selectedCareer ? thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.id === selectedCareer.value : true;
 
             return matchesSearch && matchesCareer;

@@ -1,21 +1,51 @@
-import React, { useState } from 'react';
-
+import { useState } from 'react';
 import Pagination from '../Pagination';
-import PDFDownloadButtons from '../utils/PDFDownloadButtons';
 import PdfThreeA from '../pdfSteps/PdfThreeA';
 import PdfThreeC from '../pdfSteps/PdfThreeC';
 import PdfThreeCM from '../pdfSteps/PdfThreeCM';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
+import DownloadDocs from '../utils/DownloadButton';
 
 const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
-
     const itemsPerPage = 4;
     const totalPages = Math.ceil(currentJury.length / itemsPerPage);
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const jurys = currentJury.slice(indexOfFirstItem, indexOfLastItem);
+    const getDownloadButton = (jury) => {
+        
+        const fileNameActa = `P3 ACTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
+        const fileNameCarta = `P3 CARTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
+        const fileNameCartaMultiple = `P3 CARTA MULTIPLE Nº ${formatNumberWithZero(jury.id)}.pdf`;
+        
+        return (
+            <>
+                <DownloadDocs
+                    infoStepTable={jury}
+                    PdfDocument={PdfThreeA}
+                    institutionalInfo={info}
+                    fileName={fileNameActa}
+                    fields = {{ numero_folio: 1, acta_reunion: 1,  }}
+                />
+                <DownloadDocs
+                    infoStepTable={jury}
+                    institutionalInfo={info}
+                    PdfDocument={PdfThreeC}
+                    fileName={fileNameCarta}
+                    
+                />
+                <DownloadDocs
+                    infoStepTable={jury}
+                    PdfDocument={PdfThreeCM}
+                    institutionalInfo={info}
+                    fileName={fileNameCartaMultiple}
+                    fields = {{ cart_multiple: 1 }}
+                />
+            </>
+        );
+    };
 
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -33,7 +63,7 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                             <th>Segundo Miembro</th>
                             <th>Accesitario</th>
                             <th>Asesor</th>
-                            <th>Coasesor</th>
+                            <th>Segundo Asesor</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
@@ -78,33 +108,13 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                                     </td>
                                     <td>{formatDate(jury.updatedAt)}</td>
                                     <td>
-                                        {jury.meetRequirements ? (
-                                            <PDFDownloadButtons
-                                                documents={[
-                                                    {
-                                                        document: <PdfThreeA jury={jury} />,
-                                                        fileName: `P3 ACTA Nº ${formatNumberWithZero(jury.id)}.pdf`,
-                                                    },
-                                                    {
-                                                        document: <PdfThreeC jury={jury} info={info} />,
-                                                        fileName: `P3 CARTA Nº ${formatNumberWithZero(jury.id)}.pdf`,
-                                                    },
-                                                    {
-                                                        document: <PdfThreeCM jury={jury} info={info}/>,
-                                                        fileName: `P3 CARTA MULTIPLE Nº ${formatNumberWithZero(jury.id)}.pdf`,
-                                                    },
-                                                ]}
-                                                fileName={`P3 - Designación de Jurados-${formatNumberWithZero(jury.id)}`}
-                                                label="Descargar PDF(s)"
-                                            />
-                                        ) : (
-                                            <button
-                                                onClick={() => onEdit(jury)}
-                                                className="btn btn-sm btn-outline-primary"
-                                            >
-                                                Editar
-                                            </button>
-                                        )}
+                                        {getDownloadButton(jury)}
+                                        <button
+                                            onClick={() => onEdit(jury)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
                                     </td>
                                 </tr>
                             ))

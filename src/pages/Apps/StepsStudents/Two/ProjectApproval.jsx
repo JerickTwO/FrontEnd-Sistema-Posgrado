@@ -18,7 +18,6 @@ const ProjectApproval = () => {
         try {
             const projectResponse = await projectApprovalService.getProjectByStudentCode(user.username);
             setProject(projectResponse);
-            console.log('Proyectos obtenidos:', projectResponse);
         } catch (error) {
             console.error('Error al obtener los proyectos:', error);
         }

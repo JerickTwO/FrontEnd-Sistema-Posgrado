@@ -23,6 +23,11 @@ const InstitucionalInfo = () => {
                     id: null,
                     deanName: '',
                     commemorativeText: '',
+                    directorIngenieriaAgroecologica: '',
+                    directorIngenieriaMinas: '',
+                    directorIngenieriaCivil: '',
+                    directorIngenieriaInformaticaSistemas: '',
+                    secretariaUIIngenieria: '',
                 });
             } else {
                 setInfo(response);
@@ -52,14 +57,19 @@ const InstitucionalInfo = () => {
             const payload = {
                 deanName: info.deanName.trim(),
                 commemorativeText: info.commemorativeText.trim(),
+                directorIngenieriaAgroecologica: info.directorIngenieriaAgroecologica.trim(),
+                directorIngenieriaMinas: info.directorIngenieriaMinas.trim(),
+                directorIngenieriaCivil: info.directorIngenieriaCivil.trim(),
+                directorIngenieriaInformaticaSistemas: info.directorIngenieriaInformaticaSistemas.trim(),
+                secretariaUIIngenieria: info.secretariaUIIngenieria.trim(),
             };
-    
+
             const updatedInfo = info.id
                 ? await InfoService.updateInfo({ id: info.id, ...payload })
                 : await InfoService.createInfo(payload); // 💥 asegúrate de tener este método en tu servicio
-    
+
             setInfo(updatedInfo);
-    
+
             Swal.fire({
                 icon: "success",
                 title: info.id ? "¡Actualización exitosa!" : "¡Información guardada!",
@@ -76,7 +86,7 @@ const InstitucionalInfo = () => {
             });
         }
     };
-    
+
 
     useEffect(() => {
         dispatch(setPageTitle("Información de la Institución"));
@@ -94,41 +104,114 @@ const InstitucionalInfo = () => {
                         </h5>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-5">
-                            <label htmlFor="deanName">
-                                Nombre del Decano de la Facultad de Ingeniería
-                            </label>
-                            <div className="flex">
-                                <div className="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-white-light dark:border-[#17263c] dark:bg-[#1b2e4b]">
-                                    <IconUser />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Columna 1 */}
+                            <div className="mb-5">
+                                <label htmlFor="deanName">
+                                    Nombre del Decano de la Facultad de Ingeniería
+                                </label>
+                                <div className="flex">
+                                    <div className="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-white-light dark:border-[#17263c] dark:bg-[#1b2e4b]">
+                                        <IconUser />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="deanName"
+                                        value={info.deanName}
+                                        onChange={handleChange}
+                                        placeholder="Nombre del Decano"
+                                        className="form-input ltr:rounded-l-none rtl:rounded-r-none"
+                                    />
                                 </div>
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="commemorativeText">
+                                    Nombre del Año Académico
+                                </label>
+                                <div className="flex">
+                                    <div className="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-white-light dark:border-[#17263c] dark:bg-[#1b2e4b]">
+                                        <IconCalendar />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="commemorativeText"
+                                        value={info.commemorativeText}
+                                        onChange={handleChange}
+                                        placeholder="Texto Conmemorativo"
+                                        className="form-input ltr:rounded-l-none rtl:rounded-r-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Columna 2 */}
+                            <div className="mb-5">
+                                <label htmlFor="directorIngenieriaAgroecologica">
+                                    Director de Ingeniería Agroecológica
+                                </label>
                                 <input
                                     type="text"
-                                    name="deanName"
-                                    value={info.deanName}
+                                    name="directorIngenieriaAgroecologica"
+                                    value={info.directorIngenieriaAgroecologica}
                                     onChange={handleChange}
-                                    placeholder="Nombre del Decano"
-                                    className="form-input ltr:rounded-l-none rtl:rounded-r-none"
+                                    placeholder="Director de Ingeniería Agroecológica"
+                                    className="form-input"
                                 />
                             </div>
-                        </div>
 
-                        {/* Campo para el Texto Conmemorativo */}
-                        <div className="mb-5">
-                            <label htmlFor="commemorativeText">
-                                Nombre del Año Académico
-                            </label>
-                            <div className="flex">
-                                <div className="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-white-light dark:border-[#17263c] dark:bg-[#1b2e4b]">
-                                    <IconCalendar />
-                                </div>
+                            <div className="mb-5">
+                                <label htmlFor="directorIngenieriaMinas">
+                                    Director de Ingeniería de Minas
+                                </label>
                                 <input
                                     type="text"
-                                    name="commemorativeText"
-                                    value={info.commemorativeText}
+                                    name="directorIngenieriaMinas"
+                                    value={info.directorIngenieriaMinas}
                                     onChange={handleChange}
-                                    placeholder="Texto Conmemorativo"
-                                    className="form-input ltr:rounded-l-none rtl:rounded-r-none"
+                                    placeholder="Director de Ingeniería de Minas"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="directorIngenieriaCivil">
+                                    Director de Ingeniería Civil
+                                </label>
+                                <input
+                                    type="text"
+                                    name="directorIngenieriaCivil"
+                                    value={info.directorIngenieriaCivil}
+                                    onChange={handleChange}
+                                    placeholder="Director de Ingeniería Civil"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="directorIngenieriaInformaticaSistemas">
+                                    Director de Ingeniería Informática y Sistemas
+                                </label>
+                                <input
+                                    type="text"
+                                    name="directorIngenieriaInformaticaSistemas"
+                                    value={info.directorIngenieriaInformaticaSistemas}
+                                    onChange={handleChange}
+                                    placeholder="Director de Ingeniería Informática y Sistemas"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="secretariaUIIngenieria">
+                                    Secretaría de la UI de Ingeniería
+                                </label>
+                                <input
+                                    type="text"
+                                    name="secretariaUIIngenieria"
+                                    value={info.secretariaUIIngenieria}
+                                    onChange={handleChange}
+                                    placeholder="Secretaría de la UI de Ingeniería"
+                                    className="form-input"
                                 />
                             </div>
                         </div>

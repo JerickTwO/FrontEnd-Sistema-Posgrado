@@ -57,7 +57,6 @@ const JuryAppoiment = () => {
         try {
             const juryAppointment = await juryAppointmentService.getAllJuryAppointments();
             setJuryAppointment(juryAppointment);
-            console.log('Obteniendo los jurados:', juryAppointment);
         } catch (error) {
             console.error('Error al obtener los jurados:', error);
         }

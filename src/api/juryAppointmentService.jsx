@@ -42,7 +42,6 @@ const addJuryAppointment = async (juryAppointment) => {
 
 const editJuryAppointment = async (id, juryAppointment) => {
     try {
-        console.log('Datos enviados:', juryAppointment); // Validar los datos aquí
         const response = await axios.put(`${JURYAPPOINTMENT_API_URL}${id}`, juryAppointment, getAuthHeaders());
         return response.data;
     } catch (error) {

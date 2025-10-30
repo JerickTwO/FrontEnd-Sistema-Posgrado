@@ -1,35 +1,41 @@
 import PdfBase from './PdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/PdfFourCMStyles';
-import { formatNumberWithZero, getYear, getWrittenDateFromInput } from '../utils/Dates';
+import { formatNumberWithZero, getYear, getWrittenDateFromInput, getWrittenDate } from '../utils/Dates';
+import { extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfFourCM = ({ jury, info }) => {
+const PdfFourCM = ({ infoStep, institutionalInfo, incrementFields }) => {
     const anio = getYear();
-    const createdAt = getWrittenDateFromInput(jury.createdAt);
-    const commemorativeText = info?.commemorativeText || '';
-    const student = `${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.firstNames} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.middleName} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.lastName}`;
-    const studentTwo = `${jury?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.firstNames} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.middleName} ${jury?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.lastName}`;
-    console.log(jury.projectApprovalStepTwo.adviser);
+
+    const THREE_STEP_INFO = infoStep?.juryAppointmentStepThree;
+    const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
+    const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
+
+    const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(THREE_STEP_INFO);
+    const { combinedNamesOnly, career, title } = extractStudentsInfo(FIRST_STEP_INFO);
+
+    const commemorativeText = institutionalInfo?.commemorativeText || '';
+
     return (
-        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={jury.registrationNumber}>
+        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={infoStep?.reg || institutionalInfo?.regNumber}>
 
             <Text style={styles.textHeader}>
-                Tamburco, {createdAt}
+                Tamburco, {getWrittenDate()}
             </Text>
 
             {/* Fecha y número de carta */}
             <Text style={styles.h1}>
-                CARTA MULTIPLE Nº {jury.id}-{anio}-D. UI-FI-UNAMBA.
+                CARTA MULTIPLE Nº {incrementFields?.cart_multiple}-{anio}-D. UI-FI-UNAMBA.
             </Text>
             {/* Dirigido a */}
             <View style={styles.section}>
                 <Text style={[styles.bold, styles.textTableHeader]}>
-                    SEÑORES: Jurados Evaluadores de Tesis de la EAP. {jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.career.name}
+                    SEÑORES: Jurados Evaluadores de Tesis de la EAP. {career}
                 </Text>
                 <View style={styles.table}>
                     {/* Row 1 */}
                     <View style={styles.tableRow}>
-                        <Text style={styles.tableColHeader}>{jury?.president?.firstNames || ""} {jury?.president?.middleName || ""} {jury?.president?.lastName || ""}</Text>
+                        <Text style={styles.tableColHeader}>{presidentNames}</Text>
                         <View style={styles.tableCol}>
                             <Text>
                                 <Text>Presidente</Text>
@@ -39,7 +45,7 @@ const PdfFourCM = ({ jury, info }) => {
 
                     {/* Row 2 */}
                     <View style={styles.tableRow}>
-                        <Text style={styles.tableColHeader}>{jury?.firstMember?.firstNames || ""} {jury?.firstMember?.middleName || ""} {jury?.firstMember?.lastName || ""}</Text>
+                        <Text style={styles.tableColHeader}>{firstMemberNames}</Text>
                         <View style={styles.tableCol}>
                             <Text>Primer Miembro</Text>
                         </View>
@@ -47,7 +53,7 @@ const PdfFourCM = ({ jury, info }) => {
 
                     {/* Row 3 */}
                     <View style={styles.tableRow}>
-                        <Text style={styles.tableColHeader}>{jury?.secondMember?.firstNames || ""} {jury?.secondMember?.middleName || ""} {jury?.secondMember?.lastName || ""}</Text>
+                        <Text style={styles.tableColHeader}>{secondMemberNames}</Text>
                         <View style={styles.tableCol}>
                             <Text>Segundo Miembro</Text>
                         </View>
@@ -55,16 +61,9 @@ const PdfFourCM = ({ jury, info }) => {
 
                     {/* Row 4 */}
                     <View style={styles.tableRow}>
-                        <Text style={styles.tableColHeader}>{jury?.accessory?.firstNames || ""} {jury?.accessory?.middleName || ""} {jury?.accessory?.lastName || ""}</Text>
+                        <Text style={styles.tableColHeader}>{accessoryNames}</Text>
                         <View style={styles.tableCol}>
                             <Text>Accesitario</Text>
-                        </View>
-                    </View>
-                    {/* Row 5 */}
-                    <View style={styles.tableRow}>
-                        <Text style={styles.tableColHeader}>{jury?.projectApprovalStepTwo?.adviser?.firstNames || ""} {jury?.projectApprovalStepTwo?.adviser?.middleName || ""} {jury?.projectApprovalStepTwo?.adviser?.lastName || ""}</Text>
-                        <View style={styles.tableCol}>
-                            <Text>Asesor</Text>
                         </View>
                     </View>
                 </View>
@@ -76,7 +75,7 @@ const PdfFourCM = ({ jury, info }) => {
                     <Text style={[styles.semiTableColHeader, styles.bold]}>ASUNTO:</Text>
                     <View style={styles.semiTableCol}>
                         <Text>
-                            <Text style={styles.bold}> Remito Informe de Tesis del Bach. {student} {studentTwo ? `y Bach. ${studentTwo}` : ''}, para su PRIMERA revisión.</Text>
+                            <Text style={styles.bold}> Remito Informe de Tesis {combinedNamesOnly} para su revisión.</Text>
                         </Text>
                     </View>
                 </View>
@@ -86,42 +85,43 @@ const PdfFourCM = ({ jury, info }) => {
                     <Text style={styles.semiTableColHeader}>Ref.:</Text>
                     <View style={styles.semiTableCol}>
                         <Text>
-                            <Text>SOLICITUD de fecha {createdAt}</Text>
-                            <Text style={styles.bold}>                                         REG. Nº {formatNumberWithZero(jury.registrationNumber)}</Text>
+                            <Text>SOLICITUD de fecha {getWrittenDateFromInput(infoStep?.documentDate)}</Text>
+                            <Text style={styles.bold}>                                 REG. Nº {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
                         </Text>
-                        <Text>RESOLUCIÓN DECANAL N° {jury?.deanResolution}-DFI-UNAMBA</Text>
+                        <Text>RESOLUCIÓN DECANAL N° {infoStep?.deanResolution}-DFI-UNAMBA</Text>
+                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 && (
+                            infoStep.additionalInputs
+                                .split(',')
+                                .map((input, idx) => (
+                                    <Text key={idx}>
+                                        {input.trim()}
+                                    </Text>
+                                ))
+                        )}
                     </View>
                 </View>
             </View>
 
             <View style={styles.section}>
                 <Text style={[styles.text, { marginTop: 10 }]}>
-                    Por el presente comunico a ustedes que, en cumplimiento del Art 47 del Reglamento de
+                    Por el presente comunico a ustedes que, en cumplimiento del Art {infoStep.articleNumber} del Reglamento de
                     Investigación vigente, se remite los documentos y las Resoluciones de la referencia
                     y un ejemplar de la tesis titulada:
                 </Text>
                 <Text style={[styles.bold, { marginVertical: 10 }]}>
-                    "{jury?.projectApprovalStepTwo?.titleReservationStepOne?.title}".
+                    "{title}".
                 </Text>
                 <Text>
-                    <Text>En ese sentido, remito dicho expediente para su</Text>
-                    <Text>revisión conforme indica el</Text>
-                    <Text style={styles.bold}> Art 47, 48 y 49 del Reglamento de Investigación </Text>
-                    <Text>aprobado con resolución</Text>
-                    <Text style={styles.bold}> N° {jury?.deanResolution}-CU-UNAMBA.</Text>
+                    <Text>En ese sentido, remito dicho expediente para </Text>
+                    <Text>ÚNICA revisión conforme indica el</Text>
+                    <Text style={styles.bold}> Art {infoStep?.secondArticleNumber} del Reglamento de Investigación </Text>
+
                     <Text>
-                        al mismo tiempo, debo manifestar para su conocimiento que en <Text style={styles.bold}>Capítulo XIII </Text>
-                        DISPOSICIONES TRANSISTORIAS y FINALES, en la segunda y tercera se indica literal
-                        <Text style={styles.italic}>"La vigencia del presente es inmediata a su publicación dejando sin efecto el anterior reglamento" </Text>
-                        <Text style={styles.italic}>"deróguese toda norma que se contraponga al presente reglamento a partir del día de su publicación" </Text>
+                        <Text>"el jurado evaluador se reunirá, antes de la sustentación, en un solo acto y único, fijándose fecha, hora y lugar de sustentación; esta será dentro de los diez días calendarios a la fecha de la reunión, los procedimientos administrativos, durante y después serán iguales que para la tesis convencional" </Text>
                     </Text>
 
                 </Text>
-                <Text style={{ marginTop: 3 }}>
-                    Por lo que; en atención al presente reglamento
-                    sirvase revisar con forme indica el Reglamento
-                    de la investigación vigente.
-                </Text>
+
             </View>
 
             {/* Cierre */}

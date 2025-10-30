@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import PDFDownloadButton from '../utils/PDFDownloadButtons';
+import { useState } from 'react';
 import PdfSevenC from '../pdfSteps/PdfSevenC';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
+import DownloadDocs from '../utils/DownloadButton';
 
 const TApprovalTable = ({ tapprovals, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,6 +12,19 @@ const TApprovalTable = ({ tapprovals, onEdit, info }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentTApproval = tapprovals?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
+
+
+    const getDownloadButton = (tapproval) => {
+        const fileName = `tapproval_${tapproval.id}.pdf`;
+        return (
+            <DownloadDocs
+                infoStepTable={tapproval}
+                PdfDocument={PdfSevenC}
+                institutionalInfo={info}
+                fileName={fileName}
+            />
+        );
+    };
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -77,23 +90,15 @@ const TApprovalTable = ({ tapprovals, onEdit, info }) => {
 
                                     <td className="flex gap-4 items-center justify-center">
                                         {
-                                            tapproval.meetRequirements ? (
-                                                <PDFDownloadButton
-                                                documents={{
-                                                    document: <PdfSevenC tapproval={tapproval} info={info}/>,
-                                                    fileName: `tapproval_${tapproval.id}.pdf`,
-                                                }}
-                                                fileName={`tapproval_${tapproval.id}`}
-                                                label="Descargar PDF"
-                                            />
-                                            ) : (
-                                                <button
-                                                    onClick={() => onEdit(tapproval)}
-                                                    className="btn btn-sm btn-outline-primary"
-                                                >
-                                                    Editar
-                                                </button>
-                                            )}
+                                            getDownloadButton(tapproval)
+                                        }
+                                        <button
+                                            onClick={() => onEdit(tapproval)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
+
                                     </td>
                                 </tr>
                             ))

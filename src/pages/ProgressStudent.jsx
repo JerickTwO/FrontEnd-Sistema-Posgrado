@@ -25,7 +25,6 @@ const ProgressStudent = () => {
             // setApiError('Failed to load title reservations.');
         }
     }, [user.username]);
-    console.log(progress)
     return (
         <div className="pt-5">
             <div className="grid grid-cols-1 mb-5">

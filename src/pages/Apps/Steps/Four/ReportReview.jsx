@@ -8,6 +8,7 @@ import ReportSearch from './ReportSearch';
 import teacherService from '../../../../api/teacherService';
 import careerService from '../../../../api/careerService';
 import reportReviewService from '../../../../api/reportReviewService';
+import InfoService from '../../../../api/InfoService';
 
 const ReportReview = () => {
     const dispatch = useDispatch();
@@ -18,12 +19,24 @@ const ReportReview = () => {
     const [selectedCareer, setSelectedCareer] = useState(null);
     const [search, setSearch] = useState('');
     const [careerOptions, setCareerOptions] = useState([]);
+    const [info, setInfo] = useState(null);
+
 
     useEffect(() => {
         dispatch(setPageTitle('Comprobación de Proyecto'));
         fetchReports();
         fetchCareers();
+        fetchInfo();
     }, [dispatch]);
+
+    const fetchInfo = useCallback(async () => {
+        try {
+            const response = await InfoService.getInstitutionalInfo();
+            setInfo(response)
+        } catch (error) {
+        }
+    }, []);
+
     const fetchCareers = useCallback(async () => {
         try {
             const careers = await careerService.getCareers();
@@ -62,7 +75,6 @@ const ReportReview = () => {
 
     const handleSave = async (updatedReportData, reportId) => {
         try {
-            console.log(updatedReportData)
             // Llamada al servicio con el ID en la URL y los datos en el cuerpo
             await reportReviewService.editReportReview(reportId, updatedReportData);
             Swal.fire('Éxito', 'Proyecto actualizado correctamente.', 'success');
@@ -103,7 +115,7 @@ const ReportReview = () => {
     return (
         <>
             <ReportSearch search={search} setSearch={setSearch} careerOptions={careerOptions} selectedCareer={selectedCareer} setSelectedCareer={setSelectedCareer} />
-            <ReportTable reports={filteredReports} onEdit={handleEdit} />
+            <ReportTable reports={filteredReports} onEdit={handleEdit} info={info} />
             <ReportModal isOpen={isModalOpen} report={selectedReport} onClose={closeModal} onSave={handleSave} adviserOptions={advisers} />
         </>
     );

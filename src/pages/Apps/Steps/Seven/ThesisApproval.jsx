@@ -54,7 +54,6 @@ const ThesisApproval = () => {
         try {
             const tapprovalResponse = await thesisApprovalService.getAllThesisApprovals();
             setTapprovals(tapprovalResponse);
-            console.log(tapprovalResponse);
         } catch (error) {
             console.error('Error al obtener las notificaciones:', error);
         }
@@ -70,7 +69,6 @@ const ThesisApproval = () => {
 
     const handleSave = async (updatedTapprovalData, taprovalId) => {
         try {
-            console.log('Enviando datos al servidor:', updatedTapprovalData);
             await thesisApprovalService.updateThesisApproval(taprovalId, updatedTapprovalData);
             Swal.fire('Éxito', 'Notificación actualizada correctamente.', 'success');
             await fetchTapprovals();

@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../Pagination';
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import PdfOne from '../pdfSteps/PdfOne';
-import TitleUpload from './TitleUpload'; 
+import TitleUpload from './TitleUpload';
 import { getYear, formatDate } from '../utils/Dates';
-const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit, onDelete, searchTerm }) => {
+import DownloadDocs from '../utils/DownloadButton';
+
+
+const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit, onDelete, searchTerm, info }) => {
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-
     const getDownloadButton = (reservation) => {
         const fileName = `constancia-${reservation.id}-${getYear()}.pdf`;
-
         return (
-            <PDFDownloadLink document={<PdfOne reservation={reservation} />} fileName={fileName}>
-                {({ loading }) =>
-                    loading ? (
-                        'Cargando documento...'
-                    ) : (
-                        <button className="btn btn-sm btn-outline-primary">Descargar Comprobante</button>
-                    )
-                }
-            </PDFDownloadLink>
+            <DownloadDocs
+                infoStepTable={reservation}
+                PdfDocument={PdfOne}
+                fileName={fileName}
+                institutionalInfo={info}
+                fields = {{ constacia: 1 }} />
         );
     };
 
@@ -29,9 +26,18 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
             <button onClick={() => onEdit(reservation)} className="btn btn-sm btn-outline-primary">
                 Editar
             </button>
-            <button onClick={() => onDelete(reservation.id)} className="btn btn-sm btn-outline-danger">
-                Eliminar
-            </button>
+
+            {
+                reservation.meetsRequirements ? (
+
+                    <></>
+                ) : (<button onClick={() => onDelete(reservation.id)} className="btn btn-sm btn-outline-danger">
+                    Eliminar
+                </button>
+                )
+
+            }
+
         </>
     );
 
@@ -42,7 +48,6 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
 
     const normalizedSearchTerm = searchTerm
         .normalize('NFD')
-        // biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
 
@@ -51,7 +56,6 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
             reservation.student.studentCode.toLowerCase().includes(normalizedSearchTerm) ||
             `${reservation.student.firstNames} ${reservation.student.lastName}`
                 .normalize('NFD')
-                // biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
                 .replace(/[\u0300-\u036f]/g, '')
                 .toLowerCase()
                 .includes(normalizedSearchTerm) ||
@@ -59,7 +63,6 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                 (reservation.studentTwo.studentCode.toLowerCase().includes(normalizedSearchTerm) ||
                     `${reservation.studentTwo.firstNames} ${reservation.studentTwo.lastName}`
                         .normalize('NFD')
-                        // biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
                         .replace(/[\u0300-\u036f]/g, '')
                         .toLowerCase()
                         .includes(normalizedSearchTerm)))
@@ -125,9 +128,8 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                                         <TitleUpload reservaId={reservation.id} meetsRequirements={reservation.meetsRequirements} />
                                     </td>
                                     <td className="flex gap-4 items-center justify-center">
-                                        {reservation.meetsRequirements
-                                            ? getDownloadButton(reservation)
-                                            : getActionButtons(reservation)}
+                                        {getDownloadButton(reservation)} {getActionButtons(reservation)}
+
                                     </td>
                                 </tr>
                             ))

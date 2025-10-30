@@ -27,7 +27,6 @@ const getInfo = async () => {
 const updateInfo = async (data) => {
     try {
         const response = await axios.put(INFO_API_URL, data, getAuthHeaders());
-        console.log('Datos enviados al backend:', data); // Log para depuración
         return response.data;
     } catch (error) {
         console.error('Error updating institutional info:', error.response || error);

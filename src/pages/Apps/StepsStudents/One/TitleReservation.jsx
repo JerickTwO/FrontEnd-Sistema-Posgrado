@@ -34,7 +34,6 @@ const TitleReservation = () => {
             fetchTitleReservationStepOne();
         }
     }, [dispatch, user.username, fetchTitleReservationStepOne]);
-    console.log(reservation);
     return (
         <>
             <h1 className="text-2xl font-bold mb-5">Paso 1 - Subir Proyecto de Tesis</h1>

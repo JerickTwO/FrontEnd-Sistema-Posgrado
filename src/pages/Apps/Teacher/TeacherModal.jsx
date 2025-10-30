@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useNumericKeyDown } from '../Steps/utils/useNumericKeyDown ';
 import { useNonNumericKeyDown } from '../Steps/utils/useNonNumericKeyDown';
+import { GradoEnum } from '../../../models/GradoEnum';
 
 const validationSchema = Yup.object().shape({
     dni: Yup.string()
@@ -46,9 +47,11 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
     const [birthDateError, setBirthDateError] = useState('');
     const handleKeyDown = useNumericKeyDown();
     const handleNonKeyDown = useNonNumericKeyDown();
-    // Calcula la fecha mínima permitida (hace 18 años)
     const today = new Date();
     const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const gradoOptions = Object.entries(GradoEnum)
+        .filter(([key, value]) => isNaN(Number(key)))
+        .map(([label, value]) => ({ label, value }));
 
     const validateDate = (date) => {
         const selectedDate = new Date(date[0]);
@@ -96,11 +99,18 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                         phone: teacher?.phone || '',
                                         address: teacher?.address || '',
                                         career: careerOptions.find((option) => option.value === teacher?.career?.id) || null,
+                                        degree: teacher ? gradoOptions.find(opt => opt.label === teacher.degree) : null,
                                     }}
                                     enableReinitialize={true}
                                     validationSchema={validationSchema}
-                                    onSubmit={onSave}
-                                >
+                                    onSubmit={(values) => {
+                                        const formData = {
+                                            ...values,
+                                            degree: values.degree?.value,
+                                        };
+                                        onSave(formData);
+                                        resetForm();
+                                    }}>
                                     {({ errors, submitCount, values, setFieldValue }) => (
                                         <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             <div className={submitCount && errors.dni ? 'has-error' : ''}>
@@ -118,7 +128,7 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                             </div>
                                             <div className={submitCount && errors.firstNames ? 'has-error' : ''}>
                                                 <label htmlFor="firstNames">Nombre</label>
-                                                <Field name="firstNames" type="text" id="firstNames" placeholder="Ingrese el nombre" maxLength={150} className="form-input" onKeyDown={handleNonKeyDown}/>
+                                                <Field name="firstNames" type="text" id="firstNames" placeholder="Ingrese el nombre" maxLength={150} className="form-input" onKeyDown={handleNonKeyDown} />
                                                 <ErrorMessage name="firstNames" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className={submitCount && errors.lastName ? 'has-error' : ''}>
@@ -128,7 +138,7 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                             </div>
                                             <div className={submitCount && errors.middleName ? 'has-error' : ''}>
                                                 <label htmlFor="middleName">Apellido Materno</label>
-                                                <Field name="middleName" type="text" id="middleName" placeholder="Ingrese el apellido materno" maxLength={50} className="form-input" onKeyDown={handleNonKeyDown}/>
+                                                <Field name="middleName" type="text" id="middleName" placeholder="Ingrese el apellido materno" maxLength={50} className="form-input" onKeyDown={handleNonKeyDown} />
                                                 <ErrorMessage name="middleName" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className={submitCount && errors.career ? 'has-error' : ''}>
@@ -155,7 +165,7 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                                                 dateFormat: 'Y-m-d',
                                                                 position: 'auto left',
                                                                 locale: Spanish,
-                                                                maxDate: maxDateAllowed.toISOString().split('T')[0], // Fecha mínima permitida
+                                                                maxDate: maxDateAllowed.toISOString().split('T')[0],
                                                             }}
                                                             className="form-input"
                                                             onChange={(date) => {
@@ -191,6 +201,18 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                                     onKeyDown={handleKeyDown}
                                                 />
                                                 <ErrorMessage name="phone" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className={submitCount && errors.degree ? 'has-error' : 'col-span-2'}>
+                                                <label htmlFor="degree">Grado</label>
+                                                <Select
+                                                    name="degree"
+                                                    styles={styles}
+                                                    placeholder="Selecciona un grado"
+                                                    options={gradoOptions}
+                                                    onChange={(option) => setFieldValue('degree', option)}
+                                                    value={values.degree}
+                                                />
+                                                <ErrorMessage name="degree" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className={submitCount && errors.address ? 'has-error' : 'col-span-2'}>
                                                 <label htmlFor="address">Dirección</label>
@@ -233,7 +255,7 @@ TeacherModal.propTypes = {
         career: PropTypes.shape({
             id: PropTypes.number.isRequired,
             name: PropTypes.string
-        })
+        }),
     }),
     careerOptions: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.number.isRequired,

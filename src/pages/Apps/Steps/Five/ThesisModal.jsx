@@ -3,12 +3,12 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
-import ThesisService from '../../../../api/constancyThesisService'; // Asegúrate de que la ruta es correcta
+import ThesisService from '../../../../api/constancyThesisService';
 import Swal from 'sweetalert2';
 
 const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
-    const [pdfAvailable, setPdfAvailable] = useState(null); // Estado para manejar la disponibilidad del PDF
-    const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga del PDF
+    const [pdfAvailable, setPdfAvailable] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const checkPDFExists = async () => {
@@ -32,17 +32,14 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         if (isOpen) {
             checkPDFExists();
         } else {
-            setPdfAvailable(null); // Resetear el estado cuando el modal se cierra
+            setPdfAvailable(null);
         }
     }, [isOpen, thesis]);
 
     const validationSchema = Yup.object({
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
-        title: Yup.string().required('El título es obligatorio'),
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         observations: Yup.string(),
-        aplicationNumber: Yup.string().required('El número de aplicación es obligatorio'),
-        registrationNumber: Yup.string().required('El número de registro es obligatorio'),
     });
 
     const initialValues = React.useMemo(
@@ -55,9 +52,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             lineOfResearch: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch
                 ? { value: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.id, label: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.name }
                 : null,
-            projectSimilarity: thesis?.projectSimilarity || 0,
-            aplicationNumber: thesis?.aplicationNumber || '',
-            registrationNumber: thesis?.registrationNumber || '',
+            projectSimilarity: thesis?.projectSimilarity || '',
+            reg: thesis?.reg || '',
         }),
         [thesis]
     );
@@ -65,10 +61,14 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const handleSubmit = async (values, { setSubmitting }) => {
         const normalizedValues = {
             ...values,
-            meetsRequirements: values.meetsRequirements === 'yes', // Normaliza a booleano
+            meetsRequirements: values.meetsRequirements === 'yes' ? true : false,
+
         };
-    
-        await onSave(thesis.id, normalizedValues); // Enviar valores normalizados
+        if (thesis?.meetsRequirements === true) {
+            delete normalizedValues.meetsRequirements;
+        }
+
+        await onSave(thesis.id, normalizedValues);
         setSubmitting(false);
     };
 
@@ -123,61 +123,81 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
+                                            {
+                                                !thesis.meetsRequirements && (
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="meetsRequirements">Cumple Requisitos</label>
+                                                        <div className="flex gap-4">
+                                                            <label>
+                                                                <Field
+                                                                    type="radio"
+                                                                    name="meetsRequirements"
+                                                                    value="yes"
+                                                                    className="form-radio"
+                                                                    onChange={() => {
+                                                                        setFieldValue('meetsRequirements', 'yes');
+                                                                        setFieldValue('observations', '');
+                                                                    }}
+                                                                />
+                                                                Sí
+                                                            </label>
+                                                            <label>
+                                                                <Field
+                                                                    type="radio"
+                                                                    name="meetsRequirements"
+                                                                    value="no"
+                                                                    className="form-radio"
+                                                                    onChange={() => {
+                                                                        setFieldValue('meetsRequirements', 'no');
+                                                                    }}
+                                                                />
+                                                                No
+                                                            </label>
+                                                        </div>
+                                                        <ErrorMessage name="meetsRequirements" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                )
+                                            }
 
-                                            <div className={submitCount && errors.aplicationNumber ? 'has-error' : ''}>
-                                                <label htmlFor="aplicationNumber">Número de Aplicación</label>
+                                            <div className="col-span-2">
+                                                <label htmlFor="projectSimilarity">Porcentaje de Similitud</label>
                                                 <Field
-                                                    name="aplicationNumber"
+                                                    name="projectSimilarity"
+                                                    id="projectSimilarity"
                                                     type="text"
-                                                    id="aplicationNumber"
+                                                    placeholder="Ingrese porcentaje de similitud"
+                                                    onInput={(e) => {
+                                                        let value = e.target.value;
+
+                                                        value = value.replace(/\D/g, '');
+                                                        if (value) {
+                                                            const numericValue = parseInt(value, 10);
+                                                            if (numericValue > 25) {
+                                                                value = '25';
+                                                            } else {
+                                                                value = numericValue.toString();
+                                                            }
+                                                        }
+
+                                                        e.target.value = value;
+                                                        setFieldValue('projectSimilarity', value);
+                                                    }}
+
                                                     className="form-input"
                                                 />
-                                                <ErrorMessage name="aplicationNumber" component="div" className="text-danger mt-1" />
+                                                <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
                                             </div>
-
-                                            <div className={submitCount && errors.registrationNumber ? 'has-error' : ''}>
-                                                <label htmlFor="registrationNumber">Número de Registro</label>
+                                            <div className="col-span-2">
+                                                <label htmlFor="reg">Reg</label>
                                                 <Field
-                                                    name="registrationNumber"
-                                                    type="text"
-                                                    id="registrationNumber"
+                                                    name="reg"
+                                                    type="number"
+                                                    id="reg"
+                                                    placeholder="Ingrese el reg"
                                                     className="form-input"
                                                 />
-                                                <ErrorMessage name="registrationNumber" component="div" className="text-danger mt-1" />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="meetsRequirements">Cumple Requisitos</label>
-                                                <div className="flex gap-4">
-                                                    <label>
-                                                        <Field
-                                                            type="radio"
-                                                            name="meetsRequirements"
-                                                            value="yes"
-                                                            className="form-radio"
-                                                            onChange={() => {
-                                                                setFieldValue('meetsRequirements', 'yes');
-                                                                setFieldValue('observations', '');
-                                                            }}
-                                                        />
-                                                        Sí
-                                                    </label>
-                                                    <label>
-                                                        <Field
-                                                            type="radio"
-                                                            name="meetsRequirements"
-                                                            value="no"
-                                                            className="form-radio"
-                                                            onChange={() => {
-                                                                setFieldValue('meetsRequirements', 'no');
-                                                            }}
-                                                        />
-                                                        No
-                                                    </label>
-                                                </div>
-                                                <ErrorMessage name="meetsRequirements" component="div" className="text-danger mt-1" />
-                                            </div>
-
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field
@@ -202,7 +222,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary ltr:ml-4 rtl:mr-4"
-                                                    disabled={!pdfAvailable || isSubmitting || isLoading} // Deshabilita si no hay PDF o está enviando
+                                                    disabled={!pdfAvailable || isSubmitting || isLoading}
                                                 >
                                                     {isLoading
                                                         ? 'Verificando PDF...'

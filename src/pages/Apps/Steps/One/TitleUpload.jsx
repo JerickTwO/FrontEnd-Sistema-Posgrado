@@ -3,25 +3,25 @@ import Swal from 'sweetalert2';
 import ReservationService from '../../../../api/titleReservationsService';
 
 const TitleUpload = ({ reservaId }) => {
-    const [pdfDocumentId, setPdfDocumentId] = useState(null); // Maneja el estado inicial como `null`
+    const [pdfDocumentId, setPdfDocumentId] = useState(null);
 
     useEffect(() => {
         if (!reservaId) {
             console.error('El ID de la reserva es undefined.');
             return;
         }
-        // Llamada al backend para verificar si hay un PDF asociado
+
         ReservationService.viewPdf(reservaId)
             .then((pdfData) => {
                 if (pdfData) {
-                    setPdfDocumentId(true); // Indica que el PDF está disponible
+                    setPdfDocumentId(true);
                 } else {
-                    setPdfDocumentId(false); // No hay PDF disponible
+                    setPdfDocumentId(false);
                 }
             })
             .catch((error) => {
                 console.error('Error al cargar la reservación:', error);
-                setPdfDocumentId(false); // Manejar el error como "No disponible"
+                setPdfDocumentId(false);
             });
     }, [reservaId]);
 
@@ -52,13 +52,13 @@ const TitleUpload = ({ reservaId }) => {
             <button
                 onClick={viewPDF}
                 className="btn btn-sm btn-outline-secondary m-0 w-[5rem]"
-                disabled={!pdfDocumentId} // Deshabilitar si no hay PDF
+                disabled={!pdfDocumentId}
             >
                 {pdfDocumentId === null
-                    ? 'Cargando...' // Mientras se verifica el PDF
+                    ? 'Cargando...'
                     : pdfDocumentId
-                    ? 'Ver PDF' // PDF disponible
-                    : 'No disponible'}{' '}
+                        ? 'Ver PDF'
+                        : 'No disponible'}{' '}
                 {/* No hay PDF */}
             </button>
         </div>

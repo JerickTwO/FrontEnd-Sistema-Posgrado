@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import PDFDownloadButtons from '../utils/PDFDownloadButtons';
+import { useState } from 'react';
 import PdfFiveCN from '../pdfSteps/PdfFiveCN';
 import Pagination from '../Pagination';
 import ThesisUpload from './ThesisUpload';
 import { formatDate } from '../utils/Dates';
+import DownloadDocs from '../utils/DownloadButton';
 
 const ThesisTable = ({ thesis, onEdit }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,6 +14,17 @@ const ThesisTable = ({ thesis, onEdit }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentThesis = thesis.slice(indexOfFirstItem, indexOfLastItem);
 
+    const getDownloadButton = (thesisItem) => {
+        const fileName = `thesis_${thesisItem.id}.pdf`;
+        return (
+            <DownloadDocs
+                infoStepTable={thesisItem}
+                PdfDocument={PdfFiveCN}
+                fileName={fileName}
+                fields = {{ constacia: 1 }}
+            />
+        );
+    };
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -61,23 +72,16 @@ const ThesisTable = ({ thesis, onEdit }) => {
                                         <ThesisUpload thesisId={thesisItem.id} />
                                     </td>
                                     <td className="flex gap-4 items-center justify-center">
-                                        {thesisItem.meetsRequirements ? (
-                                            <PDFDownloadButtons
-                                                documents={{
-                                                    document: <PdfFiveCN thesis={thesisItem} />,
-                                                    fileName: `thesis_${thesisItem.id}.pdf`,
-                                                }}
-                                                fileName={`thesis_${thesisItem.id}`}
-                                                label="Descargar PDF"
-                                            />
-                                        ) : (
-                                            <button
-                                                onClick={() => onEdit(thesisItem)}
-                                                className="btn btn-sm btn-outline-primary"
-                                            >
-                                                Editar
-                                            </button>
-                                        )}
+                                        {
+                                            getDownloadButton(thesisItem)
+                                        }
+                                        <button
+                                            onClick={() => onEdit(thesisItem)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
+
                                     </td>
                                 </tr>
                             ))
@@ -92,7 +96,7 @@ const ThesisTable = ({ thesis, onEdit }) => {
                 </table>
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
+        </div >
     );
 }
 export default ThesisTable;

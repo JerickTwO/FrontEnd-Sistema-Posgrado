@@ -35,7 +35,8 @@ const getTeachers = async () => {
             teacherData.institutionalEmail,
             teacherData.phone,
             teacherData.address,
-            teacherData.career
+            teacherData.career,
+            teacherData.degree
         ));
     } catch (error) {
         // console.error(response.data.message)
@@ -61,7 +62,8 @@ const addTeacher = async (teacher) => {
             response.data.institutionalEmail,
             response.data.phone,
             response.data.address,
-            response.data.career
+            response.data.career,
+            response.data.degree
         );
     } catch (error) {
         console.error("Error adding teacher", error);
@@ -86,7 +88,8 @@ const editTeacher = async (id, teacher) => {
             response.data.institutionalEmail,
             response.data.phone,
             response.data.address,
-            response.data.career
+            response.data.career,
+            response.data.degree
         );
     } catch (error) {
         console.error("Error editing teacher", error);
@@ -110,7 +113,7 @@ const deleteTeacher = async (id) => {
 
 export default {
     getTeachers,
-    getTeachersByCareer, // Nuevo servicio agregado
+    getTeachersByCareer,
     addTeacher,
     editTeacher,
     deleteTeacher

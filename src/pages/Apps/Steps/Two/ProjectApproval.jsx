@@ -26,7 +26,7 @@ const ProjectApproval = () => {
         fetchProjects();
         fetchCareers();
         fetchInfo();
-    }, [dispatch]);    
+    }, [dispatch]);
 
     const fetchInfo = useCallback(async () => {
         try {
@@ -78,8 +78,8 @@ const ProjectApproval = () => {
             await projectApprovalService.editProjectApproval(projectId, updatedProjectData);
             Swal.fire('Éxito', 'Proyecto actualizado correctamente.', 'success');
 
-            await fetchProjects(); // Actualizamos la lista de proyectos
-            closeModal(); // Cerramos el modal después de guardar
+            await fetchProjects();
+            closeModal();
         } catch (error) {
             console.error('Error al guardar el proyecto:', error);
             Swal.fire('Error', 'Hubo un problema al guardar el proyecto.', 'error');

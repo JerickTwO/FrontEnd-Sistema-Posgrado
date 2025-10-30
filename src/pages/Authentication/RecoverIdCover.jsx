@@ -61,8 +61,7 @@ const RecoverIdCover = () => {
         e.preventDefault();
         if (validatePasswords()) {
             const username = JSON.parse(localStorage.getItem('user')).username;
-            console.log("username", username);
-            console.log("newPassword", newPassword);
+
             try {
                 const response = await authService.actualizarContrasena(username, newPassword); // Ahora debería funcionar correctamente
 

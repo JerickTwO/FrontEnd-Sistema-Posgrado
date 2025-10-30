@@ -1,7 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
@@ -13,8 +12,14 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
             studentTwoCode: report?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.studentCode || '',
             studentFirstNames: report?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.student?.firstNames || 'N/A',
             studentTwoFirstNames: report?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.firstNames || '',
-            observation: report?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.observations || '',
+            observations: report?.observations || '',
             meetRequirements: report?.meetRequirements ? 'yes' : 'no',
+            documentDate: report?.documentDate || '',
+            articleNumber: report?.articleNumber || '',
+            secondArticleNumber: report?.secondArticleNumber || '',
+            deanResolution: report?.deanResolution || '',
+            reg: report?.reg || '',
+            additionalInputs: report?.additionalInputs?.split(', ') || [''],
         }),
         [report, adviserOptions]
     );
@@ -34,10 +39,17 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                     initialValues={initialValues}
                                     onSubmit={(values) => {
                                         const transformedValues = {
-                                            meetRequirements: values.meetRequirements === 'yes', // Conversión a booleano
+                                            documentDate: values.documentDate,
+                                            articleNumber: values.articleNumber,
+                                            secondArticleNumber: values.secondArticleNumber,
+                                            deanResolution: values.deanResolution,
+                                            observations: values.observations,
+                                            reg: values.reg || '',
+                                            additionalInputs: values.additionalInputs.join(', '),
                                         };
-
-                                        console.log('Llamando a onSave con:', transformedValues);
+                                        if (values.meetRequirements === 'yes' && report?.meetRequirements !== true) {
+                                            transformedValues.meetRequirements = true;
+                                        }
                                         onSave(transformedValues, report.id);
                                     }}
                                     enableReinitialize
@@ -59,34 +71,94 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                     </div>
                                                 )
                                             }
+                                            {
+                                                !report.meetRequirements && (
+                                                    <div>
+                                                        <label htmlFor="meetRequirements" > Cumple Requisitos </label>
+                                                        < div className="flex gap-4" >
+                                                            <label>
+                                                                <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
+                                                                    setFieldValue('meetRequirements', 'yes');
+                                                                    setFieldValue('observations', '');
+                                                                }} />
+                                                                Sí
+                                                            </label>
+                                                            < label >
+                                                                <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
+                                                                    setFieldValue('meetRequirements', 'no');
+                                                                }} />
+                                                                No
+                                                            </label>
+                                                        </div>
+                                                        < ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                    </div>
 
-                                            <div>
-                                                <label htmlFor="meetRequirements" > Cumple Requisitos </label>
-                                                < div className="flex gap-4" >
-                                                    <label>
-                                                        <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
-                                                            setFieldValue('meetRequirements', 'yes');
-                                                            setFieldValue('observation', '');
-                                                        }} />
-                                                        Sí
-                                                    </label>
-                                                    < label >
-                                                        <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
-                                                            setFieldValue('meetRequirements', 'no');
-                                                        }} />
-                                                        No
-                                                    </label>
-                                                </div>
-                                                < ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                )
+                                            }
+
+                                            < div className="col-span-1" >
+                                                <label htmlFor="documentDate" >Fecha del REF del Documento </label>
+                                                < Field name="documentDate" type="date" id="documentDate" placeholder="Ingrese fecha del Documento" className="form-input" />
                                             </div>
-                                            < div className="col-span-2" >
-                                                <label htmlFor="observation" > Observaciones </label>
-                                                < Field name="observation" as="textarea" id="observation" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}
+                                            < div className="col-span-1" >
+                                                <label htmlFor="articleNumber"> Número de Artículo </label>
+                                                <Field name="articleNumber" id="articleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
+                                            </div>
+                                            < div className="col-span-1" >
+                                                <label htmlFor="secondArticleNumber">Segundo Número de Artículo </label>
+                                                <Field name="secondArticleNumber" id="secondArticleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
+                                            </div>
+                                            < div className="col-span-1" >
+                                                <label htmlFor="deanResolution">Resolución Decanal </label>
+                                                <Field name="deanResolution" id="deanResolution" placeholder="000-2025" className="form-input" />
+                                            </div>
+                                            < div className="col-span-1" >
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
+                                            </div>
+                                            <FieldArray name="additionalInputs">
+                                                {({ push, remove }) => (
+                                                    values.additionalInputs.map((_, index) => (
+                                                        <div key={index} className="col-span-1">
+                                                            <label htmlFor="secondDeanResolution">Resolución {index + 2}</label>
+                                                            <div className="flex gap-2">
+
+                                                                <Field
+                                                                    name={`additionalInputs.${index}`}
+                                                                    type="text"
+                                                                    placeholder={`Campo ${index + 1}`}
+                                                                    className="form-input"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-danger"
+                                                                    onClick={() => remove(index)}
+                                                                >
+                                                                    ×
+                                                                </button>
+
+                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 4 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        className="btn btn-sm btn-outline-primary"
+                                                                        onClick={() => push('')}
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </FieldArray>
+                                            < div className="col-span-1" >
+                                                <label htmlFor="observations" > Observaciones </label>
+                                                < Field name="observations" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}
                                                     style={{
                                                         cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
                                                         opacity: values.meetRequirements === 'yes' ? 0.5 : 1,
                                                     }} />
-                                                < ErrorMessage name="observation" component="div" className="text-danger mt-1" />
+                                                < ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                             </div>
 
                                             < div className="flex justify-end items-center mt-8 col-span-2" >

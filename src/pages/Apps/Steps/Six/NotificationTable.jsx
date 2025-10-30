@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../Pagination';
-import Swal from 'sweetalert2';
 import { formatDate } from '../utils/Dates';
+import PdfSixMM from '../pdfSteps/PdfSixMM';
+import DownloadDocs from '../utils/DownloadButton';
 const NotificationTable = ({ notification, onEdit }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -11,6 +12,20 @@ const NotificationTable = ({ notification, onEdit }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentNotification = notification?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
+
+    const getDownloadButton = (notification) => {
+        const fileName = `notificación_jurados_${notification.id}.pdf`;
+        return (
+            <DownloadDocs
+                infoStepTable={notification}
+                PdfDocument={PdfSixMM}
+                fileNames={fileName}
+                fields = {{ memorando_mult: 1 }}
+            />
+        );
+
+    }
+
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -55,25 +70,14 @@ const NotificationTable = ({ notification, onEdit }) => {
 
                                     <td className="flex gap-4 items-center justify-center">
                                         {
-                                            notification.meetRequirements ? (
-                                                <button
-                                                    onClick={() =>
-                                                        Swal.fire("Paso Completado", "Jurados notificados exitosamente.", "success")
-                                                    }
-                                                    className="btn btn-sm btn-outline-info"
-                                                >
-                                                    Completado
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    onClick={() => onEdit(notification)}
-                                                    className="btn btn-sm btn-outline-primary"
-                                                >
-                                                    Editar
-                                                </button>
-                                            )
+                                            getDownloadButton(notification)
                                         }
-
+                                        <button
+                                            onClick={() => onEdit(notification)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
                                     </td>
                                 </tr>
                             ))

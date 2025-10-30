@@ -1,8 +1,8 @@
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
-import Logo from './BANNER.png';
+import Logo from './BANNER2025.png';
 import styles from './styles/PdfBaseStyles';
 import { formatNumberWithZero } from '../utils/Dates';
-
+import WatermarkLogo from './marcaAgua.png';
 const ConstancyVoucher = ({
     showCommemorativeText,
     commemorativeText,
@@ -11,34 +11,38 @@ const ConstancyVoucher = ({
 }) => (
     <Document>
         <Page size="A4">
-            <View style={styles.container}>
+            <View>
                 <View style={styles.header}>
                     <View style={styles.headerSection}>
                         <Image style={styles.banner} src={Logo} />
                     </View>
                     {/* Mostrar texto conmemorativo si está habilitado */}
-                    {showCommemorativeText && (
-                        <Text style={styles.headerSection}>{commemorativeText}</Text>
-                    )}
+
                 </View>
+                <View style={styles.container}>
+                    <View>
+                        {showCommemorativeText && (
+                            <Text style={styles.headerSection}>{commemorativeText}</Text>
+                        )}
+                        <View style={{ textAlign: 'justify' }}>
+                            {children}
+                        </View>
+                        <View style={styles.watermarkContainer}>
+                            <Image src={WatermarkLogo} style={styles.watermarkImage} />
+                        </View>
 
-                {/* CONTENIDO */}
-                <View>
-                    {children}
-                </View> 
-
-                <View style={styles.footerText}>
-                    {/* <Text>Atentamente,</Text> TODO:componente con este apartado condicional */}
-                    <Text>C. c.</Text>
-                    <Text>Archivo</Text>
-                    <Text>REG. N° {formatNumberWithZero(registrationNumber)}</Text>
-                    <View style={styles.hr} />
-                    <View style={styles.footerInfo}>
-                        <Text>Campus Universitario S/N, Tamburco, Abancay-Apurímac</Text>
-                        <Text>Carretera Panamericana Abancay-Cusco Km. 5</Text>
-                        <Text>email: unidadinvestigacion@unamba.edu.pe</Text>
+                    </View>
+                    <View style={styles.footerText}>
+                        <Text>C. c.</Text>
+                        <Text>Archivo</Text>
+                        <Text>REG. N° {formatNumberWithZero(registrationNumber)}</Text>
+                        <View style={styles.hr} />
+                        <View style={styles.footerInfo}>
+                            <Text>Av. Inca Garcilaso de la Vega S/N Tamburco, Abancay | (083) 636 050 | www.unamba.edu.pe</Text>
+                        </View>
                     </View>
                 </View>
+
             </View>
         </Page>
     </Document>

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../Pagination';
-import Swal from 'sweetalert2';
 import PdfEightCN from '../pdfSteps/PdfEightCN';
-import PDFDownloadButton from '../utils/PDFDownloadButtons';
 import { formatDate } from '../utils/Dates';
+import DownloadDocs from '../utils/DownloadButton';
 const PastingTable = ({ pastings, onEdit, info }) => {
-    console.log(pastings);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(pastings?.length / itemsPerPage);
@@ -13,6 +11,20 @@ const PastingTable = ({ pastings, onEdit, info }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentNotification = pastings?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
+
+    const getDownloadButton = (pasting) => {
+        const fileName = `pasting_${pasting.id}.pdf`;
+        return (
+            <DownloadDocs
+                infoStepTable={pasting}
+                PdfDocument={PdfEightCN}
+                institutionalInfo={info}
+                fileNames={fileName}
+                fields = {{ constacia: 1 }}
+            />
+        );
+
+    }
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -62,25 +74,16 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                                     <td>{formatDate(pasting?.updatedAt)}</td>
 
                                     <td className="flex gap-4 items-center justify-center">
-                                        {
-                                            pasting.meetRequirements ? (
-                                                <PDFDownloadButton
-                                                    documents={{
-                                                        document: <PdfEightCN pasting={pasting} info={info} />,
-                                                        fileName: `pasting_${pasting.id}.pdf`,
-                                                    }}
-                                                    fileName={`pasting_${pasting.id}`}
-                                                    label="Descargar PDF"
-                                                />
-                                            ) : (
-                                                <button
-                                                    onClick={() => onEdit(pasting)}
-                                                    className="btn btn-sm btn-outline-primary"
-                                                >
-                                                    Editar
-                                                </button>
-                                            )
-                                        }
+                                        {getDownloadButton(pasting)}
+
+                                        <button
+                                            onClick={() => onEdit(pasting)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
+
+
                                     </td>
                                 </tr>
                             ))
@@ -95,7 +98,7 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                 </table>
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
+        </div >
     );
 };
 

@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
@@ -28,6 +28,14 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
             registrationNumber: tapproval?.registrationNumber || '',
             reportNumber: tapproval?.reportNumber || '',
             multipleMemorandumNumber: tapproval?.multipleMemorandumNumber || '',
+            articleNumber: tapproval?.articleNumber || '',
+            secondArticleNumber: tapproval?.secondArticleNumber || '',
+            thirdArticleNumber: tapproval?.thirdArticleNumber || '',
+            futDate: tapproval?.futDate || '',
+            cartNumber: tapproval?.cartNumber || '',
+            carta: tapproval?.carta || '',
+            reg: tapproval?.reg || '',
+            additionalInputs: tapproval?.additionalInputs?.split(', ') || [''],
         }),
         [tapproval]
     );
@@ -50,13 +58,21 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                     initialValues={initialValues}
                                     onSubmit={(values) => {
                                         const transformedValues = {
-                                            meetRequirements: values.meetRequirements === 'yes',
                                             observations: values.observations,
-                                            registrationNumber: values.registrationNumber,
                                             reportNumber: values.reportNumber,
                                             multipleMemorandumNumber: values.multipleMemorandumNumber,
+                                            articleNumber: values.articleNumber,
+                                            secondArticleNumber: values.secondArticleNumber,
+                                            thirdArticleNumber: values.thirdArticleNumber,
+                                            futDate: values.futDate,
+                                            cartNumber: values.cartNumber,
+                                            carta: values.carta || '',
+                                            reg: values.reg || '',
+                                            additionalInputs: values.additionalInputs.join(', '),
                                         };
-
+                                        if (values.meetRequirements === 'yes' && tapproval?.meetRequirements !== true) {
+                                            transformedValues.meetRequirements = true;
+                                        }
                                         onSave(transformedValues, tapproval.id);
                                     }}
                                     enableReinitialize
@@ -76,21 +92,9 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
-                                            {/* Campo de Número de Registro */}
-                                            <div className="col-span-1">
-                                                <label htmlFor="registrationNumber">Número de Registro</label>
-                                                <Field
-                                                    name="registrationNumber"
-                                                    type="text"
-                                                    id="registrationNumber"
-                                                    placeholder="Ingrese número de registro"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="registrationNumber" component="div" className="text-danger mt-1" />
-                                            </div>
 
                                             {/* Campo de Número de Informe */}
-                                            <div className="col-span-2">
+                                            <div className="col-span-1 ">
                                                 <label htmlFor="reportNumber">Número de Informe</label>
                                                 <Field
                                                     name="reportNumber"
@@ -102,49 +106,165 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 <ErrorMessage name="reportNumber" component="div" className="text-danger mt-1" />
                                             </div>
 
-                                            {/* Campo de Número de Memorándum Múltiple */}
+                                            {/* Campo de Número de artículo Múltiple */}
                                             <div className="col-span-1">
-                                                <label htmlFor="multipleMemorandumNumber">Número de Memorándum</label>
+                                                <label htmlFor="articleNumber">Primer Número de artículo</label>
+                                                <Field
+                                                    name="articleNumber"
+                                                    type="text"
+                                                    id="articleNumber"
+                                                    placeholder="Ingrese número de artículo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="secondArticleNumber">Segundo Número de artículo</label>
+                                                <Field
+                                                    name="secondArticleNumber"
+                                                    type="text"
+                                                    id="secondArticleNumber"
+                                                    placeholder="Ingrese número de artículo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="thirdArticleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="thirdArticleNumber">Tercer Número de artículo</label>
+                                                <Field
+                                                    name="thirdArticleNumber"
+                                                    type="text"
+                                                    id="thirdArticleNumber"
+                                                    placeholder="Ingrese número de artículo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="thirdArticleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="futDate">Fecha de Fut</label>
+                                                <Field
+                                                    name="futDate"
+                                                    type="text"
+                                                    id="futDate"
+                                                    placeholder="Ingrese fecha de Fut"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="cartNumber">Número de Carta</label>
+                                                <Field
+                                                    name="cartNumber"
+                                                    type="text"
+                                                    id="cartNumber"
+                                                    placeholder="021-2025"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="multipleMemorandumNumber">Número de memorandum</label>
                                                 <Field
                                                     name="multipleMemorandumNumber"
                                                     type="text"
                                                     id="multipleMemorandumNumber"
-                                                    placeholder="Ingrese número de memorándum múltiple"
+                                                    placeholder="021-2025"
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage name="multipleMemorandumNumber" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div>
-                                                <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                <div className="flex gap-4">
-                                                    <label>
-                                                        <Field
-                                                            type="radio"
-                                                            name="meetRequirements"
-                                                            value="yes"
-                                                            className="form-radio"
-                                                            onChange={() => {
-                                                                setFieldValue('meetRequirements', 'yes');
-                                                                setFieldValue('observations', ''); // Borra las observaciones
-                                                            }}
-                                                        />
-                                                        Sí
-                                                    </label>
-                                                    <label>
-                                                        <Field
-                                                            type="radio"
-                                                            name="meetRequirements"
-                                                            value="no"
-                                                            className="form-radio"
-                                                            onChange={() => {
-                                                                setFieldValue('meetRequirements', 'no');
-                                                            }}
-                                                        />
-                                                        No
-                                                    </label>
-                                                </div>
-                                                <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field
+                                                    name="reg"
+                                                    type="number"
+                                                    id="reg"
+                                                    placeholder="Ingrese el reg"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="carta">Carta</label>
+                                                <Field
+                                                    name="carta"
+                                                    type="number"
+                                                    id="carta"
+                                                    placeholder="Ingrese el número de carta"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="carta" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            {!tapproval.meetRequirements &&
+                                                <div>
+                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                    <div className="flex gap-4">
+                                                        <label>
+                                                            <Field
+                                                                type="radio"
+                                                                name="meetRequirements"
+                                                                value="yes"
+                                                                className="form-radio"
+                                                                onChange={() => {
+                                                                    setFieldValue('meetRequirements', 'yes');
+                                                                    setFieldValue('observations', ''); // Borra las observaciones
+                                                                }}
+                                                            />
+                                                            Sí
+                                                        </label>
+                                                        <label>
+                                                            <Field
+                                                                type="radio"
+                                                                name="meetRequirements"
+                                                                value="no"
+                                                                className="form-radio"
+                                                                onChange={() => {
+                                                                    setFieldValue('meetRequirements', 'no');
+                                                                }}
+                                                            />
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                    <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                </div>
+                                            }
+
+                                            <FieldArray name="additionalInputs">
+                                                {({ push, remove }) => (
+                                                    values.additionalInputs.map((_, index) => (
+                                                        <div key={index} className="col-span-1">
+                                                            <label htmlFor="secondDeanResolution">Memorando {index + 2}</label>
+                                                            <div className="flex gap-2">
+
+                                                                <Field
+                                                                    name={`additionalInputs.${index}`}
+                                                                    type="text"
+                                                                    placeholder={`Campo ${index + 1}`}
+                                                                    className="form-input"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-danger"
+                                                                    onClick={() => remove(index)}
+                                                                >
+                                                                    ×
+                                                                </button>
+
+                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 2 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        className="btn btn-sm btn-outline-primary"
+                                                                        onClick={() => push('')}
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                )}
+                                                            </div>
+
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </FieldArray>
                                             {/* Campo de Observaciones */}
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>

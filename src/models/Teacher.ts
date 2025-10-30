@@ -1,15 +1,17 @@
+import { GradoEnum } from "./GradoEnum";
+
 class Teacher {
     id: number;
     dni: string;
     firstNames: string;
     lastName: string;
     middleName: string;
-    birthDate: string;  // Usamos string para fechas ya que así vienen en el JSON
+    birthDate: string;
     institutionalEmail: string;
     phone: string;
     address: string;
-    career:  string;  // Añadimos la carrera como un objeto, puede ser null
-
+    career: string;
+    degree: GradoEnum;
     constructor(
         id: number,
         dni: string,
@@ -20,7 +22,8 @@ class Teacher {
         institutionalEmail: string,
         phone: string,
         address: string,
-        career: string   // Agregamos el objeto carrera
+        career: string,
+        degree: GradoEnum,
     ) {
         this.id = id;
         this.dni = dni;
@@ -31,9 +34,9 @@ class Teacher {
         this.institutionalEmail = institutionalEmail;
         this.phone = phone;
         this.address = address;
-        this.career = career;  // Asignamos la carrera en el constructor
+        this.career = career;
+        this.degree = degree;
     }
 }
 
 export default Teacher;
-    

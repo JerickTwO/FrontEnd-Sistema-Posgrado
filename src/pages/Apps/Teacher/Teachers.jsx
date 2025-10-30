@@ -78,7 +78,7 @@ const Teachers = () => {
     }, [contactList, search, selectedCareer]); // Agrega 'selectedCareer' como dependencia
 
 
-    const saveTeacher = async (values, { resetForm }) => {
+    const saveTeacher = async (values) => {
         const payload = {
             ...values,
             career: {
@@ -98,7 +98,6 @@ const Teachers = () => {
                 setContactList((prev) => [addedTeacher, ...prev]);
                 showMessage('Docente agregado exitosamente.');
             }
-            resetForm();
             closeModal();
         } catch (error) {
             console.error('Error guardando el docente:', error);

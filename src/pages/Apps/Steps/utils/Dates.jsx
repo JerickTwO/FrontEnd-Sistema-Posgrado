@@ -6,9 +6,10 @@ export const numberALetters = (num) => {
     const especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
     const cientos = ['', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
 
-    if (typeof num !== 'number' || num < 0 || num >= 1000) {
+    if (typeof num !== 'number' || num < 0 || num >= 1000000) {
         return 'Número fuera de rango o inválido';
     }
+
     if (num === 100) return 'cien';
     if (num < 10) return unidades[num];
     if (num < 20) return especiales[num - 10];
@@ -16,8 +17,21 @@ export const numberALetters = (num) => {
     if (num < 100) return `${decenas[Math.floor(num / 10)]} y ${unidades[num % 10]}`.trim();
     if (num < 1000) return `${cientos[Math.floor(num / 100)]} ${numberALetters(num % 100)}`.trim();
 
+    if (num < 1000000) {
+        const milParte = Math.floor(num / 1000);
+        const restoParte = num % 1000;
+
+        // Si el número es 1000 o mayor, pero menos de 2000, simplemente poner "mil"
+        const milTexto = milParte === 1 ? 'mil' : `${unidades[milParte]} mil`;
+
+        const restoTexto = restoParte === 0 ? '' : ` ${numberALetters(restoParte)}`;
+
+        return milTexto + restoTexto;
+    }
+
     return 'Número fuera de rango';
 };
+
 
 // Obtiene la fecha actual en formato "1 de enero de 2025"
 // Ejemplo: getWrittenDate() => "5 de enero del 2025"
@@ -32,6 +46,34 @@ export const getWrittenDate = () => {
     const year = today.getFullYear();
 
     return `${day} de ${month} del ${year}`;
+};
+
+export const getWrittenDateEmpresa = () => {
+    const months = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
+    ];
+    const today = new Date();
+    const day = today.getDate();
+    const month = months[today.getMonth()];
+    const year = today.getFullYear();
+
+    return `${day} días del ${month} del año ${numberALetters(year)}`;
+};
+
+export const getWrittenDateYearWrite = () => {
+    const months = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
+    ];
+    const today = new Date();
+    const day = today.getDate();
+    const month = months[today.getMonth()];
+    const year = today.getFullYear();
+
+    const diaTexto = day === 1 ? 'día' : 'días';
+
+    return `${day} ${diaTexto} del mes de ${month} del año ${numberALetters(year)}`;
 };
 
 // Obtiene solo el año actual
@@ -60,6 +102,9 @@ export const getWrittenDateFromInput = (inputDate) => {
     ];
     try {
         const date = new Date(inputDate);
+        // Sumar un día:
+        date.setDate(date.getDate() + 1);
+
         const day = date.getDate();
         const month = months[date.getMonth()];
         const year = date.getFullYear();
@@ -69,6 +114,7 @@ export const getWrittenDateFromInput = (inputDate) => {
         return 'Fecha inválida';
     }
 };
+
 
 // Convierte una fecha y hora completa al formato extendido con texto
 // Ejemplo: getFullWrittenDateTimeFromInput("2025-01-05T16:38:42.000+00:00")
@@ -108,11 +154,23 @@ export const getFullWrittenDateTimeFromInput = (inputDate) => {
     }
 };
 
-// Formatea un número al formato 3 dígitos con ceros a la izquierda (ej. "001")
-// Ejemplo: formatNumberWithZero(7) => "007"
-export const formatNumberWithZero = (number) => {
-    if (typeof number !== 'number') return 'Número inválido';
-    return number.toString().padStart(3, '0');
+// Formatea un número (string o number) a N dígitos con ceros a la izquierda (por defecto 3)
+// Ejemplos:
+//   formatNumberWithZero(7)        => "007"
+//   formatNumberWithZero("4")     => "004"
+//   formatNumberWithZero("004")   => "004"
+//   formatNumberWithZero(undefined) => "000"
+export const formatNumberWithZero = (value, width = 3) => {
+    // Si viene null/undefined, devolvemos todo ceros con el ancho solicitado
+    if (value === null || value === undefined) return ''.padStart(width, '0');
+
+    // Aceptar number o string numérica; limpiar caracteres no numéricos por seguridad
+    const raw = typeof value === 'number' ? String(value) : String(value).trim();
+    const digitsOnly = raw.replace(/[^0-9]/g, '');
+    const n = parseInt(digitsOnly, 10);
+
+    if (Number.isNaN(n)) return ''.padStart(width, '0');
+    return n.toString().padStart(width, '0');
 };
 
 // Convierte una fecha en formato ISO a yyyy-mm-dd
@@ -132,3 +190,18 @@ export const formatISODateToSimpleDate = (isoDate) => {
         return 'Fecha inválida';
     }
 };
+
+
+export const formatDateSpanish = (dateStr) => {
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+    const date = new Date(dateStr);
+    const dayName = days[date.getDay()];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${dayName} ${day} de ${month} del ${year}`;
+}

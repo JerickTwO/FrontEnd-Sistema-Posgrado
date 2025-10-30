@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import i18next from 'i18next';
 import themeConfig from '../theme.config';
 
 const defaultState = {
     isDarkMode: false,
     mainLayout: 'app',
     theme: 'light',
-    menu: 'horizontal',
+    menu: 'vertical',
     layout: 'full',
     rtlClass: 'ltr',
     animation: '',
@@ -14,23 +13,6 @@ const defaultState = {
     locale: 'es',
     sidebar: false,
     pageTitle: '',
-    languageList: [
-        { code: 'zh', name: 'Chinese' },
-        { code: 'da', name: 'Danish' },
-        { code: 'en', name: 'English' },
-        { code: 'fr', name: 'French' },
-        { code: 'de', name: 'German' },
-        { code: 'el', name: 'Greek' },
-        { code: 'hu', name: 'Hungarian' },
-        { code: 'it', name: 'Italian' },
-        { code: 'ja', name: 'Japanese' },
-        { code: 'pl', name: 'Polish' },
-        { code: 'pt', name: 'Portuguese' },
-        { code: 'ru', name: 'Russian' },
-        { code: 'es', name: 'Spanish' },
-        { code: 'sv', name: 'Swedish' },
-        { code: 'tr', name: 'Turkish' },
-    ],
     semidark: false,
 };
 
@@ -41,28 +23,9 @@ const initialState = {
     rtlClass: localStorage.getItem('rtlClass') || themeConfig.rtlClass,
     animation: localStorage.getItem('animation') || themeConfig.animation,
     navbar: localStorage.getItem('navbar') || themeConfig.navbar,
-    locale: localStorage.getItem('i18nextLng') || themeConfig.locale,
     isDarkMode: false,
     sidebar: localStorage.getItem('sidebar') || defaultState.sidebar,
     semidark: localStorage.getItem('semidark') || themeConfig.semidark,
-    languageList: [
-        { code: 'zh', name: 'Chinese' },
-        { code: 'da', name: 'Danish' },
-        { code: 'en', name: 'English' },
-        { code: 'fr', name: 'French' },
-        { code: 'de', name: 'German' },
-        { code: 'el', name: 'Greek' },
-        { code: 'hu', name: 'Hungarian' },
-        { code: 'it', name: 'Italian' },
-        { code: 'ja', name: 'Japanese' },
-        { code: 'pl', name: 'Polish' },
-        { code: 'pt', name: 'Portuguese' },
-        { code: 'ru', name: 'Russian' },
-        { code: 'es', name: 'Spanish' },
-        { code: 'sv', name: 'Swedish' },
-        { code: 'tr', name: 'Turkish' },
-        { code: 'ae', name: 'Arabic' },
-    ],
 };
 
 const themeConfigSlice = createSlice({
@@ -126,7 +89,6 @@ const themeConfigSlice = createSlice({
         },
         toggleLocale(state, { payload }) {
             payload = payload || state.locale;
-            i18next.changeLanguage(payload);
             state.locale = payload;
         },
         toggleSidebar(state) {
