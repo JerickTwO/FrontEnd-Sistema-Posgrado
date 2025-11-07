@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Times-Bold'
     },
     textHeader: {
-        textAlign: 'right',
         fontSize: 12,
     },
     textTableHeader: {
@@ -43,12 +42,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     tableColHeader: {
-        width: '45%',
+        width: '70%',
         padding: 1,
     },
 
     tableCol: {
-        width: '55%',
+        width: '30%',
         padding: 1
     },
     // End Table Styles
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
     semiTable: {
         display: 'table',
         width: 'auto',
+        textWrap: 'noWrap',
         alignItems: 'stretch',
         fontSize: 12,
     },
@@ -64,12 +64,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     semiTableColHeader: {
-        width: '11%',
+        width: '15%',
         padding: 1,
     },
 
     semiTableCol: {
-        width: '89%',
+        width: '85%',
         padding: 1
     },
     // End semiTable Styles

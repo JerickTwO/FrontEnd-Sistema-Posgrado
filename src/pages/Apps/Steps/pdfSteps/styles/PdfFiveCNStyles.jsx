@@ -2,44 +2,48 @@ import { StyleSheet } from '@react-pdf/renderer';
 
 // Style Sheet
 const styles = StyleSheet.create({
+    pageStyle: {
+        height: '100vh',
+        width: '100vw',
+    },
     page: {
+        display: 'flex',
+        justifyContent: 'space-between',
         flexDirection: 'column',
         backgroundColor: '#FFF',
         fontFamily: 'Times-Roman',
-        padding: '35px 60px',
+        padding: '0 60px',
+        height: '81%',
     },
     bold: {
         fontFamily: 'Times-Bold',
     },
     header: {
         alignItems: 'center',
-        marginBottom: 20,
     },
     textHeader: {
         fontSize: 18,
-        paddingHorizontal: 70,
         textAlign: 'center',
         marginBottom: 5,
     },
     logo: {
-        objectFit: 'fill',
-        width: '8cm',
-        height: '2cm',
-        marginBottom: 15,
+        width: '95vw',
+        height: 'auto',
+
     },
     title: {
         fontSize: 18,
-        borderTop: '1px dashed #000',
-        paddingHorizontal: 40,
-        textDecoration: 'underline',
         paddingTop: 25,
         textAlign: 'center',
     },
     body: {
         textAlign: 'justify',
         fontSize: 16,
-        marginBottom: 20,
         lineHeight: 1.5,
+    },
+    flexCol: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     footerBody: {
         fontSize: 16,
@@ -51,22 +55,29 @@ const styles = StyleSheet.create({
     },
     footerText: {
         fontSize: 8,
-        position: 'absolute',
-        bottom: 15,
-        paddingHorizontal: 40,
-        left: 0,
-        right: 0,
         fontFamily: 'Times-Bold'
     },
     hr: {
-        marginTop: 10,
-        marginBottom: 10,
-        borderBottom: '2.5pt solid #000',
+        borderBottom: '0.5pt solid red',
     },
     footerInfo: {
         textAlign: 'right',
         fontSize: 10,
-        marginTop: 10,
+    },
+    watermarkContainer: {
+        position: 'absolute',
+        bottom: 300,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+    },
+
+    watermarkImage: {
+        width: 300,
+        height: 300,
+        objectFit: 'contain',
     },
 });
 export default styles;

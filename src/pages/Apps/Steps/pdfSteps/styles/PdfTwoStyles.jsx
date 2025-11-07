@@ -1,4 +1,5 @@
 import { StyleSheet } from "@react-pdf/renderer";
+
 const styles = StyleSheet.create({
     h1: {
         textAlign: 'center',
@@ -8,9 +9,8 @@ const styles = StyleSheet.create({
         textDecoration: 'underline',
     },
     p: {
-        fontSize: 12,
+        fontSize: 11,
         marginBottom: 10,
-        textAlign: 'justify',
     },
     ul: {
         marginVertical: 10,
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         marginBottom: 5,
     },
-    // Table Styles
     table: {
         display: 'table',
         width: 'auto',
@@ -40,13 +39,9 @@ const styles = StyleSheet.create({
         width: '86%',
         padding: 5,
     },
-    // End Table Styles
-    // Section Styles
-
     section: {
         marginBottom: 10,
         fontSize: 11,
-        textAlign: 'justify',
     },
     bold: {
         fontFamily: 'Times-Bold',
@@ -54,7 +49,5 @@ const styles = StyleSheet.create({
     underline: {
         textDecoration: 'underline',
     },
-    // End Section Styles
-
-})
-export default styles; 
+});
+export default styles;

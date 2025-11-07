@@ -46,7 +46,8 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         title: Yup.string().required('El título es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         observation: Yup.string(),
-        registrationNumber: Yup.string().required('El reg es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        reg: Yup.string(),
     });
 
     const initialValues = {
@@ -57,11 +58,11 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         title: reservation?.title || '',
         lineOfResearch: lineOptions.find((option) => option.value === reservation?.lineOfResearch?.id) || null,
         projectSimilarity: reservation?.projectSimilarity || 0,
-        registrationNumber: reservation?.registrationNumber || '',
-        };
+        articleNumber: reservation?.articleNumber || '',
+        reg: reservation?.reg || '',
+    };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        console.log('✅ submit', values); // 👈 ahora debería salir
         await onSave(reservation.id, values);
         setSubmitting(false);
     };
@@ -146,52 +147,86 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                         placeholder="Ingrese valores decimales.."
                                                         className="form-input"
                                                         onChange={(e) => setFieldValue('projectSimilarity', parseFloat(e.target.value) || '')}
+                                                        onInput={(e) => {
+                                                            let value = e.target.value;
+
+                                                            value = value.replace(/\D/g, '');
+                                                           if (value) {
+                                                                const numericValue = parseInt(value, 10);
+                                                                if (numericValue > 25) {
+                                                                    value = '25';
+                                                                } else {
+                                                                    value = numericValue.toString();
+                                                                }
+                                                            }
+
+                                                            e.target.value = value;
+                                                            setFieldValue('projectSimilarity', value);
+                                                        }}
                                                     />
                                                     <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
                                                 </div>
                                                 <div>
-                                                    <label htmlFor="registrationNumber">Reg</label>
+                                                    <label htmlFor="articleNumber">Número de Articulo</label>
                                                     <Field
-                                                        name="registrationNumber"
+                                                        name="articleNumber"
                                                         type="text"
-                                                        id="registrationNumber"
+                                                        id="articleNumber"
                                                         placeholder="Ingrese el número de registro"
                                                         className="form-input"
                                                     />
-                                                    <ErrorMessage name="registrationNumber" component="div" className="text-danger mt-1" />
+                                                    <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                                </div>
+                                                <div>
+                                                    <label htmlFor="reg">Reg</label>
+                                                    <Field
+                                                        name="reg"
+                                                        type="text"
+                                                        id="reg"
+                                                        placeholder="Ingrese el reg"
+                                                        className="form-input"
+                                                    />
+                                                    <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                                 </div>
 
-                                                <div>
-                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                    <div className="flex gap-4">
-                                                        <label htmlFor="meetYes">
-                                                            <Field
-                                                                id="meetYes"
-                                                                type="radio"
-                                                                name="meetRequirements"
-                                                                value="yes"
-                                                                className="form-radio"
-                                                                onChange={() => {
-                                                                    setFieldValue('meetRequirements', 'yes');
-                                                                    setFieldValue('observation', '');
-                                                                }}
-                                                            />
-                                                            Sí
-                                                        </label>
-                                                        <label htmlFor="meetNo">
-                                                            <Field
-                                                                id="meetNo"
-                                                                type="radio"
-                                                                name="meetRequirements"
-                                                                value="no"
-                                                                className="form-radio"
-                                                                onChange={() => setFieldValue('meetRequirements', 'no')}
-                                                            />
-                                                            No
-                                                        </label>
+                                                {!reservation?.meetsRequirements ? (
+                                                    <div>
+                                                        <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                        <div className="flex gap-4">
+                                                            <label htmlFor="meetYes">
+                                                                <Field
+                                                                    id="meetYes"
+                                                                    type="radio"
+                                                                    name="meetRequirements"
+                                                                    value="yes"
+                                                                    className="form-radio"
+                                                                    onChange={() => {
+                                                                        setFieldValue('meetRequirements', 'yes');
+                                                                        setFieldValue('observation', '');
+                                                                    }}
+                                                                />
+                                                                Sí
+                                                            </label>
+                                                            <label htmlFor="meetNo">
+                                                                <Field
+                                                                    id="meetNo"
+                                                                    type="radio"
+                                                                    name="meetRequirements"
+                                                                    value="no"
+                                                                    className="form-radio"
+                                                                    onChange={() => setFieldValue('meetRequirements', 'no')}
+                                                                />
+                                                                No
+                                                            </label>
+                                                        </div>
+                                                        <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                    <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
-                                                </div>
+                                                ) : (
+                                                    <div className="hidden">
+                                                        <Field type="hidden" name="meetRequirements" value="yes" />
+                                                    </div>
+                                                )}
+
                                                 <div className="col-span-2">
                                                     <label htmlFor="observation">Observaciones</label>
                                                     <Field

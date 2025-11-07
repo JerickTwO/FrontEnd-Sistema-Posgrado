@@ -1,12 +1,11 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import './polyfills'; // Importar polyfills para @react-pdf/renderer
 import './security/axiosSetup'; // Importa el archivo de configuración del interceptor
 import 'react-perfect-scrollbar/dist/css/styles.css';
 // Tailwind css
 import './tailwind.css';
 
-// i18n (needs to be bundled)
-import './i18n';
 
 // Router
 import { RouterProvider } from 'react-router';

@@ -6,14 +6,20 @@ export const getApprovalDetails = (project = {}) => {
     const studentTwo = project?.titleReservationStepOne?.studentTwo ?? null;
 
     const observations = project?.observations ?? null;
+    const articleNumber = project?.articleNumber ?? null;
+    const secondArticleNumber = project?.secondArticleNumber ?? null;
+    const referenceDate = project?.referenceDate ?? null;
     const meetsRequirements = project?.meetsRequirements ?? null;
     const updatedAt = project?.updatedAt ?? null;
 
     return {
-        id, // Incluimos id en el objeto de retorno
+        id,
         student,
-        studentTwo, // Este campo será null si no existe
+        studentTwo,
+        articleNumber,
+        secondArticleNumber,
         meetsRequirements,
+        referenceDate,
         observations,
         updatedAt,
     };

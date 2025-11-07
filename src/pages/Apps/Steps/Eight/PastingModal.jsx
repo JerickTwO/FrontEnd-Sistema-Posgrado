@@ -28,6 +28,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             deanResolution: pasting?.deanResolution || '',
             registrationNumber: pasting?.registrationNumber || '',
             articleNumber: pasting?.articleNumber || '',
+            reg: pasting?.reg || '',
         }),
         [pasting]
     );
@@ -49,13 +50,15 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                     initialValues={initialValues}
                                     onSubmit={(values) => {
                                         const transformedValues = {
-                                            meetRequirements: values.meetRequirements === 'yes',
                                             observations: values.observations,
                                             deanResolution: values.deanResolution,
                                             registrationNumber: values.registrationNumber,
                                             articleNumber: values.articleNumber,
+                                            reg: values.reg || '',
                                         };
-
+                                        if (values.meetRequirements === 'yes' && pasting?.meetRequirements !== true) {
+                                            transformedValues.meetRequirements = true;
+                                        }
                                         onSave(transformedValues, pasting.id);
                                     }}
                                     enableReinitialize
@@ -78,41 +81,42 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
 
                                             <div className="col-span-1">
                                                 <label htmlFor="deanResolution">Resolución del Decano</label>
-                                                <Field name="deanResolution" type="text" id="deanResolution" className="form-input" />
+                                                <Field name="deanResolution" type="text" id="deanResolution" className="form-input" placeholder="000-2025" />
                                                 <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="registrationNumber">Número de Registro</label>
-                                                <Field name="registrationNumber" type="text" id="registrationNumber" className="form-input" />
-                                                <ErrorMessage name="registrationNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="articleNumber">Número de Artículo</label>
                                                 <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
                                                 <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div>
-                                                <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                <div className="flex gap-4">
-                                                    <label>
-                                                        <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
-                                                            setFieldValue('meetRequirements', 'yes');
-                                                            setFieldValue('observations', '');
-                                                        }
-                                                        } />
-                                                        Sí
-                                                    </label>
-                                                    <label>
-                                                        <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={
-                                                            () => {
-                                                                setFieldValue('meetRequirements', 'no');
-                                                            }} />
-                                                        No
-                                                    </label>
-                                                </div>
-                                                <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
+                                            {pasting.meetRequirements &&
+                                                <div>
+                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                    <div className="flex gap-4">
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
+                                                                setFieldValue('meetRequirements', 'yes');
+                                                                setFieldValue('observations', '');
+                                                            }
+                                                            } />
+                                                            Sí
+                                                        </label>
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={
+                                                                () => {
+                                                                    setFieldValue('meetRequirements', 'no');
+                                                                }} />
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                    <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                </div>
+                                            }
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field name="observations" as="textarea" id="observations" placeholder="Ingrese observaciones" className="form-input" disable={values.meetRequirements === 'yes'}

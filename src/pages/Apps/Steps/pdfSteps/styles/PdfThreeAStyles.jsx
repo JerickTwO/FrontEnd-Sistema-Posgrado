@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         display: 'table',
         width: 'auto',
         alignItems: 'stretch',
+        textAlign: 'left',
         fontSize: 12,
         marginVertical: 20,
     },
@@ -24,13 +25,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     tableColHeader: {
-        width: '45%',
+        width: '75%',
         padding: 1,
         fontFamily: 'Times-Bold',
     },
 
     tableCol: {
-        width: '55%',
+        width: '25%',
         padding: 1
     },
     // End Table Styles

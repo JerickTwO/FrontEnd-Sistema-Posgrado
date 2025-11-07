@@ -4,7 +4,7 @@ const ProtectedRoute = ({ children }) => {
     if (!user) {
         return <Navigate to="/auth/inicio-sesion" />;
     }
-    if (user.rol?.name !== 'admin') {
+    if (user.rol?.name !== 'ROLE_ADMIN') {
         return <Navigate to="/" />;
     }
 
@@ -15,7 +15,7 @@ const StudentRoute = ({ children }) => {
     if (!user) {
         return <Navigate to="/auth/inicio-sesion" />;
     }
-    if (user.rol?.name !== 'estudiante') {
+    if (user.rol?.name !== 'ROLE_ESTUDIANTE') {
         return <Navigate to="/" />;
     }
     return children;

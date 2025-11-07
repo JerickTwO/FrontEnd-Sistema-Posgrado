@@ -1,55 +1,50 @@
-import React from 'react';
 import PdfBase from './PdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/PdfThreeAStyles';
-import { getFullWrittenDateTimeFromInput, getWrittenDateFromInput, formatISODateToSimpleDate, getYear } from '../utils/Dates';
+import { getWrittenDateFromInput, formatISODateToSimpleDate, getYear, formatNumberWithZero } from '../utils/Dates';
+import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfThreeA = ({ jury }) => {
-    if (!jury) {
-        console.error("El objeto 'jury' no se recibió correctamente");
-        return (
-            <PdfBase commemorativeText={false}>
-                <Text style={styles.h1}>Error: Datos del jurado no disponibles</Text>
-            </PdfBase>
-        );
-    }
+const PdfThreeA = ({ infoStep, incrementFields, institutionalInfo }) => {
+    const THREE_STEP_INFO = infoStep;
+    const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
+    const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
-    // Fechas y valores procesados
-    const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const applicationDate = getFullWrittenDateTimeFromInput(currentDateTime);
+    const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(TWO_STEP_INFO)
+    const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames, } = extractJurysInfo(THREE_STEP_INFO)
 
-    const updatedDate = jury?.updatedAt ? formatISODateToSimpleDate(jury.updatedAt) : "Fecha no disponible";
+    const directorMap = {
+        "ingeniería de sistemas": institutionalInfo.directorIngenieriaInformaticaSistemas,
+        "administración de empresas": institutionalInfo.directorAdministracionEmpresas,
+        "contabilidad": institutionalInfo.directorContabilidad,
+        "ingeniería civil": institutionalInfo.directorIngenieriaCivil,
+        "arquitectura": institutionalInfo.directorArquitectura,
+        "derecho": institutionalInfo.directorDerecho,
+        "medicina": institutionalInfo.directorMedicina,
+        "enfermería": institutionalInfo.directorEnfermeria,
+    };
+    const directorName = directorMap[career.toLowerCase()] || "Director no disponible";
+
+    const updatedDate = infoStep?.updatedAt ? formatISODateToSimpleDate(infoStep.updatedAt) : "Fecha no disponible";
     const requestDate = getWrittenDateFromInput(updatedDate);
-
     const anio = getYear();
-    const reg = jury?.registrationNumber;
-
-    // Extraer datos de los estudiantes
-    const firstStudent = jury?.projectApprovalStepTwo?.titleReservationStepOne?.student;
-    const secondStudent = jury?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo;
-
-    const studentsText = secondStudent
-        ? `Bachilleres ${firstStudent?.firstNames || "Nombre no disponible"} ${firstStudent?.middleName || ""} ${firstStudent?.lastName || "Apellido no disponible"} y ${secondStudent?.firstNames || "Nombre no disponible"
-        } ${secondStudent?.middleName || ""} ${secondStudent?.lastName || "Apellido no disponible"}`
-        : `Bachiller ${firstStudent?.firstNames || "Nombre no disponible"} ${firstStudent?.middleName || ""} ${firstStudent?.lastName || "Apellido no disponible"}`;
-
     return (
-        <PdfBase commemorativeText={false} registrationNumber={reg}>
+        <PdfBase commemorativeText={false} registrationNumber={infoStep?.reg || institutionalInfo?.regNumber}>
             <Text style={styles.h1}>ACTA DE DESIGNACIÓN DE JURADOS DE TESIS</Text>
 
             <View style={styles.section}>
                 <Text>
-                    En fecha {applicationDate}, reunidas de manera presencial, el director de la Unidad de Investigación de la Facultad de Ingeniería,
-                    <Text style={styles.bold}> Dr. Lintol Contreras Salas</Text>, y miembros de la Comisión de Investigación de la
-                    <Text style={styles.bold}> Escuela Académico Profesional de {jury?.projectApprovalStepTwo?.titleReservationStepOne?.student?.career?.name || "Carrera no disponible"}</Text>,
-                    conformado por el Mgt. {jury?.projectApprovalStepTwo?.adviser?.firstNames || ""} {jury?.projectApprovalStepTwo?.adviser?.middleName || ""} {jury?.projectApprovalStepTwo?.adviser?.lastName || ""} y demás miembros de la comisión y en atención a la solicitud s/n presentado por los
-                    <Text style={styles.bold}> {studentsText}</Text>,
+                    En fecha {getWrittenDateFromInput(infoStep.actDate)} siendo las {infoStep.actTime} horas, reunidas de manera presencial, el director de la Unidad de Investigación de la Facultad de Ingeniería,
+                    <Text style={styles.bold}> {institutionalInfo.deanName}</Text>, y miembros de la Comisión de Investigación de la
+                    <Text style={styles.bold}> Escuela Académico Profesional de {career || "Carrera no disponible"}</Text>,
+                    conformado por el Mgt. {directorName} y demás miembros de la comisión y en atención a la solicitud s/n presentado por
+                    <Text style={styles.bold}> {combinedNamesOnly}</Text>,
                     de fecha {requestDate}, peticionando la designación de jurados para revisión del informe final de tesis denominado
-                    <Text style={styles.bold}>: “{jury?.projectApprovalStepTwo?.titleReservationStepOne?.title || "Título no disponible"}",</Text> aprobado mediante
-                    <Text style={styles.bold}> RESOLUCIÓN DECANAL N° {jury.id}-{anio}-DFI-UNAMBA</Text>.
+                    <Text style={styles.bold}>: “{title}",</Text> aprobado mediante
+                    <Text style={styles.bold}> RESOLUCIÓN DECANAL N° {infoStep?.deanResolution}-{anio}-DFI-UNAMBA</Text>.
                     Se procede a realizar la designación de jurados e incorporación de Asesor de acuerdo al
-                    <Text style={styles.bold}> CAPÍTULO VII: DEL INFORME Y LA DESIGNACIÓN DE JURADOS (Art.46)</Text> del Reglamento de Investigación,
-                    aprobado bajo <Text style={styles.bold}>RESOLUCIÓN N° {jury?.deanResolution || "Resolución no disponible"} – CU-UNAMBA</Text>,
+                    <Text style={styles.bold}> CAPÍTULO VII: DEL INFORME Y LA DESIGNACIÓN DE JURADOS (Art.{infoStep.articleNumber})</Text> del Reglamento de Investigación,
+                    aprobado bajo <Text style={styles.bold}>RESOLUCIÓN N° {infoStep?.secondDeanResolution || "Resolución no disponible"}-{anio} – CU-UNAMBA</Text>,
                     quedando el jurado evaluador de la siguiente manera:
                 </Text>
             </View>
@@ -58,7 +53,7 @@ const PdfThreeA = ({ jury }) => {
                 {/* Presidente */}
                 <View style={styles.tableRow}>
                     <Text style={styles.tableColHeader}>
-                        {jury?.president?.firstNames || ""} {jury?.president?.middleName || ""} {jury?.president?.lastName || ""}
+                        {presidentNames}
                     </Text>
                     <View style={styles.tableCol}>
                         <Text style={styles.bold}>Presidente</Text>
@@ -68,7 +63,7 @@ const PdfThreeA = ({ jury }) => {
                 {/* Primer Miembro */}
                 <View style={styles.tableRow}>
                     <Text style={styles.tableColHeader}>
-                        {jury?.firstMember?.firstNames || ""} {jury?.firstMember?.middleName || ""} {jury?.firstMember?.lastName || ""}
+                        {firstMemberNames}
                     </Text>
                     <View style={styles.tableCol}>
                         <Text style={styles.bold}>Primer Miembro</Text>
@@ -78,7 +73,7 @@ const PdfThreeA = ({ jury }) => {
                 {/* Segundo Miembro */}
                 <View style={styles.tableRow}>
                     <Text style={styles.tableColHeader}>
-                        {jury?.secondMember?.firstNames || ""} {jury?.secondMember?.middleName || ""} {jury?.secondMember?.lastName || ""}
+                        {secondMemberNames}
                     </Text>
                     <View style={styles.tableCol}>
                         <Text style={styles.bold}>Segundo Miembro</Text>
@@ -88,7 +83,7 @@ const PdfThreeA = ({ jury }) => {
                 {/* Accesitario */}
                 <View style={styles.tableRow}>
                     <Text style={styles.tableColHeader}>
-                        {jury?.accessory?.firstNames || ""} {jury?.accessory?.middleName || ""} {jury?.accessory?.lastName || ""}
+                        {accessoryNames}
                     </Text>
                     <View style={styles.tableCol}>
                         <Text style={styles.bold}>Accesitario</Text>
@@ -98,18 +93,30 @@ const PdfThreeA = ({ jury }) => {
                 {/* Asesor */}
                 <View style={styles.tableRow}>
                     <Text style={styles.tableColHeader}>
-                        {jury?.projectApprovalStepTwo?.adviser?.firstNames || ""} {jury?.projectApprovalStepTwo?.adviser?.middleName || ""} {jury?.projectApprovalStepTwo?.adviser?.lastName || ""}
+                        {adviserNames}
                     </Text>
                     <View style={styles.tableCol}>
                         <Text style={styles.bold}>Asesor</Text>
                     </View>
                 </View>
+
+                {infoStep?.projectApprovalStepTwo?.coadviser && (
+                    <View style={styles.tableRow}>
+                        <Text style={styles.tableColHeader}>
+                            {coAdviserNames}
+                        </Text>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.bold}>Segundo Asesor</Text>
+                        </View>
+                    </View>
+                )}
             </View>
 
             <View style={[styles.section, styles.sectionFinal]}>
                 <Text>
-                    Siendo las {jury?.hour || "Hora no disponible"} horas del mismo día, se culmina la reunión, firmando este documento los participantes en señal de conformidad, el mismo que será adjuntado al libro de actas de la Unidad de Investigación de la Facultad de Ingeniería en
-                    <Text style={styles.bold}> folio N° {jury?.numberFolio || "Folio no disponible"}.</Text>
+                    Siendo las {infoStep?.hour || "Hora no disponible"} horas del mismo día, se culmina la reunión, firmando este documento los participantes en señal de conformidad, el mismo que será adjuntado al libro de actas de la Unidad de Investigación de la Facultad de Ingeniería en
+                    <Text style={styles.bold}> folio N° {formatNumberWithZero(incrementFields?.numero_folio)}-{anio}.</Text>
+
                 </Text>
             </View>
         </PdfBase>

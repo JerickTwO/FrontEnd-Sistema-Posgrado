@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import PdfTwo from '../pdfSteps/PdfTwo';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import DownloadDocs from '../utils/DownloadButton';
 
 const ApprovalTable = ({ projects, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,20 +16,16 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentProjects = projects.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
 
-
     const getDownloadButton = (project) => {
         const fileName = `P2 INFORME-${formatNumberWithZero(project.id)}-Aprobación de proyecto de Tesis.pdf`;
         return (
-            <PDFDownloadLink document={<PdfTwo project={project} info={info}/>} fileName={fileName}>
-                <button type='submit' onClick={() => {
-                    setIsLoading(true); 
-                    setTimeout(() => {
-                        setIsLoading(false);
-                    }, 1000);
-                }} className="btn btn-sm btn-outline-primary" disabled={isLoading}>
-                    {isLoading ? 'Cargando...' : 'Descargar Comprobante'}
-                </button>
-            </PDFDownloadLink>
+            <DownloadDocs
+                infoStepTable={project}
+                PdfDocument={PdfTwo}
+                institutionalInfo={info}
+                fileName={fileName}
+                fields = {{ informe: 1, regNumber: 1 }}
+            />
         );
     };
 
@@ -76,19 +72,13 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                                     <td>{project.coadviser ? `${project.coadviser.firstNames || ' '} ${project.coadviser.lastName || ' '}` : 'N/A'}</td>
                                     <td>{formatDate(project.updatedAt)}</td>
                                     <td className="flex gap-4 items-center justify-center">
-                                        {
-                                            project.meetRequirements ? (
-                                                getDownloadButton(project)
-                                            ) : (
-                                                <button
-                                                    onClick={() => onEdit(project)}
-                                                    className="btn btn-sm btn-outline-primary"
-                                                >
-                                                    Editar
-                                                </button>
-                                            )
-                                        }
-
+                                        {getDownloadButton(project)}
+                                        <button
+                                            onClick={() => onEdit(project)}
+                                            className="btn btn-sm btn-outline-primary"
+                                        >
+                                            Editar
+                                        </button>
                                     </td>
                                 </tr>
                             ))
@@ -103,7 +93,6 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                 </table>
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-
         </div>
     );
 };

@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import { getReportDetails, formatDate } from '../utils/ReportUtils';
-import PDFDownloadButton from '../utils/PDFDownloadButtons';
 import PdfFourCM from '../pdfSteps/PdfFourCM';
-import Swal from 'sweetalert2';
-import PdfThreeCM from '../pdfSteps/PdfThreeCM';
-const ReportTable = ({ reports, onEdit }) => {
+import DownloadDocs from '../utils/DownloadButton'
+
+const ReportTable = ({ reports, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 10;
@@ -15,6 +14,19 @@ const ReportTable = ({ reports, onEdit }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentReports = reports.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
+    const getDownloadButton = (report) => {
+        const fileName = `Report${report.id}.pdf`;
+        return (
+            <DownloadDocs
+                infoStepTable={report}
+                PdfDocument={PdfFourCM}
+                fileName={fileName}
+                institutionalInfo={info}
+
+                fields = {{ cart_multiple: 1 }}
+            />
+        );
+    };
 
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -64,26 +76,14 @@ const ReportTable = ({ reports, onEdit }) => {
                                         <td>{coadviser ? `${coadviser.firstNames || ' '} ${coadviser.lastName || ' '}` : 'N/A'}</td>
                                         <td>{formatDate(updatedAt)}</td>
                                         <td className="flex gap-4 items-center justify-center">
-                                            {
-                                                report.meetRequirements ? (
-                                                    <PDFDownloadButton
-                                                        documents={{
-                                                            // info={info}
-                                                            document: <PdfThreeCM report={report} />,
-                                                            fileName: `Report${report.id}.pdf`,
-                                                        }}
-                                                        fileName={`report_${report?.id}`}
-                                                        label="Descargar PDF"
-                                                    />
-                                                ) : (
-                                                    <button
-                                                        onClick={() => onEdit(report)}
-                                                        className="btn btn-sm btn-outline-primary"
-                                                    >
-                                                        Editar
-                                                    </button>
-                                                )
-                                            }
+                                            {getDownloadButton(report)}
+
+                                            <button
+                                                onClick={() => onEdit(report)}
+                                                className="btn btn-sm btn-outline-primary"
+                                            >
+                                                Editar
+                                            </button>
                                         </td>
                                     </tr>
                                 );
@@ -99,7 +99,7 @@ const ReportTable = ({ reports, onEdit }) => {
                 </table>
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
+        </div >
     );
 };
 

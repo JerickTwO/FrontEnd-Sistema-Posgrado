@@ -1,46 +1,67 @@
 import styles from './styles/PdfFiveCNStyles';
-import Logo from './BannerPdfFive.png';
+import Logo from './BANNER2025.png';
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
 import { getYear, getWrittenDate, formatNumberWithZero } from '../utils/Dates';
+import WatermarkLogo from './marcaAgua.png';
+import { extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfFiveCN = ({ thesis }) => {
+const PdfFiveCN = ({ infoStep, incrementFields }) => {
     const anio = getYear();
     const actualData = getWrittenDate();
 
+    const FIRST_STEP_INFO = infoStep?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne;
+    const {
+        title,
+        career,
+        combinedNamesOnly
+    } = extractStudentsInfo(FIRST_STEP_INFO);
+
     return (
         <Document>
-            <Page size="A4" style={styles.page}>
+            <Page size="A4" style={styles.pageStyle}>
                 <View style={styles.header}>
                     <Image style={styles.logo} src={Logo} />
                     <Text style={[styles.title, styles.bold]}>CONSTANCIA DE ORIGINALIDAD</Text>
-                    <Text style={[styles.textHeader, styles.bold]}>Nº {formatNumberWithZero(thesis?.id)}-{anio}</Text>
+                    <Text style={[styles.textHeader, styles.bold]}>Nº {incrementFields?.constacia}-{anio}</Text>
                 </View>
-                <Text style={styles.body}>
-                    La Universidad Nacional Micaela Bastidas de Apurímac,
-                    a través de la Unidad de Investigación de la Facultad
-                    de Ingeniería declara que, la Tesis intitulada
-                    <Text style={styles.bold}> “{thesis?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne?.title}”</Text>,
-                    presentado por el <Text style={styles.bold}> Bach. {thesis?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne?.student?.firstNames} {thesis?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne?.student?.middleName}{thesis?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne?.student?.lastName}</Text>, para
-                    optar el Título de <Text style={styles.bold}> {thesis?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne?.student?.career?.name}; </Text>
-                    ha sido sometido a un mecanismo de evaluación y
-                    verificación de similitud, a través del Software
-                    COMPILATIO Magister, siendo el índice de similitud
-                    ACEPTABLE de ({thesis?.aplicationNumber}) por lo que, cumple con los criterios
-                    de originalidad establecidos por la Universidad.
-                </Text>
-                <Text style={styles.footerBody}>Abancay, {actualData}</Text>
-                <View style={styles.footerText}>
-                    <Text>Atentamente,</Text>
-                    <Text>C. c.</Text>
-                    <Text>Archivo</Text>
-                    <Text>REG. N° {formatNumberWithZero(thesis?.id)}</Text>
-                    <View style={styles.hr} />
-                    <View style={styles.footerInfo}>
-                        <Text>Campus Universitario S/N, Tamburco, Abancay-Apurímac</Text>
-                        <Text>Carretera Panamericana Abancay-Cusco Km. 5</Text>
-                        <Text>email: unidadinvestigacion@unamba.edu.pe</Text>
+                <View style={styles.page}>
+
+                    <View style={styles.watermarkContainer}>
+                        <Image src={WatermarkLogo} style={styles.watermarkImage} />
+                    </View>
+                    <View style={styles.flexCol}>
+
+                        <Text style={styles.body}>
+
+                            La Universidad Nacional Micaela Bastidas de Apurímac,
+                            a través de la Unidad de Investigación de la Facultad
+                            de Ingeniería declara que, la Tesis intitulada
+                            <Text style={styles.bold}> “{title}”</Text>,
+                            presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text>, para
+                            optar el Título de <Text style={styles.bold}> {career}; </Text>
+                            ha sido sometido a un mecanismo de evaluación y
+                            verificación de similitud, a través del Software
+                            COMPILATIO Magister, siendo el índice de similitud
+                            ACEPTABLE de ({infoStep?.projectSimilarity}%) por lo que, cumple con los criterios
+                            de originalidad establecidos por la Universidad.
+
+                        </Text>
+
+                        <Text style={{ alignSelf: 'flex-end' }} >Abancay, {actualData}</Text>
+
+                    </View>
+
+                    <View style={styles.footerText}>
+                        <Text>C. c.</Text>
+                        <Text>Archivo</Text>
+                        <Text>REG. N° {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
+                        <View style={styles.hr} />
+                        <View style={styles.footerInfo}>
+                            <Text>Av. Inca Garcilaso de la Vega S/N Tamburco, Abancay | (083) 636 050 | www.unamba.edu.pe</Text>
+                        </View>
                     </View>
                 </View>
+
             </Page>
         </Document>
     );

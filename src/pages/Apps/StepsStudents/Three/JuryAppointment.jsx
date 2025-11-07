@@ -22,7 +22,6 @@ const JuryAppointment = () => {
     }
   }, [user.username]);
 
-  console.log("principal", jury);
   useEffect(() => {
     dispatch(setPageTitle('Aprobación de Proyecto'));
     if (user.username) {

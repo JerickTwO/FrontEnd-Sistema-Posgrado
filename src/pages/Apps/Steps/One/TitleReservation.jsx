@@ -10,6 +10,7 @@ import lineResearchService from '../../../../api/LineResearchService';
 import studentService from '../../../../api/studentService';
 import titleReservationsService from '../../../../api/titleReservationsService';
 import SelectCareer from './SelectCareer';
+import InfoService from '../../../../api/institucionalInfoService';
 import MultiSelectStudent from './MultiSelectStudent';
 import ReservationTable from './ReservationTable';
 import ReservationModal from './ReservationModal';
@@ -27,6 +28,7 @@ const TitleReservation = () => {
     const [editingReservation, setEditingReservation] = useState(null);
     const [addContactModal, setAddContactModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [info, setInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
@@ -34,9 +36,17 @@ const TitleReservation = () => {
         dispatch(setPageTitle('Constancia de Filtro'));
         fetchCareers();
         fetchStudents();
+        fetchInfo();
         fetchTitleReservations();
     }, [dispatch]);
-
+    const fetchInfo = useCallback(async () => {
+        try {
+            const response = await InfoService.getInfo();
+            setInfo(response)
+        } catch (error) {
+            setApiError('Error al cargar la información institucional.');
+        }
+    }, []);
     // Fetch de estudiantes
     const fetchStudents = useCallback(async () => {
         try {
@@ -180,11 +190,11 @@ const TitleReservation = () => {
                 meetsRequirements: values.meetRequirements === 'yes',
                 observations: values.observation || '',
                 title: values.title || '',
-                registrationNumber: values.registrationNumber || 'N/A',
+                articleNumber: values.articleNumber || 'N/A',
                 projectSimilarity: parseFloat(values.projectSimilarity) || 0,
                 lineOfResearch: values.lineOfResearch ? { id: values.lineOfResearch.value } : null,
             };
-    
+
             const result = await Swal.fire({
                 title: '¿Estás seguro de actualizar esta reservación?',
                 text: 'Esta acción actualizará la información de la reservación seleccionada.',
@@ -195,17 +205,17 @@ const TitleReservation = () => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
             });
-    
+
             if (result.isConfirmed) {
                 const response = await titleReservationsService.editTitleReservation(reservationId, titleReservationData);
-    
+
                 if (!response) {
                     Swal.fire('Error', 'No se pudo actualizar la reservación', 'error');
                 } else {
                     Swal.fire('Éxito', 'Reservación actualizada correctamente', 'success');
                     await fetchTitleReservations();
                     closeModal();
-                    setEditingReservation(null);        
+                    setEditingReservation(null);
                 }
             } else {
                 Swal.fire('Cancelado', 'No se realizaron cambios', 'info');
@@ -214,7 +224,7 @@ const TitleReservation = () => {
             Swal.fire('Error', 'Error inesperado: ' + error.message, 'error');
         }
     };
-    
+
 
 
     // Editar reservación
@@ -338,6 +348,7 @@ const TitleReservation = () => {
                 selectedCareer={selectedCareer}
                 titleReservations={titleReservations}
                 apiError={apiError}
+                info={info}
                 onEdit={editReservation}
                 onDelete={deleteTitleReservation}
                 searchTerm={searchTerm}

@@ -53,17 +53,21 @@ const Students = () => {
 
     const normalizeText = (text) => {
         return text
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase();
+            ?.normalize('NFD') // Descompone caracteres acentuados en su forma básica
+            ?.replace(/[\u0300-\u036f]/g, '') // Elimina los signos diacríticos
+            ?.toLowerCase(); // Convierte a minúsculas
     };
     const filteredItems = useMemo(() => {
         const normalizedSearch = normalizeText(search);
         return contactList.filter((student) => {
             const fullName = `${student.firstNames} ${student.lastName}`;
             const normalizedFullName = normalizeText(fullName);
+
+            // Normalización y comparación del código del estudiante y el DNI
             const studentCodeMatch = normalizeText(student.studentCode.toString()).includes(normalizedSearch);
             const dniMatch = normalizeText(student.dni.toString()).includes(normalizedSearch);
+
+            // Chequea si el término de búsqueda coincide con el nombre completo, código del estudiante, o DNI
             const matchesSearch = normalizedFullName.includes(normalizedSearch) || studentCodeMatch || dniMatch;
             const matchesCareer = selectedCareer ? student.career?.id === selectedCareer.value : true;
             return matchesSearch && matchesCareer;

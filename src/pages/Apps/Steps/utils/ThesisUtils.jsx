@@ -6,14 +6,16 @@ export const getThesisDetails = (thesis = {}) => {
     const studentTwo = thesis?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo ?? null;
 
     const observations = thesis?.observations ?? null;
+    const projectSimilarity = thesis?.projectSimilarity ?? null;
     const meetsRequirements = thesis?.meetsRequirements ?? null;
     const updatedAt = thesis?.updatedAt ?? null;
 
     return {
-        id, // Incluimos id en el objeto de retorno
+        id,
         student,
-        studentTwo, // Este campo será null si no existe
+        studentTwo,
         meetsRequirements,
+        projectSimilarity,
         observations,
         updatedAt,
     };

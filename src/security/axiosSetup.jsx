@@ -9,15 +9,11 @@ const isTokenExpired = () => {
     const { exp } = jwtDecode(token);
     const now = Date.now() / 1000;
 
-   // console.log('Token Exp:', exp);  // Verificar la expiración del token
-   // console.log('Current Time:', now);
-
     return exp < now;
 };
 
 axios.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
-   // console.log('Interceptor is called');  // Verificar si el interceptor está siendo llamado
     if (token && isTokenExpired()) {
         Swal.close();  // Cerrar cualquier alerta abierta antes de mostrar la nueva
         Swal.fire({

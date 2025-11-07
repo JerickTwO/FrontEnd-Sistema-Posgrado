@@ -1,9 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Spanish } from "flatpickr/dist/l10n/es.js";
-
 import React, { Fragment } from 'react';
-import Flatpickr from 'react-flatpickr';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
@@ -18,11 +15,19 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
             meetRequirements: notification?.meetRequirements ? 'yes' : 'no',
             thesisDate: notification?.thesisDate || 'N/A',
             observations: notification?.observations || '',
+            futDate: notification?.futDate || '',
+            deanResolution: notification?.deanResolution || '',
+            secondDeanResolution: notification?.secondDeanResolution || '',
+            day: notification?.day || '',
+            hour: notification?.hour || '',
+            location: notification?.location || '',
+            articleNumber: notification?.articleNumber || '',
+            reg: notification?.reg || '',
+            additionalInputs: notification?.additionalInputs?.split(', ') || [''],
         }),
         [notification]
     );
     const today = new Date();
-    const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -46,12 +51,20 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                     initialValues={initialValues}
                                     onSubmit={(values) => {
                                         const transformedValues = {
-                                            meetRequirements: values.meetRequirements === 'yes',
                                             observations: values.observations,
-                                            thesisDate: values.thesisDate,
+                                            futDate: values.futDate,
+                                            deanResolution: values.deanResolution,
+                                            secondDeanResolution: values.secondDeanResolution,
+                                            day: values.day,
+                                            hour: values.hour,
+                                            location: values.location,
+                                            articleNumber: values.articleNumber,
+                                            reg: values.reg || '',
+                                            additionalInputs: values.additionalInputs.join(', '),
                                         };
-
-
+                                        if (values.meetRequirements === 'yes' && notification?.meetRequirements !== true) {
+                                            transformedValues.meetRequirements = true;
+                                        }
                                         onSave(transformedValues, notification?.id);
                                     }}
 
@@ -73,30 +86,159 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                 </div>
                                             )}
 
-                                            <div>
-                                                <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                <div className="flex gap-4">
-                                                    <label>
-                                                        <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
-                                                            setFieldValue('meetRequirements', 'yes');
-                                                            setFieldValue('observations', '');
-                                                        }} />
-                                                        Sí
-                                                    </label>
-                                                    <label>
-                                                        <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
-                                                            setFieldValue('meetRequirements', 'no');
-                                                        }} />
-                                                        No
-                                                    </label>
-                                                </div>
-                                                <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="futDate">Fecha de Fut</label>
+                                                <Field
+                                                    name="futDate"
+                                                    id="futDate"
+                                                    type="date"
+                                                    placeholder="Ingrese fecha de Fut"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="deanResolution">Resolución decanal</label>
+                                                <Field
+                                                    name="deanResolution"
+                                                    id="deanResolution"
+                                                    placeholder="000-2025"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
+                                            </div>
+
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="secondDeanResolution">Segunda Resolución decanal</label>
+                                                <Field
+                                                    name="secondDeanResolution"
+                                                    id="secondDeanResolution"
+                                                    placeholder="000-2025"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
+                                            </div>
+
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="day">Día</label>
+                                                <Field
+                                                    name="day"
+                                                    id="day"
+                                                    type="date"
+                                                    placeholder="Ingrese el Día"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="day" component="div" className="text-danger mt-1" />
+                                            </div>
+
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="hour">Hora</label>
+                                                <Field
+                                                    name="hour"
+                                                    id="hour"
+                                                    type="time"
+                                                    placeholder="Ingrese la Hora"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
+                                            </div>
+
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="location">Lugar</label>
+                                                <Field
+                                                    name="location"
+                                                    id="location"
+                                                    placeholder="Ingrese observaciones"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
+                                            </div>
+
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="articleNumber">Número de Artículo</label>
+                                                <Field
+                                                    name="articleNumber"
+                                                    id="articleNumber"
+                                                    placeholder="Ingrese observaciones"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                    <label htmlFor="thesisDate">Fecha de Tesis</label>
-                                                    <Field name="thesisDate" type="date" id="thesisDate" className="form-input" />
-                                                    <ErrorMessage name="thesisDate" component="div" className="text-danger mt-1" />
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field
+                                                    name="reg"
+                                                    type="number"
+                                                    id="reg"
+                                                    placeholder="Ingrese el reg"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <FieldArray name="additionalInputs">
+                                                {({ push, remove }) => (
+                                                    values.additionalInputs.map((_, index) => (
+                                                        <div key={index} className="col-span-1">
+                                                            <label htmlFor="secondDeanResolution">Resolución {index + 3}</label>
+                                                            <div className="flex gap-2">
+
+                                                                <Field
+                                                                    name={`additionalInputs.${index}`}
+                                                                    type="text"
+                                                                    placeholder={`Campo ${index + 1}`}
+                                                                    className="form-input"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-sm btn-danger"
+                                                                    onClick={() => remove(index)}
+                                                                >
+                                                                    ×
+                                                                </button>
+
+                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 3 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        className="btn btn-sm btn-outline-primary"
+                                                                        onClick={() => push('')}
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                )}
+                                                            </div>
+
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </FieldArray>
+                                            {!notification.meetRequirements &&
+                                                <div>
+                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                    <div className="flex gap-4">
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
+                                                                setFieldValue('meetRequirements', 'yes');
+                                                                setFieldValue('observations', '');
+                                                            }} />
+                                                            Sí
+                                                        </label>
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
+                                                                setFieldValue('meetRequirements', 'no');
+                                                            }} />
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                    <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
                                                 </div>
+                                            }
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field

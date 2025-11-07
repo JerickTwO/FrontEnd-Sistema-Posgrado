@@ -1,18 +1,20 @@
 import { StyleSheet } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
     h1: {
-        textAlign: 'center',
+        textAlign: 'justify',
         fontSize: 14,
         marginVertical: 12,
         textDecoration: 'underline',
         fontFamily: 'Times-Bold',
     },
     textHeader: {
-        textAlign: 'right',
+        textAlign: 'justify',
         fontSize: 12,
     },
     textTableHeader: {
-        fontSize: 14,
+        fontSize: 12,
+        textAlign: 'justify',
+
     },
     // Section Styles
     underline: {
@@ -25,9 +27,7 @@ const styles = StyleSheet.create({
     bold: {
         fontFamily: 'Times-Bold',
     },
-    italic: {
-        fontFamily: 'Times-Italic',
-    },
+
     firm: {
         alignSelf: 'center',
         marginTop: 50,
@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     semiTableColHeader: {
-        width: '11%',
+        width: '15%',
         padding: 1,
     },
 
     semiTableCol: {
-        width: '89%',
-        padding: 1,
+        width: '85%',
+        padding: 1
     },
     // End semiTable Styles
     sectionSign: {

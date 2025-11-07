@@ -1,6 +1,5 @@
 import { showObservations } from "../utils/ShowObservations";
 const PastingTable = ({ pasting }) => {
-    console.log(pasting);
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

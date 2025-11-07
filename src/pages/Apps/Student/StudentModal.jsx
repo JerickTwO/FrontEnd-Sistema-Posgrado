@@ -121,7 +121,7 @@ const StudentModal = ({ isOpen, onClose, onSave, student, careerOptions }) => {
                                                 <ErrorMessage name="dni" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className={submitCount && errors.firstNames ? 'has-error' : ''}>
-                                                <label htmlFor="firstNames">Nombre</label>
+                                                <label htmlFor="firstNames">Nombres Completos</label>
                                                 <Field name="firstNames" type="text" id="firstNames" placeholder="Ingrese el nombre" maxLength={150} className="form-input" onKeyDown={handleNonKeyDown} />
                                                 <ErrorMessage name="firstNames" component="div" className="text-danger mt-1" />
                                             </div>

@@ -53,7 +53,6 @@ const PastingApproval = () => {
         try {
             const pastingResponse = await pastingApprovalService.getAllPastingApprovals();
             setPastings(pastingResponse);
-            console.log(pastingResponse);
         } catch (error) {
             console.error('Error al obtener las notificaciones:', error);
         }
@@ -69,7 +68,6 @@ const PastingApproval = () => {
 
     const handleSave = async (updatedTapprovalData, taprovalId) => {
         try {
-            console.log('Enviando datos al servidor:', updatedTapprovalData);
             await pastingApprovalService.updatePastingApproval(taprovalId, updatedTapprovalData);
             Swal.fire('Éxito', 'Notificación actualizada correctamente.', 'success');
             await fetchPastings();

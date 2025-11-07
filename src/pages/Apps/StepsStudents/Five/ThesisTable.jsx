@@ -2,10 +2,6 @@ import PropTypes from 'prop-types';
 import { formatDate } from '../../Steps/utils/Dates';
 import ThesisUpload from './ThesisUpload';
 const ThesisTable = ({ thesis }) => {
-    console.log("Thesis", thesis?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne
-
-    );
-
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

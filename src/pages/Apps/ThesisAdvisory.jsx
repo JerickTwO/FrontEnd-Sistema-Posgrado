@@ -327,8 +327,8 @@ const ThesisAdvisory = () => {
                                                     {serverError && <div className="text-danger">{serverError}</div>}
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <div className={submitCount && errors.coAdviser ? 'has-error' : ''}>
-                                                            <label htmlFor="coAdviser">Coasesor</label>
-                                                            <Field name="coAdviser" type="text" id="coAdviser" placeholder="Ingrese el nombre del coasesor" maxLength={200} className="form-input" />
+                                                            <label htmlFor="coAdviser">Segundo Asesor</label>
+                                                            <Field name="coAdviser" type="text" id="coAdviser" placeholder="Ingrese el nombre del Segundo Asesor" maxLength={200} className="form-input" />
                                                             <ErrorMessage name="coAdviser" component="div" className="text-danger mt-1" />
                                                         </div>
                                                         <div className={submitCount && errors.thesisTitle ? 'has-error' : ''}>

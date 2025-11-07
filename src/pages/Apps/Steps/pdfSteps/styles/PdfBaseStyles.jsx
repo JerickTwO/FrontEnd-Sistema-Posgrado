@@ -1,36 +1,34 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
-// REGISTRO DE FUENTES
 const styles = StyleSheet.create({
     page: {
         fontSize: 10,
+        height: '98vh',
+        width:'100vw',
     },
     container: {
         margin: '0 auto',
         backgroundColor: 'white',
         fontFamily: 'Times-Roman',
-        padding: '20px 80px',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '0 80px',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
     },
-    header: {
-        textAlign: 'center',
-    },
+
     headerSection: {
         fontSize: 10,
+        margin: '0 auto',
+        padding: '0 10px',
         marginBottom: 10,
     },
     banner: {
-        width: '65vw',
-        margin: '0 auto',
+        width: '95vw',
         height: 'auto',
     },
     footerText: {
         fontSize: 8,
-        position: 'absolute',
-        bottom: -100,
-        paddingHorizontal: 80,
-        left: 0,
-        right: 0,
         fontFamily: 'Times-Bold'
     },
     headerText: {
@@ -39,13 +37,28 @@ const styles = StyleSheet.create({
     },
     hr: {
         marginTop: 10,
-        marginBottom: 10,
-        borderBottom: '2.5pt solid #000',
+        marginBottom: 2,
+        borderBottom: '0.5pt solid red',
     },
     footerInfo: {
-        textAlign: 'right',
+        textAlign: 'center',
         fontSize: 10,
-        marginTop: 10,
+        marginBottom: 5,
+    },
+    watermarkContainer: {
+        position: 'absolute',
+        top: 150,        // ajusta según la altura deseada
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+    },
+
+    watermarkImage: {
+        width: 300,         // ajusta tamaño según necesidad
+        height: 300,
+        objectFit: 'contain',
     },
 });
 

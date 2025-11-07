@@ -1,6 +1,5 @@
 import { showObservations } from "../utils/ShowObservations";
 const TApprovalTable = ({ thesis }) => {
-    console.log("resp7:", thesis);
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

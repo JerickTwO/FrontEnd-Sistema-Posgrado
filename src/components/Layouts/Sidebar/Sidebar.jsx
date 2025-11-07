@@ -27,8 +27,8 @@ const Sidebar = () => {
     };
     const [user, setUser] = useState(null);
 
-    const isAdmin = user && user.rol && user.rol.name === 'admin';
-    const isEstudiante = user && user.rol && user.rol.name === 'estudiante';
+    const isAdmin = user && user.rol && user.rol.name === 'ROLE_ADMIN';
+    const isEstudiante = user && user.rol && user.rol.name === 'ROLE_ESTUDIANTE';
 
     useEffect(() => {
         const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
