@@ -193,7 +193,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2249 Caynor Circle, New Brunswick, New Jersey</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">4262 Leverton Cove Road, Springfield, Massachusetts</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +215,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2692 Berkshire Circle, Knoxville, Tennessee</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -241,7 +241,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 9704</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -255,7 +255,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 310</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +269,7 @@ const AccountSetting = () => {
                                                 <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 5264</span>
                                             </h6>
                                             <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
+                                                <button className="btn btn-primary">Edit</button>
                                             </div>
                                         </div>
                                     </div>

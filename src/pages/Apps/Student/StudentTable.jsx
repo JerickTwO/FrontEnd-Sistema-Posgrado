@@ -3,12 +3,9 @@ import Pagination from '../Steps/Pagination';
 
 const StudentTable = ({ students, onEdit, onDelete }) => {
     const [expandedRow, setExpandedRow] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1); // Página actual
-    const itemsPerPage = 10; // Estudiantes por página
-
-    const totalPages = Math.ceil(students.length / itemsPerPage); // Número total de páginas
-
-    // Obtener estudiantes para la página actual
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10
+    const totalPages = Math.ceil(students.length / itemsPerPage);
     const indexOfLastStudent = currentPage * itemsPerPage;
     const indexOfFirstStudent = indexOfLastStudent - itemsPerPage;
     const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
@@ -17,7 +14,6 @@ const StudentTable = ({ students, onEdit, onDelete }) => {
         setExpandedRow(expandedRow === id ? null : id);
     };
 
-    // Funciones para cambiar de página
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);

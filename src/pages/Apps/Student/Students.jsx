@@ -17,7 +17,7 @@ const Students = () => {
     const [contactList, setContactList] = useState([]);
     const [search, setSearch] = useState('');
     const [editingStudent, setEditingStudent] = useState(null);
-    const [selectedCareer, setSelectedCareer] = useState(null); // Estado para la carrera seleccionada
+    const [selectedCareer, setSelectedCareer] = useState(null);
 
     useEffect(() => {
         dispatch(setPageTitle('Estudiantes'));
@@ -53,44 +53,33 @@ const Students = () => {
 
     const normalizeText = (text) => {
         return text
-            .normalize('NFD') // Descompone caracteres acentuados en su forma básica
-            .replace(/[\u0300-\u036f]/g, '') // Elimina los signos diacríticos
-            .toLowerCase(); // Convierte a minúsculas
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase();
     };
-
     const filteredItems = useMemo(() => {
         const normalizedSearch = normalizeText(search);
         return contactList.filter((student) => {
-            // Concatenación y normalización del nombre completo
             const fullName = `${student.firstNames} ${student.lastName}`;
             const normalizedFullName = normalizeText(fullName);
-
-            // Normalización y comparación del código del estudiante y el DNI
             const studentCodeMatch = normalizeText(student.studentCode.toString()).includes(normalizedSearch);
             const dniMatch = normalizeText(student.dni.toString()).includes(normalizedSearch);
-
-            // Chequea si el término de búsqueda coincide con el nombre completo, código del estudiante, o DNI
             const matchesSearch = normalizedFullName.includes(normalizedSearch) || studentCodeMatch || dniMatch;
-
-            // Verifica si la carrera seleccionada coincide con la carrera del estudiante
             const matchesCareer = selectedCareer ? student.career?.id === selectedCareer.value : true;
-
-            // Retorna verdadero si ambos criterios coinciden
             return matchesSearch && matchesCareer;
         });
-    }, [contactList, search, selectedCareer]); // Agrega 'selectedCareer' como dependencia
+    }, [contactList, search, selectedCareer]);
 
     const saveStudent = async (values, { resetForm }) => {
         const payload = {
             ...values,
-            gender: values.gender === 'true', // Convertir string a booleano
+            gender: values.gender === 'true',
             career: {
                 id: values.career.value,
                 name: values.career.label,
                 faculty: values.career.data.faculty,
             },
         };
-
         try {
             if (editingStudent) {
                 const updatedStudent = await studentService.editStudent(editingStudent.id, payload);

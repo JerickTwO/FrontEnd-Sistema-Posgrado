@@ -65,7 +65,11 @@ const Progress = () => {
                                 placeholder="Buscar estudiante..."
                                 value={searchQuery}
                                 onChange={handleSearch}
-                                className="border border-gray-300 dark:border-gray-700 rounded-lg p-2 w-full bg-[#1a1a2e] text-white placeholder-gray-500"
+                                className="
+                                    border border-gray-300 dark:border-gray-200
+                                    rounded-lg p-2 w-full bg-[#fff] dark:bg-black text-white
+                                    placeholder-gray-500
+                                "
                             />
                         </div>
 
@@ -96,12 +100,12 @@ const Progress = () => {
                                                         <div className="h-1.5 bg-[#ebedf2] dark:bg-dark/40 rounded-full flex w-full">
                                                             <div
                                                                 className={`rounded-full bg-${step.completionPercentage === 100
-                                                                        ? "success"
-                                                                        : step.completionPercentage >= 75
-                                                                            ? "primary"
-                                                                            : step.completionPercentage >= 30
-                                                                                ? "warning"
-                                                                                : "gray"
+                                                                    ? "success"
+                                                                    : step.completionPercentage >= 75
+                                                                        ? "primary"
+                                                                        : step.completionPercentage >= 30
+                                                                            ? "warning"
+                                                                            : "gray"
                                                                     }`}
                                                                 style={{
                                                                     width: `${step.completionPercentage}%`,
@@ -112,12 +116,12 @@ const Progress = () => {
                                                     {/* Porcentaje del progreso */}
                                                     <td
                                                         className={`text-${step.completionPercentage === 100
-                                                                ? "success"
-                                                                : step.completionPercentage >= 75
-                                                                    ? "primary"
-                                                                    : step.completionPercentage >= 30
-                                                                        ? "warning"
-                                                                        : "gray"
+                                                            ? "success"
+                                                            : step.completionPercentage >= 75
+                                                                ? "primary"
+                                                                : step.completionPercentage >= 30
+                                                                    ? "warning"
+                                                                    : "gray"
                                                             }`}
                                                     >
                                                         {`${step.completionPercentage}%`}
