@@ -62,12 +62,8 @@ const Students = () => {
         return contactList.filter((student) => {
             const fullName = `${student.firstNames} ${student.lastName}`;
             const normalizedFullName = normalizeText(fullName);
-
-            // Normalización y comparación del código del estudiante y el DNI
-            const studentCodeMatch = normalizeText(student.studentCode.toString()).includes(normalizedSearch);
-            const dniMatch = normalizeText(student.dni.toString()).includes(normalizedSearch);
-
-            // Chequea si el término de búsqueda coincide con el nombre completo, código del estudiante, o DNI
+            const studentCodeMatch = normalizeText(student?.studentCode?.toString() || '').includes(normalizedSearch);
+            const dniMatch = normalizeText(student?.dni?.toString() || '').includes(normalizedSearch);
             const matchesSearch = normalizedFullName.includes(normalizedSearch) || studentCodeMatch || dniMatch;
             const matchesCareer = selectedCareer ? student.career?.id === selectedCareer.value : true;
             return matchesSearch && matchesCareer;
