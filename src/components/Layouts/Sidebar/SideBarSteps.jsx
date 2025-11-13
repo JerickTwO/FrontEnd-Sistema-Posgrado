@@ -2,22 +2,22 @@ export const adminSteps = [
     { path: '/apps/paso/constancia-de-filtro', label: '1: Aprobación de Tesis' },
     { path: '/apps/paso/designacion-de-jurados', label: '2: Designación de Jurados' },
     { path: '/apps/paso/aprobacion-de-proyecto', label: '3: Sustentación de Tesis' },
-    // { path: '/apps/paso/revision-de-reporte', label: '4: Revision de Reporte' },
-    // { path: '/apps/paso/constancia-de-tesis', label: '5: Constancia de Tesis' },
-    // { path: '/apps/paso/notificacion-de-jurados', label: '6: Notificación de Jurados' },
-    // { path: '/apps/paso/aprobacion-de-tesis', label: '7: Aprobación de Tesis' },
-    // { path: '/apps/paso/aprobacion-de-empastados', label: '8: Aprobación de Empastados' },
+    { path: '/apps/paso/revision-de-reporte', label: '4: Revision de Reporte' },
+    { path: '/apps/paso/constancia-de-tesis', label: '5: Constancia de Tesis' },
+    { path: '/apps/paso/notificacion-de-jurados', label: '6: Notificación de Jurados' },
+    { path: '/apps/paso/aprobacion-de-tesis', label: '7: Aprobación de Tesis' },
+    { path: '/apps/paso/aprobacion-de-empastados', label: '8: Aprobación de Empastados' },
 ];
 
 export const studentSteps = [
     { path: '/apps/paso-estudiante/constancia-de-filtro', label: '1: Aprobación de Tesis' },
     { path: '/apps/paso-estudiante/designacion-de-jurados', label: '2: Designación de Jurados' },
     { path: '/apps/paso-estudiante/aprobacion-de-proyecto', label: '3: Sustentación de Tesis' },
-    // { path: '/apps/paso-estudiante/revision-de-reporte', label: '4: Revision de Reporte' },
-    // { path: '/apps/paso-estudiante/constancia-de-tesis', label: '5: Constancia de Tesis' },
-    // { path: '/apps/paso-estudiante/notificacion-de-jurados', label: '6: Notificación de Jurados' },
-    // { path: '/apps/paso-estudiante/aprobacion-de-tesis', label: '7: Aprobación de Tesis' },
-    // { path: '/apps/paso-estudiante/aprobacion-de-empastados', label: '8: Aprobación de Empastados' },
+    { path: '/apps/paso-estudiante/revision-de-reporte', label: '4: Revision de Reporte' },
+    { path: '/apps/paso-estudiante/constancia-de-tesis', label: '5: Constancia de Tesis' },
+    { path: '/apps/paso-estudiante/notificacion-de-jurados', label: '6: Notificación de Jurados' },
+    { path: '/apps/paso-estudiante/aprobacion-de-tesis', label: '7: Aprobación de Tesis' },
+    { path: '/apps/paso-estudiante/aprobacion-de-empastados', label: '8: Aprobación de Empastados' },
 ];
 
 export const extraSteps = [

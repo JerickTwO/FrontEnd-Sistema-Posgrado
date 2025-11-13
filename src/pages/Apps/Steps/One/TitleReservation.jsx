@@ -189,9 +189,7 @@ const TitleReservation = () => {
             const titleReservationData = {
                 meetsRequirements: values.meetRequirements === 'yes',
                 observations: values.observation || '',
-                title: values.title || '',
-                articleNumber: values.articleNumber || 'N/A',
-                projectSimilarity: parseFloat(values.projectSimilarity) || 0,
+                message: values.message || '',
                 lineOfResearch: values.lineOfResearch ? { id: values.lineOfResearch.value } : null,
             };
 

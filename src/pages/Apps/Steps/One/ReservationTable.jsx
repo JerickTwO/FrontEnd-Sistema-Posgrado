@@ -1,25 +1,11 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
-import PdfOne from '../pdfSteps/PdfOne';
-import TitleUpload from './TitleUpload';
-import { getYear, formatDate } from '../utils/Dates';
-import DownloadDocs from '../utils/DownloadButton';
+import { formatDate } from '../utils/Dates';
 
 
 const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit, onDelete, searchTerm, info }) => {
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-    const getDownloadButton = (reservation) => {
-        const fileName = `constancia-${reservation.id}-${getYear()}.pdf`;
-        return (
-            <DownloadDocs
-                infoStepTable={reservation}
-                PdfDocument={PdfOne}
-                fileName={fileName}
-                institutionalInfo={info}
-                fields = {{ constacia: 1 }} />
-        );
-    };
 
     const getActionButtons = (reservation) => (
         <>
@@ -29,13 +15,11 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
 
             {
                 reservation.meetsRequirements ? (
-
                     <></>
                 ) : (<button onClick={() => onDelete(reservation.id)} className="btn btn-sm btn-outline-danger">
                     Eliminar
                 </button>
                 )
-
             }
 
         </>
@@ -88,11 +72,10 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                             <th>Estudiante(s)</th>
                             <th>Carrera</th>
                             <th>Proyecto</th>
+                            <th>Mensaje</th>
                             <th>Observaciones</th>
-                            <th>Similitud</th>
                             <th>Fecha Creación</th>
                             <th>Fecha Actualización</th>
-                            <th className="!text-center">PDF</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -120,15 +103,12 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                                     </td>
                                     <td>{reservation.student?.career?.name || 'N/A'}</td>
                                     <td>{reservation.project ? 'Sí' : 'No'}</td>
+                                    <td>{reservation.message || reservation.mensaje || '—'}</td>
                                     <td>{reservation.observations || 'Ninguna'}</td>
-                                    <td>{reservation.projectSimilarity}%</td>
                                     <td>{formatDate(reservation.createdAt)}</td>
                                     <td>{formatDate(reservation.updatedAt)}</td>
-                                    <td>
-                                        <TitleUpload reservaId={reservation.id} meetsRequirements={reservation.meetsRequirements} />
-                                    </td>
                                     <td className="flex gap-4 items-center justify-center">
-                                        {getDownloadButton(reservation)} {getActionButtons(reservation)}
+                                        {getActionButtons(reservation)}
 
                                     </td>
                                 </tr>

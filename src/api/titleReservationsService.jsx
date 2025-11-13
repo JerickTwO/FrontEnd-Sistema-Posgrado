@@ -63,15 +63,15 @@ const getProgresByStudentCode = async (studentCode) => {
 };
 
 // Obtener PDF en base64 para vista previa
-const viewPdf = async (reservaId) => {
-    try {
-        const response = await axios.get(`${PDFONE_API_URL}${reservaId}/view`, getAuthHeaders());
-        return response.data.pdfData;
-    } catch (error) {
-        console.error('Error al obtener el PDF:', error);
-        throw error;
-    }
-};
+// const viewPdf = async (reservaId) => {
+//     try {
+//         const response = await axios.get(`${PDFONE_API_URL}${reservaId}/view`, getAuthHeaders());
+//         return response.data.pdfData;
+//     } catch (error) {
+//         console.error('Error al obtener el PDF:', error);
+//         throw error;
+//     }
+// };
 
 // Agregar una nueva reserva de título
 const addTitleReservation = async (titlereservation) => {
@@ -145,7 +145,7 @@ export default {
     deleteTitleReservation,
     searchTitleReservations,
     getProgresByStudentCode,
-    viewPdf,
+    // viewPdf,
     uploadPdf,
     deletePdf,
 };

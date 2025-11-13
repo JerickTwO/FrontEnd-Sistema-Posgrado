@@ -5,10 +5,8 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
-import titleReservationsService from '../../../../api/titleReservationsService';
 
 const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions }) => {
-    const [pdfAvailable, setPdfAvailable] = useState(null);
     const [readyToInit, setReadyToInit] = useState(false);
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
@@ -18,22 +16,18 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
 
         if (isOpen && reservation?.id) {
             setReadyToInit(false);
-            titleReservationsService.viewPdf(reservation.id)
-                .then((pdfData) => {
+            Promise.resolve()
+                .then(() => {
                     if (isMounted) {
-                        setPdfAvailable(!!pdfData);
                         setReadyToInit(true);
                     }
                 })
                 .catch((error) => {
                     console.error('Error al cargar el PDF:', error);
                     if (isMounted) {
-                        setPdfAvailable(false);
                         setReadyToInit(true);
                     }
                 });
-        } else {
-            setPdfAvailable(null);
         }
 
         return () => {
@@ -41,13 +35,12 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         };
     }, [isOpen, reservation?.id]);
 
+    // Validación reducida a los campos realmente presentes en el formulario
     const validationSchema = Yup.object({
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
-        title: Yup.string().required('El título es obligatorio'),
+        message: Yup.string().required('El título/mensaje es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         observation: Yup.string(),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
-        reg: Yup.string(),
     });
 
     const initialValues = {
@@ -55,15 +48,13 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         studentTwoCode: reservation?.studentTwo?.studentCode || '',
         meetRequirements: reservation?.meetsRequirements ? 'yes' : 'no',
         observation: reservation?.observations || '',
-        title: reservation?.title || '',
+        message: reservation?.message || reservation?.message || '',
         lineOfResearch: lineOptions.find((option) => option.value === reservation?.lineOfResearch?.id) || null,
-        projectSimilarity: reservation?.projectSimilarity || 0,
-        articleNumber: reservation?.articleNumber || '',
-        reg: reservation?.reg || '',
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        await onSave(reservation.id, values);
+        const payload = { ...values, message: values.message };
+        await onSave(reservation.id, payload);
         setSubmitting(false);
     };
 
@@ -113,17 +104,16 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                         <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                     </div>
                                                 )}
-                                                <div>
-                                                    <label htmlFor="title">Título del Proyecto</label>
+                                                <div className={submitCount && errors.message ? 'has-error' : ''}>
+                                                    <label htmlFor="message">Mensaje</label>
                                                     <Field
-                                                        name="title"
+                                                        name="message"
                                                         type="text"
-                                                        id="title"
-                                                        placeholder="Ingrese el título del proyecto"
+                                                        id="message"
+                                                        placeholder="Ingrese el mensaje"
                                                         className="form-input"
-                                                        onChange={(e) => setFieldValue('title', e.target.value)}
                                                     />
-                                                    <ErrorMessage name="title" component="div" className="text-danger mt-1" />
+                                                    <ErrorMessage name="message" component="div" className="text-danger mt-1" />
                                                 </div>
                                                 <div className="col-span-1">
                                                     <label htmlFor="lineOfResearch">Línea de Investigación</label>
@@ -135,58 +125,6 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                         onChange={(option) => setFieldValue('lineOfResearch', option)}
                                                         placeholder="Seleccione una línea..."
                                                     />
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="projectSimilarity">Similitud del proyecto</label>
-                                                    <Field
-                                                        name="projectSimilarity"
-                                                        type="number"
-                                                        min="0"
-                                                        max="25"
-                                                        id="projectSimilarity"
-                                                        placeholder="Ingrese valores decimales.."
-                                                        className="form-input"
-                                                        onChange={(e) => setFieldValue('projectSimilarity', parseFloat(e.target.value) || '')}
-                                                        onInput={(e) => {
-                                                            let value = e.target.value;
-
-                                                            value = value.replace(/\D/g, '');
-                                                           if (value) {
-                                                                const numericValue = parseInt(value, 10);
-                                                                if (numericValue > 25) {
-                                                                    value = '25';
-                                                                } else {
-                                                                    value = numericValue.toString();
-                                                                }
-                                                            }
-
-                                                            e.target.value = value;
-                                                            setFieldValue('projectSimilarity', value);
-                                                        }}
-                                                    />
-                                                    <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="articleNumber">Número de Articulo</label>
-                                                    <Field
-                                                        name="articleNumber"
-                                                        type="text"
-                                                        id="articleNumber"
-                                                        placeholder="Ingrese el número de registro"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="reg">Reg</label>
-                                                    <Field
-                                                        name="reg"
-                                                        type="text"
-                                                        id="reg"
-                                                        placeholder="Ingrese el reg"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                                 </div>
 
                                                 {!reservation?.meetsRequirements ? (
@@ -250,13 +188,9 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                     <button
                                                         type="submit"
                                                         className="btn btn-primary ltr:ml-4 rtl:mr-4"
-                                                        disabled={!pdfAvailable || isSubmitting}
+                                                        disabled={isSubmitting}
                                                     >
-                                                        {pdfAvailable === null
-                                                            ? 'Cargando...'
-                                                            : pdfAvailable
-                                                                ? 'Actualizar'
-                                                                : 'No disponible'}
+                                                        {'Actualizar'}
                                                     </button>
                                                 </div>
                                             </Form>
