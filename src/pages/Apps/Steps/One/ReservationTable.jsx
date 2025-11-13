@@ -71,7 +71,6 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                             <th>Cumple Requisitos</th>
                             <th>Estudiante(s)</th>
                             <th>Carrera</th>
-                            <th>Proyecto</th>
                             <th>Mensaje</th>
                             <th>Observaciones</th>
                             <th>Fecha Creación</th>
@@ -102,7 +101,6 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                                         )}
                                     </td>
                                     <td>{reservation.student?.career?.name || 'N/A'}</td>
-                                    <td>{reservation.project ? 'Sí' : 'No'}</td>
                                     <td>{reservation.message || reservation.mensaje || '—'}</td>
                                     <td>{reservation.observations || 'Ninguna'}</td>
                                     <td>{formatDate(reservation.createdAt)}</td>
@@ -115,7 +113,7 @@ const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit,
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="11" className="px-4 py-2 text-center">
+                                <td colSpan="9" className="px-4 py-2 text-center">
                                     No hay reservaciones disponibles
                                 </td>
                             </tr>
