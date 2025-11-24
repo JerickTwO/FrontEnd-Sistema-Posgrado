@@ -2,7 +2,7 @@ function formatFullNameUpper(student) {
     const fn = student && student.firstNames ? student.firstNames : 'Desconocido';
     const ln = student && student.lastName ? student.lastName : 'Desconocido';
     const mn = student && student.middleName ? student.middleName : '';
-    return `${fn} ${ln} ${mn}`.toUpperCase().trim();
+    return `${fn} ${ln} ${mn}`?.toUpperCase().trim();
 }
 
 function getGenderedPrefix(student) {
@@ -33,7 +33,7 @@ export function extractStudentsInfo(FIRST_STEP_INFO) {
     const partsWithId = buildStudentParts(FIRST_STEP_INFO, true);
     const partsWithoutId = buildStudentParts(FIRST_STEP_INFO, false);
     const first = FIRST_STEP_INFO?.student;
-    const titleThesis = FIRST_STEP_INFO?.title.toUpperCase();
+    const titleThesis = FIRST_STEP_INFO?.title?.toUpperCase();
 
     return {
         firstStudent: first,
@@ -74,8 +74,8 @@ export function extractAdvisersInfo(TWO_STEP_INFO) {
     const adviser = TWO_STEP_INFO?.adviser || {};
     const coadviser = TWO_STEP_INFO?.coadviser || {};
 
-    const adviserNames = `${adviser?.degree} ${adviser?.firstNames} ${adviser?.lastName} ${adviser?.middleName}`.toUpperCase().trim();
-    const coAdviserNames = `${coadviser?.degree} ${coadviser?.firstNames} ${coadviser?.lastName} ${coadviser?.middleName || ''}`.toUpperCase().trim();
+    const adviserNames = `${adviser?.degree} ${adviser?.firstNames} ${adviser?.lastName} ${adviser?.middleName}`?.toUpperCase().trim();
+    const coAdviserNames = `${coadviser?.degree} ${coadviser?.firstNames} ${coadviser?.lastName} ${coadviser?.middleName || ''}`?.toUpperCase().trim();
 
     return {
         adviserNames,
@@ -89,10 +89,10 @@ export function extractJurysInfo(THREE_STEP_INFO) {
     const secondMember = THREE_STEP_INFO?.secondMember || {};
     const accessory = THREE_STEP_INFO?.accessory || {};
 
-    const presidentNames = `${president?.degree} ${president?.firstNames} ${president?.lastName} ${president?.middleName || ''}`.toUpperCase().trim();
-    const firstMemberNames = `${firstMember?.degree} ${firstMember?.firstNames} ${firstMember?.lastName} ${firstMember?.middleName || ''}`.toUpperCase().trim();
-    const secondMemberNames = `${secondMember?.degree} ${secondMember?.firstNames} ${secondMember?.firstNames} ${secondMember?.lastName} ${secondMember?.middleName || ''}`.toUpperCase().trim();
-    const accessoryNames = `${accessory?.degree} ${accessory?.firstNames} ${accessory?.firstNames} ${accessory?.lastName} ${accessory?.middleName || ''}`.toUpperCase().trim();
+    const presidentNames = `${president?.degree} ${president?.firstNames} ${president?.lastName} ${president?.middleName || ''}`?.toUpperCase().trim();
+    const firstMemberNames = `${firstMember?.degree} ${firstMember?.firstNames} ${firstMember?.lastName} ${firstMember?.middleName || ''}`?.toUpperCase().trim();
+    const secondMemberNames = `${secondMember?.degree} ${secondMember?.firstNames} ${secondMember?.firstNames} ${secondMember?.lastName} ${secondMember?.middleName || ''}`?.toUpperCase().trim();
+    const accessoryNames = `${accessory?.degree} ${accessory?.firstNames} ${accessory?.firstNames} ${accessory?.lastName} ${accessory?.middleName || ''}`?.toUpperCase().trim();
 
     return {
         presidentNames,

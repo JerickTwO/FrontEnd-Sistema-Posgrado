@@ -172,12 +172,12 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                                 />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="reg">Reg</label>
+                                                <label htmlFor="reg">Número de Constancia</label>
                                                 <Field
                                                     name="reg"
                                                     type="number"
                                                     id="reg"
-                                                    placeholder="Ingrese el reg"
+                                                    placeholder="Ingrese el número de constancia"
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage
@@ -188,12 +188,12 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                             </div>
                                             {/* Número de Artículos */}
                                             <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Primer Número de Artículos</label>
+                                                <label htmlFor="articleNumber">Primer Número de Artículo</label>
                                                 <Field
                                                     name="articleNumber"
                                                     type="text"
                                                     id="articleNumber"
-                                                    placeholder="Ingrese los artículos"
+                                                    placeholder="Ingrese el número de artículo"
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage
@@ -204,39 +204,17 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="secondArticleNumber">
-                                                    Segundo Número de Artículos
+                                                    Porcentaje de Similitud
                                                 </label>
                                                 <Field
                                                     name="secondArticleNumber"
                                                     type="text"
                                                     id="secondArticleNumber"
-                                                    placeholder="Ingrese los artículos"
+                                                    placeholder="Ingrese el porcentaje de similitud"
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage
                                                     name="secondArticleNumber"
-                                                    component="div"
-                                                    className="text-danger mt-1"
-                                                />
-                                            </div>
-                                            {/* Fecha de Referencia */}
-                                            <div className="col-span-1">
-                                                <label htmlFor="referenceDate">Fecha de Referencia</label>
-                                                <Flatpickr
-                                                    name="referenceDate"
-                                                    placeholder="Ingrese la fecha"
-                                                    value={values.referenceDate || ''}
-                                                    options={{ dateFormat: 'Y-m-d', locale: Spanish }}
-                                                    onChange={(dates) =>
-                                                        setFieldValue(
-                                                            'referenceDate',
-                                                            dates[0]?.toISOString().slice(0, 10) || ''
-                                                        )
-                                                    }
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage
-                                                    name="referenceDate"
                                                     component="div"
                                                     className="text-danger mt-1"
                                                 />

@@ -10,21 +10,20 @@ const ConstancyVoucher = ({
     registrationNumber
 }) => (
     <Document>
-        <Page size="A4">
-            <View>
+        <Page wrap size="A4">
+            <View wrap={false}>
                 <View style={styles.header}>
                     <View style={styles.headerSection}>
                         <Image style={styles.banner} src={Logo} />
                     </View>
                     {/* Mostrar texto conmemorativo si está habilitado */}
-
                 </View>
-                <View style={styles.container}>
+                <View wrap={false} style={styles.container}>
                     <View>
                         {showCommemorativeText && (
                             <Text style={styles.headerSection}>{commemorativeText}</Text>
                         )}
-                        <View style={{ textAlign: 'justify' }}>
+                        <View wrap={false}>
                             {children}
                         </View>
                         <View style={styles.watermarkContainer}>

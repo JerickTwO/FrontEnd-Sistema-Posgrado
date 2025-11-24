@@ -87,7 +87,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/constancia-de-filtro',
+        path: 'apps/paso/reserva-de-titulo',
         element: (
             <ProtectedRoute>
                 <Constancy />
@@ -95,7 +95,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/aprobacion-de-proyecto',
+        path: 'apps/paso/filtro-de-similitud',
         element: (
             <ProtectedRoute>
                 <ProjectAproval />
@@ -103,7 +103,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/designacion-de-jurados',
+        path: 'apps/paso/revision-de-tesis',
         element: (
             <ProtectedRoute>
                 <JuryAppointment />
@@ -111,7 +111,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/revision-de-reporte',
+        path: 'apps/paso/filtro-de-similitud-dos',
         element: (
             <ProtectedRoute>
                 <ReportReview />
@@ -143,7 +143,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/constancia-de-tesis',
+        path: 'apps/paso/presentacion-de-informe',
         element: (
             <ProtectedRoute>
                 <ConstancyThesis />
@@ -151,7 +151,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/notificacion-de-jurados',
+        path: 'apps/paso/revision-de-informe',
         element: (
             <ProtectedRoute>
                 <JuryNotifications />
@@ -176,7 +176,7 @@ const routes = [
     },
     // Estudiantes
     {
-        path: 'apps/paso-estudiante/constancia-de-filtro',
+        path: 'apps/paso-estudiante/reserva-de-titulo',
         element: (
             <StudentRoute>
                 <ConstancyStudents />
@@ -184,7 +184,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/aprobacion-de-proyecto',
+        path: 'apps/paso-estudiante/filtro-de-similitud',
         element: (
             <StudentRoute>
                 <ProjectApprovalStudents />
@@ -192,7 +192,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/designacion-de-jurados',
+        path: 'apps/paso-estudiante/revision-de-tesis',
         element: (
             <StudentRoute>
                 <JuryAppointmentStudents />
@@ -200,7 +200,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/revision-de-reporte',
+        path: 'apps/paso-estudiante/filtro-de-similitud-dos',
         element: (
             <StudentRoute>
                 <ReportReviewStudents />
@@ -208,7 +208,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/constancia-de-tesis',
+        path: 'apps/paso-estudiante/presentacion-de-informe',
         element: (
             <StudentRoute>
                 <ConstancyThesisStudents />
@@ -216,7 +216,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/notificacion-de-jurados',
+        path: 'apps/paso-estudiante/revision-de-informe',
         element: (
             <StudentRoute>
                 <JuryNotificationsStudents />

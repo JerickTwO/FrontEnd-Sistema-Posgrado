@@ -12,8 +12,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Times-Roman',
         height: '100%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '0 80px',
+        padding: '0 60px',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
     },
 
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     banner: {
         width: '95vw',
         height: 'auto',
+        padding: '0 40px',
     },
     footerText: {
         fontSize: 8,

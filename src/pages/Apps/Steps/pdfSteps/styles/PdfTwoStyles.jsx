@@ -5,7 +5,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 14,
         marginVertical: 10,
+        fontFamily: 'Times-Bold',
         marginTop: 2,
+        textDecoration: 'underline',
+    },
+    h2: {
+        textAlign: 'center',
+        fontFamily: 'Times-Bold',
+        fontSize: 10,
+        marginVertical: 12,
         textDecoration: 'underline',
     },
     p: {
@@ -20,28 +28,12 @@ const styles = StyleSheet.create({
         fontSize: 11,
         marginBottom: 5,
     },
-    table: {
-        display: 'table',
-        width: 'auto',
-        alignItems: 'stretch',
-        fontSize: 12,
-    },
-    tableRow: {
-        flexDirection: 'row',
-    },
-    tableColHeader: {
-        width: '14%',
-        padding: 5,
-        fontFamily: 'Times-Bold',
-    },
-
-    tableCol: {
-        width: '86%',
-        padding: 5,
-    },
     section: {
         marginBottom: 10,
         fontSize: 11,
+    },
+    justify: {
+        textAlign: 'justify',
     },
     bold: {
         fontFamily: 'Times-Bold',

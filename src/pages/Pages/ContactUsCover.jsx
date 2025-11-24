@@ -67,7 +67,7 @@ const ContactUsCover = () => {
                                     button={
                                         <>
                                             <div>
-                                                <img src={`/assets/images/flags/${flag.toUpperCase()}.svg`} alt="image" className="h-5 w-5 rounded-full object-cover" />
+                                                <img src={`/assets/images/flags/${flag?.toUpperCase()}.svg`} alt="image" className="h-5 w-5 rounded-full object-cover" />
                                             </div>
                                             <div className="text-base font-bold uppercase">{flag}</div>
                                             <span className="shrink-0">
@@ -89,7 +89,7 @@ const ContactUsCover = () => {
                                                             setLocale(item.code);
                                                         }}
                                                     >
-                                                        <img src={`/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="w-5 h-5 object-cover rounded-full" />
+                                                        <img src={`/assets/images/flags/${item.code?.toUpperCase()}.svg`} alt="flag" className="w-5 h-5 object-cover rounded-full" />
                                                         <span className="ltr:ml-3 rtl:mr-3">{item.name}</span>
                                                     </button>
                                                 </li>
