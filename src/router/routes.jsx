@@ -33,7 +33,7 @@ import ReportReviewStudents from '../pages/Apps/StepsStudents/Four/ReportReview'
 import ConstancyThesisStudents from '../pages/Apps/StepsStudents/Five/ConstancyThesis';
 import JuryNotificationsStudents from '../pages/Apps/StepsStudents/Six/JuryNotification';
 import ThesisApprovalStudents from '../pages/Apps/StepsStudents/Seven/ThesisApproval';
-import PastingApprovalStudent from '../pages/Apps/StepsStudents/Eight/PastingApproval';
+import PastingApprovalStudents from '../pages/Apps/StepsStudents/Eight/PastingApproval';
 // <--End Students Imports-->
 
 import AuthRoute from '../security/AuthRoute ';
@@ -235,7 +235,7 @@ const routes = [
         path: 'apps/paso-estudiante/aprobacion-de-empastados',
         element: (
             <StudentRoute>
-                <PastingApprovalStudent />
+                <PastingApprovalStudents />
             </StudentRoute>
         ),
     },

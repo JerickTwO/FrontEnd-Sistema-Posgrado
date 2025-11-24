@@ -154,7 +154,7 @@ const Sidebar = () => {
                                                 </div>
                                             </button>
                                             <AnimateHeight duration={300} height={currentMenu === 'steps' ? 'auto' : 0}>
-                                                <ul className="sub-menu text-gray-500">
+                                                <ul className="sub-menu text-gray-500 [&_.active]:!text-primary [&_.active]:!font-bold [&_.active]:!justify-start">
                                                     <StepMenuList steps={adminSteps} />
                                                 </ul>
                                             </AnimateHeight>
@@ -175,7 +175,7 @@ const Sidebar = () => {
                                                 </div>
                                             </button>
                                             <AnimateHeight duration={300} height={currentMenu === 'extra-steps' ? 'auto' : 0}>
-                                                <ul className="sub-menu text-gray-500">
+                                                <ul className="sub-menu text-gray-500 [&_.active]:!text-primary [&_.active]:!font-bold [&_.active]:!bg-transparent [&_.active]:!border-none [&_.active]:!p-0 [&_.active]:!m-0">
                                                     <StepMenuList steps={extraSteps} />
                                                 </ul>
                                             </AnimateHeight>
@@ -223,7 +223,7 @@ const Sidebar = () => {
                                             </div>
                                         </button>
                                         <AnimateHeight duration={300} height={currentMenu === 'stepsStudents' ? 'auto' : 0}>
-                                            <ul className="sub-menu text-gray-500">
+                                            <ul className="sub-menu text-gray-500 [&_.active]:!text-primary [&_.active]:!font-bold [&_.active]:!bg-transparent [&_.active]:!border-none [&_.active]:!p-0 [&_.active]:!m-0">
                                                 <StepMenuList steps={studentSteps} />
                                             </ul>
                                         </AnimateHeight>
