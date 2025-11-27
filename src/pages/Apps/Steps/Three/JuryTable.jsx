@@ -17,9 +17,6 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
     const getDownloadButton = (jury) => {
         
         const fileNameActa = `P3 ACTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
-        const fileNameCarta = `P3 CARTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
-        const fileNameCartaMultiple = `P3 CARTA MULTIPLE Nº ${formatNumberWithZero(jury.id)}.pdf`;
-        
         return (
             <>
                 <DownloadDocs
@@ -28,20 +25,6 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                     institutionalInfo={info}
                     fileName={fileNameActa}
                     fields = {{ numero_folio: 1, acta_reunion: 1,  }}
-                />
-                <DownloadDocs
-                    infoStepTable={jury}
-                    institutionalInfo={info}
-                    PdfDocument={PdfThreeC}
-                    fileName={fileNameCarta}
-                    
-                />
-                <DownloadDocs
-                    infoStepTable={jury}
-                    PdfDocument={PdfThreeCM}
-                    institutionalInfo={info}
-                    fileName={fileNameCartaMultiple}
-                    fields = {{ cart_multiple: 1 }}
                 />
             </>
         );

@@ -2,12 +2,14 @@ import { StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
     h1: {
-        textAlign: 'center',
-        fontSize: 14,
+        textAlign: 'start',
+        fontSize: 10,
         marginVertical: 10,
         fontFamily: 'Times-Bold',
-        marginTop: 2,
         textDecoration: 'underline',
+    },
+    down: {
+        marginBottom: 10,
     },
     h2: {
         textAlign: 'center',
@@ -40,6 +42,9 @@ const styles = StyleSheet.create({
     },
     underline: {
         textDecoration: 'underline',
+    },
+    right : {
+        textAlign: 'right',
     },
 });
 export default styles;

@@ -58,7 +58,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
             hour: juryAppointment?.hour || '',
             futDate: juryAppointment?.futDate || '',
             numberFolio: juryAppointment?.numberFolio || '',
-            registrationNumber: juryAppointment?.registrationNumber || '',
             numberDeanResolution: juryAppointment?.numberDeanResolution || '',
             secondNumberDeanResolution: juryAppointment?.secondNumberDeanResolution || '',
             deanResolution: juryAppointment?.deanResolution || '',
@@ -93,7 +92,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                 <div className="fixed inset-0 bg-[black]/60" />
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center px-4 py-8">
-                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-[70rem] text-black dark:text-white-dark">
+                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-[40rem] text-black dark:text-white-dark">
                             <button type="button" onClick={onClose} className="absolute top-4 ltr:right-4 rtl:left-4 text-gray-400 hover:text-gray-800 dark:hover:text-gray-600 outline-none">
                                 <IconX />
                             </button>
@@ -125,7 +124,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                             hour: values.hour,
                                             futDate: fut,
                                             numberFolio: values.numberFolio,
-                                            registrationNumber: values.registrationNumber,
                                             numberDeanResolution: values.numberDeanResolution,
                                             secondNumberDeanResolution: values.secondNumberDeanResolution,
                                             deanResolution: values.deanResolution,
@@ -144,14 +142,52 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                     }}
                                     enableReinitialize
                                 >
-                                    {({ setFieldValue, values }) => {
-                                        const selectedValues = [values.president, values.firstMember, values.secondMember, values.accessory, values.adviser, values.coadviser];
-
+                                    {({ setFieldValue }) => {
                                         return (
 
-                                            <Form className="grid gap-6 grid-cols-4 w-[100%]">
-                                                <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                            <Form className="grid gap-6 grid-cols-2 w-[100%]">
+                                                <div className="col-span-1">
+                                                    <label htmlFor="deanResolution">Numero de Carta</label>
+                                                    <Field name="deanResolution" type="text" id="deanResolution" placeholder="000" className="form-input" />
+                                                    <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
+                                                </div>
+                                                <div className="col-span-1">
+                                                    <label htmlFor="reg">Número de Registro</label>
+                                                    <Field name="reg" type="number" id="reg" placeholder="000" className="form-input" />
+                                                    <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                                </div>
+                                                <div className="col-span-1">
+                                                    <label htmlFor="articleNumber">Número de Artículo</label>
+                                                    <Field name="articleNumber" type="text" id="articleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
+                                                    <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                                </div>
+                                                 <div>
+                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                    <div className="flex gap-4">
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
+                                                                setFieldValue('meetRequirements', 'yes');
+                                                                setFieldValue('observations', '');
+                                                            }} />
+                                                            Sí
+                                                        </label>
+                                                        <label>
+                                                            <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
+                                                                setFieldValue('meetRequirements', 'no');
+                                                            }} />
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                     Información de Actas
+                                                </div>
+                                                                                                <div className="col-span-1">
+                                                    <label htmlFor="secondDeanResolution">Número de Artículo</label>
+                                                    <Field name="secondDeanResolution" type="text" id="secondDeanResolution" placeholder="000" className="form-input" />
+                                                    <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
                                                 </div>
                                                 <div className="col-span-1">
                                                     <label htmlFor="actDate">Primera Fecha de Acta</label>
@@ -168,16 +204,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                     <Field name="secondActDate" type="date" id="secondActDate" placeholder="Ingrese la Segunda Fecha de Acta" className="form-input" />
                                                     <ErrorMessage name="secondActDate" component="div" className="text-danger mt-1" />
                                                 </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="deanResolution">Primera Resolución Decanal</label>
-                                                    <Field name="deanResolution" type="text" id="deanResolution" placeholder="000-2025" className="form-input" />
-                                                    <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="secondDeanResolution">Segunda Resolución Decanal</label>
-                                                    <Field name="secondDeanResolution" type="text" id="secondDeanResolution" placeholder="000-2025" className="form-input" />
-                                                    <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div>
+
                                                 <div className="col-span-1">
                                                     <label htmlFor="hour">Segunda Hora de Acta</label>
                                                     <Field name="hour" type="time" id="hour" placeholder="Ingrese la hora" className="form-input" />
@@ -187,34 +214,30 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                     <label htmlFor="numberFolio">Número de Folio</label>
                                                     <Field name="numberFolio" type="text" id="numberFolio" placeholder="Ingrese el número de folio" className="form-input" />
                                                     <ErrorMessage name="numberFolio" component="div" className="text-danger mt-1" />
-                                                </div>
+                                                </div> */}
                                                 {/* TERCER RESOLUCION */}
-                                                <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
 
                                                     Información de Carta
-                                                </div>
-                                                <div className="col-span-1">
+                                                </div> */}
+                                                {/* <div className="col-span-1">
                                                     <label htmlFor="futDate">Fecha FUT</label>
                                                     <Field name="futDate" type="date" id="futDate" className="form-input" />
                                                     <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="registrationNumber">Número de Registro</label>
-                                                    <Field name="registrationNumber" type="number" id="registrationNumber" placeholder="Ingrese el número de registro" className="form-input" />
-                                                    <ErrorMessage name="registrationNumber" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
+                                                </div> */}
+
+                                                {/* <div className="col-span-1">
                                                     <label htmlFor="numberDeanResolution">Fecha de Acta de Jurados</label>
                                                     <Field name="numberDeanResolution" type="date" id="numberDeanResolution" placeholder="Ingrese el número de resolución decanal" className="form-input" />
                                                     <ErrorMessage name="numberDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div>
+                                                </div> */}
 
-                                                <div className="col-span-1">
+                                                {/* <div className="col-span-1">
                                                     <label htmlFor="secondNumberDeanResolution">Segunda Fecha de Acta de Jurados</label>
                                                     <Field name="secondNumberDeanResolution" type="date" id="secondNumberDeanResolution" placeholder="Ingrese el segundo número de resolución decanal" className="form-input" />
                                                     <ErrorMessage name="secondNumberDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <FieldArray name="additionalInputs">
+                                                </div> */}
+                                                {/* <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
                                                         values.additionalInputs.map((_, index) => (
                                                             <div key={index} className="col-span-1">
@@ -248,8 +271,8 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                             </div>
                                                         ))
                                                     )}
-                                                </FieldArray>
-                                                <FieldArray name="textattached">
+                                                </FieldArray> */}
+                                                {/* <FieldArray name="textattached">
                                                     {({ push, remove }) => (
                                                         values.textattached.map((_, index) => (
                                                             <div key={index} className="col-span-1">
@@ -283,15 +306,11 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                             </div>
                                                         ))
                                                     )}
-                                                </FieldArray>
-                                                <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                </FieldArray> */}
+                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                     Información de Carta Multiple
                                                 </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="articleNumber">Número de Artículo</label>
-                                                    <Field name="articleNumber" type="text" id="articleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
-                                                    <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
-                                                </div>
+
                                                 <div className="col-span-1">
                                                     <label htmlFor="secondArticleNumber">Segundo Número de Artículo</label>
                                                     <Field name="secondArticleNumber" type="text" id="secondArticleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
@@ -319,24 +338,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                     />
                                                     <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                                 </div>
-                                                <div>
-                                                    <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                    <div className="flex gap-4">
-                                                        <label>
-                                                            <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
-                                                                setFieldValue('meetRequirements', 'yes');
-                                                                setFieldValue('observations', '');
-                                                            }} />
-                                                            Sí
-                                                        </label>
-                                                        <label>
-                                                            <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
-                                                                setFieldValue('meetRequirements', 'no');
-                                                            }} />
-                                                            No
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                            
                                                 <div className="col-span-1">
                                                     <label htmlFor="observations">Observaciones</label>
                                                     <Field name="observations" as="textarea" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}
@@ -409,8 +411,8 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                     <label htmlFor="coadviser">Segundo Asesor</label>
                                                     <Select id="coadviser" styles={styles} value={values.coadviser} isDisabled placeholder="Segundo Asesor seleccionado" />
                                                 </div>
-
-                                                <div className="flex justify-end items-center mt-8 col-span-4">
+                                                */}
+                                                <div className="flex justify-end items-center mt-8 col-span-2">
                                                     <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                         Cancelar
                                                     </button>
@@ -424,7 +426,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                             'Guardar'
                                                         )}
                                                     </button>
-                                                </div>
+                                                </div> 
 
                                             </Form>
                                         );
