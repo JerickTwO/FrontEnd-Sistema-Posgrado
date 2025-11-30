@@ -4,7 +4,7 @@ import styles from './styles/PdfTwoStyles';
 import { extractStudentsInfo } from '../utils/StringUtils';
 import { getWrittenDate, formatNumberWithZero } from '../utils/Dates';
 
-const PdfThreeA = ({ infoStep, institutionalInfo }) => {
+const PdfThree = ({ infoStep, institutionalInfo }) => {
 
     const THREE_STEP_INFO = infoStep;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
@@ -64,4 +64,4 @@ const PdfThreeA = ({ infoStep, institutionalInfo }) => {
     );
 };
 
-export default PdfThreeA;
+export default PdfThree;

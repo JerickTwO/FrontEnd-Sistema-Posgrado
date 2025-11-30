@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
-import PdfThreeA from '../pdfSteps/PdfThreeA';
-import PdfThreeC from '../pdfSteps/PdfThreeC';
-import PdfThreeCM from '../pdfSteps/PdfThreeCM';
+import PdfThree from '../pdfSteps/PdfThree';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 
@@ -21,7 +19,7 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
             <>
                 <DownloadDocs
                     infoStepTable={jury}
-                    PdfDocument={PdfThreeA}
+                    PdfDocument={PdfThree}
                     institutionalInfo={info}
                     fileName={fileNameActa}
                 />
