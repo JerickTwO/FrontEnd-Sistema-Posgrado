@@ -17,14 +17,13 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
     const currentProjects = projects.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
 
     const getDownloadButton = (project) => {
-        const fileName = `P2 INFORME-${formatNumberWithZero(project.id)}-Aprobación de proyecto de Tesis.pdf`;
+        const fileName = `P2 Constancia de similitud.pdf`;
         return (
             <DownloadDocs
                 infoStepTable={project}
                 PdfDocument={PdfTwo}
                 institutionalInfo={info}
                 fileName={fileName}
-                fields = {{ informe: 1, regNumber: 1 }}
             />
         );
     };

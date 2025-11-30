@@ -95,28 +95,23 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
 
                                                 )
                                             }
-
                                             < div className="col-span-1" >
-                                                <label htmlFor="documentDate" >Fecha del REF del Documento </label>
-                                                < Field name="documentDate" type="date" id="documentDate" placeholder="Ingrese fecha del Documento" className="form-input" />
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
+                                            </div>
+                                            < div className="col-span-1" >
+                                                <label htmlFor="deanResolution">Número de Constancia </label>
+                                                <Field name="deanResolution" id="deanResolution" placeholder="000" className="form-input" />
                                             </div>
                                             < div className="col-span-1" >
                                                 <label htmlFor="articleNumber"> Número de Artículo </label>
                                                 <Field name="articleNumber" id="articleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
                                             </div>
                                             < div className="col-span-1" >
-                                                <label htmlFor="secondArticleNumber">Segundo Número de Artículo </label>
-                                                <Field name="secondArticleNumber" id="secondArticleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
+                                                <label htmlFor="secondArticleNumber">Porcentaje de Similitud  </label>
+                                                <Field name="secondArticleNumber" id="secondArticleNumber" placeholder="Ingrese el porcentaje de similitud" className="form-input" />
                                             </div>
-                                            < div className="col-span-1" >
-                                                <label htmlFor="deanResolution">Resolución Decanal </label>
-                                                <Field name="deanResolution" id="deanResolution" placeholder="000-2025" className="form-input" />
-                                            </div>
-                                            < div className="col-span-1" >
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
-                                            </div>
-                                            <FieldArray name="additionalInputs">
+                                            {/* <FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -150,7 +145,7 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                         </div>
                                                     ))
                                                 )}
-                                            </FieldArray>
+                                            </FieldArray> */}
                                             < div className="col-span-1" >
                                                 <label htmlFor="observations" > Observaciones </label>
                                                 < Field name="observations" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}

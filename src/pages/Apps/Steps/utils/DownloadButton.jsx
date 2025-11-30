@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useIncrementRegNumber from "../utils/IncrementRegNumber";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Dialog, Transition } from '@headlessui/react';
@@ -8,6 +8,10 @@ const DownloadDocs = ({ infoStepTable, PdfDocument, fileName, fields = {},instit
     const { incrementFields, loading } = useIncrementRegNumber();
     const [incrementedFields, setIncrementedFields] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
+
+    useEffect(() => {
+        setShowPreview(true);
+    }, []);
 
     const handleGenerateReg = async () => {
         if (!incrementedFields) {

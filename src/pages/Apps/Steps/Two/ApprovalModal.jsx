@@ -1,12 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Select from 'react-select';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
 import IconX from '../../../../components/Icon/IconX';
-import Flatpickr from 'react-flatpickr';
-import { Spanish } from 'flatpickr/dist/l10n/es.js';
 
 const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
@@ -123,54 +120,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                                     />
                                                 </div>
                                             )}
-
-                                            {/* Seleccionar Asesor */}
-                                            <div className="col-span-1">
-                                                <label htmlFor="adviser">Seleccionar Asesor</label>
-                                                <Select
-                                                    name="adviser"
-                                                    id="adviser"
-                                                    styles={styles}
-                                                    options={adviserOptions
-                                                        .filter((a) => a.id !== values.coadviser?.value)
-                                                        .map((a) => ({ value: a.id, label: `${a.firstNames} ${a.lastName}` }))}
-                                                    value={values.adviser}
-                                                    onChange={(opt) => {
-                                                        setFieldValue('adviser', opt);
-                                                        if (!opt) setFieldValue('coadviser', null);
-                                                    }}
-                                                    placeholder="Seleccione un asesor..."
-                                                    isClearable
-                                                />
-                                                <ErrorMessage
-                                                    name="adviser"
-                                                    component="div"
-                                                    className="text-danger mt-1"
-                                                />
-                                            </div>
-
-                                            {/* Seleccionar Co-asesor */}
-                                            <div className="col-span-1">
-                                                <label htmlFor="coadviser">Seleccionar Co-asesor</label>
-                                                <Select
-                                                    name="coadviser"
-                                                    id="coadviser"
-                                                    styles={styles}
-                                                    options={adviserOptions
-                                                        .filter((a) => a.id !== values.adviser?.value)
-                                                        .map((a) => ({ value: a.id, label: `${a.firstNames} ${a.lastName}` }))}
-                                                    value={values.coadviser}
-                                                    onChange={(opt) => setFieldValue('coadviser', opt)}
-                                                    placeholder="Seleccione un co-asesor..."
-                                                    isDisabled={!values.adviser}
-                                                    isClearable
-                                                />
-                                                <ErrorMessage
-                                                    name="coadviser"
-                                                    component="div"
-                                                    className="text-danger mt-1"
-                                                />
-                                            </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="reg">Número de Constancia</label>
                                                 <Field
@@ -188,7 +137,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                             </div>
                                             {/* Número de Artículos */}
                                             <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Primer Número de Artículo</label>
+                                                <label htmlFor="articleNumber">Número de Artículo</label>
                                                 <Field
                                                     name="articleNumber"
                                                     type="text"

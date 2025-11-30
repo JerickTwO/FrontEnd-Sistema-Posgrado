@@ -16,7 +16,7 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
     const jurys = currentJury.slice(indexOfFirstItem, indexOfLastItem);
     const getDownloadButton = (jury) => {
         
-        const fileNameActa = `P3 ACTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
+        const fileNameActa = `P3 CARTA Nº ${formatNumberWithZero(jury.id)}.pdf`;
         return (
             <>
                 <DownloadDocs
@@ -24,7 +24,6 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                     PdfDocument={PdfThreeA}
                     institutionalInfo={info}
                     fileName={fileNameActa}
-                    fields = {{ numero_folio: 1, acta_reunion: 1,  }}
                 />
             </>
         );

@@ -54,7 +54,7 @@ const PdfFiveCN = ({ infoStep, incrementFields }) => {
                     <View style={styles.footerText}>
                         <Text>C. c.</Text>
                         <Text>Archivo</Text>
-                        <Text>REG. N° {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
+                        <Text>REG. N° {formatNumberWithZero(infoStep?.reg)}</Text>
                         <View style={styles.hr} />
                         <View style={styles.footerInfo}>
                             <Text>Av. Inca Garcilaso de la Vega S/N Tamburco, Abancay | (083) 636 050 | www.unamba.edu.pe</Text>
