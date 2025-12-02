@@ -1,0 +1,82 @@
+import PdfBase from './PdfBase';
+import { Text, View, Link } from '@react-pdf/renderer';
+import styles from './styles/PdfFive';
+import { getWrittenDate } from '../utils/Dates';
+
+const PdfFive = ({ infoStep, incrementFields }) => {
+    const cartaNumber = infoStep?.cartaNumber || `${incrementFields?.carta || '024'}-2025-D-UI-FA-UNAMBA`;
+    const actualDate = getWrittenDate();
+    const jurados = infoStep?.jurados || [
+        'Dr. DANIEL AMILCAR PINTO PAGAZA',
+        'Dr. JOSÉ ABDON SOTOMAYOR CHAHUAYLLA',
+        'Dr. MAURICIO RAÚL ESCALANTE CÁRDENAS',
+        'Dr. PERCY LEFITO PAZ',
+        'Dra. ROSITA LETICIA VALER MONTESINOS',
+        'Dra. SILVIA SOLEDAD LÓPEZ IBÁÑEZ',
+        'Dr. JULIANA DE LEÓN',
+        'Dra. MARÍA PAREJA PAREJA',
+        'Mgt. YAMILET ADEHIM BARRIONUEVO INCA ROCA',
+        'Mgt. GREGORIO GAUNA CHINO',
+        'Mgt. MÁXIMO SOTO PAREJA',
+        'Mgt. JOSUÉ HUAMANI CAYLLAHUA',
+        'Mgt. JOSÉ CARLOS VILCA NAVÁEZ',
+        'Mgt. ELIO NOLASCO CARBAJAL',
+        'Dr. LUIS PORRAS DURAND',
+        'Mgt. ALFREDO HUAMÁN',
+        'Mgt. DAVID BARRIAL ACOSTA',
+        'Mgt. WILBER OSORIO TORRES',
+        'Mgt. HERMENGILDO CHACCARÁ HUACHACA',
+        'Mgt. ERIKA LOA NAVARRO',
+        'Mg. EDGAR MEZA MESCCO',
+    ];
+    const asunto = 'COMUNICO PROGRAMACIÓN DE SORTEO DE JURADOS DE TESIS, DE MANERA PRESENCIAL Y/O VIRTUAL';
+    const fechaSorteo = infoStep?.fechaSorteo || 'martes 12 de agosto del 2025';
+    const horaSorteo = infoStep?.horaSorteo || '09:00 a.m.';
+    const lugarPresencial = infoStep?.lugarPresencial || 'nuevo local administrativo de la Facultad de Administración, ubicado frente a la puerta de ingreso del comedor universitario';
+    const linkVirtual = infoStep?.linkVirtual || 'met.google.com/srw-btac-pff';
+
+    return (
+        <PdfBase commemorativeText={false} registrationNumber={incrementFields?.regNumber}>
+            <Text style={styles.h1}>CARTA MÚLTIPLE N°{cartaNumber}</Text>
+            <View style={styles.section}>
+                <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.bold}>Señores:</Text>
+                <View style={{ flexDirection: 'row', width: '100%' }}>
+                    <View style={{ width: '50%', marginRight: '6px' }}>
+                        {jurados.slice(0, Math.ceil(jurados.length / 2)).map((nombre, idx) => (
+                            <Text key={idx} style={styles.justify}>{nombre}</Text>
+                        ))}
+                    </View>
+                    <View style={{ width: '50%' }}>
+                        {jurados.slice(Math.ceil(jurados.length / 2)).map((nombre, idx) => (
+                            <Text key={idx + Math.ceil(jurados.length / 2)} style={styles.justify}>{nombre}</Text>
+                        ))}
+                    </View>
+                </View>
+            </View>
+            <View style={[styles.section, { flexDirection: 'row', alignItems: 'flex-start' }]}>
+                <View style={{ width: '8%', minWidth: 80 }}>
+                    <Text style={styles.bold}>ASUNTO</Text>
+                </View>
+                <View style={{ width: '92%' }}>
+                    <Text style={styles.bold}>: {asunto}</Text>
+                </View>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.justify}>
+                    Previo cordial saludo, comunico programación de fecha y hora de sorteo de jurados para la revisión y aprobación de informe final de tesis.
+                    {'\n'}La misma que está prevista para el día <Text style={styles.bold}>{fechaSorteo}</Text>, a horas <Text style={styles.bold}>{horaSorteo}</Text>, de manera presencial en el <Text style={styles.bold}>{lugarPresencial}</Text>, y virtual Ingresar al siguiente link:
+                    {'\n'}<Text style={styles.bold}><Link src={`https://${linkVirtual}`}>{linkVirtual}</Link></Text>
+                </Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.justify}>Sin otro particular, es propicia la ocasión para expresarles mis saludos cordiales.</Text>
+            </View>
+            <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]}>Atentamente,</Text>
+        </PdfBase>
+    );
+};
+
+export default PdfFive;

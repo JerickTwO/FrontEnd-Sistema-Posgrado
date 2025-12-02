@@ -1,4 +1,4 @@
-import styles from './styles/PdfFiveCNStyles';
+import styles from './styles/PdfFive';
 import Logo from './BANNER2025.png';
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
 import { getYear, getWrittenDate, formatNumberWithZero } from '../utils/Dates';

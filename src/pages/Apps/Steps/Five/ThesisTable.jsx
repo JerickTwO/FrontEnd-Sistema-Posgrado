@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PdfFiveCN from '../pdfSteps/PdfFiveCN';
+import PdfFive from '../pdfSteps/Paso-5-1';
 import Pagination from '../Pagination';
 import ThesisUpload from './ThesisUpload';
 import { formatDate } from '../utils/Dates';
@@ -19,7 +19,7 @@ const ThesisTable = ({ thesis, onEdit }) => {
         return (
             <DownloadDocs
                 infoStepTable={thesisItem}
-                PdfDocument={PdfFiveCN}
+                PdfDocument={PdfFive}
                 fileName={fileName}
                 fields = {{ constacia: 1 }}
             />
