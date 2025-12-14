@@ -1,5 +1,5 @@
 import PdfBase from './PdfBase';
-import { Text, View } from '@react-pdf/renderer';
+import { Text, View, Link } from '@react-pdf/renderer';
 import styles from './styles/PdfSixMMStyles';
 import { formatNumberWithZero, getYear, getWrittenDateFromInput, getWrittenDate, formatDateSpanish } from '../utils/Dates';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
@@ -14,13 +14,16 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
     const { adviserNames, coAdviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
     const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(THREE_STEP_INFO);
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
+    const articleNumber = infoStep?.articleNumber || '46';
+    const contactEmail = infoStep?.email || '182009@unamba.edu.pe';
+
 
     const dayWithAddedOne = new Date(infoStep?.day);
     dayWithAddedOne.setDate(dayWithAddedOne.getDate() + 1);
 
     const formattedDayWithAddedOne = formatDateSpanish(dayWithAddedOne);
     return (
-        <PdfBase showCommemorativeText={false} registrationNumber={infoStep?.reg || institutionalInfo?.regNumber}>
+        <PdfBase showCommemorativeText={false} registrationNumber={infoStep?.reg}>
             <Text style={styles.h1}>
                 MEMORANDO MULTIPLE Nº {incrementFields?.memorando_mult}-{anio}-D. UI-FI-UNAMBA.
             </Text>
@@ -97,7 +100,7 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                     <View style={styles.semiTableCol}>
                         <Text>
                             <Text>Fut de fecha {getWrittenDateFromInput(infoStep?.futDate)}</Text>
-                            <Text style={styles.bold}>                                         REG. Nº {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
+                            <Text style={styles.bold}>                                         REG. Nº {formatNumberWithZero(infoStep?.reg)}</Text>
                         </Text>
                         <Text>RESOLUCIÓN DECANAL N° {infoStep?.deanResolution}-DFI-UNAMBA</Text>
                         <Text>RESOLUCIÓN DECANAL Nº {infoStep?.secondDeanResolution}-DFI-UNAMBA</Text>
@@ -123,36 +126,15 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
             </View>
             <Text>-------------------------------------------------------------------------</Text>
             <View style={styles.section}>
-                <Text style={[styles.text, { marginTop: 10 }]}>
-                    Por el presente me dirijo a Ustedes, con la finalidad de poner en su conocimiento que, en mérito al Artículo {infoStep?.articleNumber} del Reglamento de Investigación, se ha programado la fecha y hora de sustentación de Tesis
-                    "{title}", presentado por {combinedNamesOnly}
-                </Text>
-
-                <View style={styles.semiTable}>
-                    {/* Row 1 */}
-                    <View style={{ marginTop: "5px" }}>
-                        <Text style={[styles.semiTableCol, styles.bold]} >DÍA: <Text style={styles.noBold}>{formattedDayWithAddedOne}</Text></Text>
-                    </View>
-                    <View style={{ marginTop: "5px" }}>
-                        <Text style={[styles.semiTableCol, styles.bold]} >HORA: <Text style={styles.noBold}>{infoStep.hour} horas</Text></Text>
-                    </View>
-
-                    <View style={{ marginVertical: "5px" }}>
-                        <Text style={[styles.semiTableCol, styles.bold]} >LUGAR: <Text style={styles.noBold}>Auditorio de la EAP. {career} ({infoStep?.location})</Text></Text>
-                    </View>
-
-
-                </View>
                 <Text style={styles.p}>
-                    Para tal efecto, adjunto al presente los antecedentes que detallo a continuación:
+                    Previo un cordial saludo, mediante el presente remito Informe de Tesis titulada: <Text style={styles.bold}>“{title}”</Text>, presentado por el Bachiller: <Text style={styles.bold}>{combinedNamesOnly}</Text>.
                 </Text>
-
-                <View style={styles.ul}>
-                    <Text style={styles.ulLi}>• Solicitud del interesado</Text>
-                    <Text style={styles.ulLi}>• Resolución de aprobación de proyecto de tesis</Text>
-                    <Text style={styles.ulLi}>•	Resolución de designación de jurados</Text>
-                    <Text style={styles.ulLi}>• Informe final de Tesis en físico</Text>
-                </View>
+                <Text style={styles.p}>
+                    Una vez recibido el trabajo de investigación o tesis por los jurados evaluadores, se procederá a evaluar en forma y fondo en un plazo de quince días hábiles. Los miembros están obligados a participar en las diferentes etapas de la revisión del informe; su incumplimiento constituye falta sujeta a sanción prevista en el Estatuto de la UNAMBA y normas conexas.
+                </Text>
+                <Text style={styles.p}>
+                    Dentro de los días establecidos en el Art. {articleNumber}, el Jurado evaluador devolverá el trabajo de investigación o tesis con las observaciones realizadas a la interesada al siguiente correo <Link src={`mailto:${contactEmail}`}>{contactEmail}</Link> y a la Dirección de la Unidad de Investigación; en caso de ser aprobado, será el presidente quien eleve el informe final a la Unidad de Investigación para su trámite correspondiente.
+                </Text>
                 <Text style={[styles.p]}>Sin otro en particular, aprovecho la oportunidad para expresarle las muestras de mi especial consideración y deferencia personal.</Text>
                 <Text style={[styles.bold, { textAlign: 'center' }]} >Atentamente,</Text>
             </View>

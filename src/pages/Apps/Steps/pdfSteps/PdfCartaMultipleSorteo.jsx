@@ -1,5 +1,5 @@
 import PdfBase from './PdfBase';
-import { Text, View } from '@react-pdf/renderer';
+import { Text, View, Link } from '@react-pdf/renderer';
 import styles from './styles/PdfTwoStyles';
 import { getWrittenDate } from '../utils/Dates';
 
@@ -30,10 +30,11 @@ const PdfCartaMultipleSorteo = ({ infoStep, institutionalInfo, incrementFields }
         'Mg. EDGAR MEZA MESCCO',
     ];
     const asunto = 'COMUNICO PROGRAMACIÓN DE SORTEO DE JURADOS DE TESIS, DE MANERA PRESENCIAL Y/O VIRTUAL';
-    const fechaSorteo = infoStep?.fechaSorteo || 'martes 12 de agosto del 2025';
-    const horaSorteo = infoStep?.horaSorteo || '09:00 a.m.';
-    const lugarPresencial = infoStep?.lugarPresencial || 'nuevo local administrativo de la Facultad de Administración, ubicado frente a la puerta de ingreso del comedor universitario';
-    const linkVirtual = infoStep?.linkVirtual || 'met.google.com/srw-btac-pff';
+    const fechaSorteo = infoStep?.fechaSorteo || '';
+    const horaSorteo = infoStep?.horaSorteo || '';
+    const lugarPresencial = infoStep?.lugarPresencial || '';
+    const url = infoStep?.url || '';
+    const linkHref = url ? (url.startsWith('http') ? url : `https://${url}`) : '';
 
     return (
         <PdfBase commemorativeText={false} registrationNumber={incrementFields?.regNumber}>
@@ -67,8 +68,15 @@ const PdfCartaMultipleSorteo = ({ infoStep, institutionalInfo, incrementFields }
             <View style={styles.section}>
                 <Text style={styles.justify}>
                     Previo cordial saludo, comunico programación de fecha y hora de sorteo de jurados para la revisión y aprobación de informe final de tesis.
-                    {'\n'}La misma que está prevista para el día <Text style={styles.bold}>{fechaSorteo}</Text>, a horas <Text style={styles.bold}>{horaSorteo}</Text>, de manera presencial en el <Text style={styles.bold}>{lugarPresencial}</Text>, y virtual Ingresar al siguiente link:
-                    {'\n'}<Text style={styles.bold}>{linkVirtual}</Text>
+                    {'\n'}La misma que está prevista para el día <Text style={styles.bold}>{fechaSorteo}</Text>, a horas <Text style={styles.bold}>{horaSorteo}</Text>, de manera presencial en el <Text style={styles.bold}>{lugarPresencial}</Text>
+                    {url && (
+                        <Text>
+                            , y virtual Ingresar al siguiente link:
+                            <Text style={styles.bold}>
+                                <Link src={linkHref} target="_blank"> {url}</Link>
+                            </Text>
+                        </Text>
+                    )}
                 </Text>
             </View>
             <View style={styles.section}>

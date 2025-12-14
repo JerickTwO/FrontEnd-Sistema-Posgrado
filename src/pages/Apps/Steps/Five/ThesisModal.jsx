@@ -1,45 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
-import ThesisService from '../../../../api/constancyThesisService';
-import Swal from 'sweetalert2';
 
 const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
-    const [pdfAvailable, setPdfAvailable] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        const checkPDFExists = async () => {
-            if (!thesis?.id) {
-                console.error('El ID de la tesis es indefinido.');
-                setPdfAvailable(false);
-                return;
-            }
-            try {
-                setIsLoading(true);
-                const exists = await ThesisService.viewPdfDocument(thesis.id);
-                setPdfAvailable(Boolean(exists));
-            } catch (error) {
-                console.error('Error al verificar la existencia del PDF:', error);
-                setPdfAvailable(false);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        if (isOpen) {
-            checkPDFExists();
-        } else {
-            setPdfAvailable(null);
-        }
-    }, [isOpen, thesis]);
 
     const validationSchema = Yup.object({
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         observations: Yup.string(),
+        refDate: Yup.string(),
+        cartNumber: Yup.string(),
+        url: Yup.string(),
+        fechaSorteo: Yup.string(),
+        horaSorteo: Yup.string(),
+        lugarPresencial: Yup.string(),
     });
 
     const initialValues = React.useMemo(
@@ -54,6 +30,12 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                 : null,
             projectSimilarity: thesis?.projectSimilarity || '',
             reg: thesis?.reg || '',
+            refDate: thesis?.refDate || '',
+            cartNumber: thesis?.cartNumber || '',
+            url: thesis?.url || '',
+            fechaSorteo: thesis?.fechaSorteo || '',
+            horaSorteo: thesis?.horaSorteo || '',
+            lugarPresencial: thesis?.lugarPresencial || '',
         }),
         [thesis]
     );
@@ -62,6 +44,12 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         const normalizedValues = {
             ...values,
             meetsRequirements: values.meetsRequirements === 'yes' ? true : false,
+            refDate: values.refDate,
+            cartNumber: values.cartNumber,
+            url: values.url,
+            fechaSorteo: values.fechaSorteo,
+            horaSorteo: values.horaSorteo,
+            lugarPresencial: values.lugarPresencial,
 
         };
         if (thesis?.meetsRequirements === true) {
@@ -199,6 +187,72 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-2">
+                                                <label htmlFor="refDate">Fecha de Referencia</label>
+                                                <Field
+                                                    name="refDate"
+                                                    type="date"
+                                                    id="refDate"
+                                                    placeholder="Seleccione la fecha de referencia"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="refDate" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="cartNumber">Número de Carta</label>
+                                                <Field
+                                                    name="cartNumber"
+                                                    type="text"
+                                                    id="cartNumber"
+                                                    placeholder="Ingrese el número de carta"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="url">URL</label>
+                                                <Field
+                                                    name="url"
+                                                    type="text"
+                                                    id="url"
+                                                    placeholder="Ingrese la URL"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="url" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
+                                                <Field
+                                                    name="fechaSorteo"
+                                                    type="text"
+                                                    id="fechaSorteo"
+                                                    placeholder="Ingrese la fecha de sorteo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="fechaSorteo" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="horaSorteo">Hora de Sorteo</label>
+                                                <Field
+                                                    name="horaSorteo"
+                                                    type="text"
+                                                    id="horaSorteo"
+                                                    placeholder="Ingrese la hora de sorteo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="lugarPresencial">Lugar Presencial</label>
+                                                <Field
+                                                    name="lugarPresencial"
+                                                    type="text"
+                                                    id="lugarPresencial"
+                                                    placeholder="Ingrese el lugar presencial"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field
                                                     name="observations"
@@ -222,13 +276,11 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary ltr:ml-4 rtl:mr-4"
-                                                    disabled={!pdfAvailable || isSubmitting || isLoading}
+                                                    disabled={isSubmitting}
                                                 >
-                                                    {isLoading
-                                                        ? 'Verificando PDF...'
-                                                        : !pdfAvailable
-                                                            ? 'No disponible'
-                                                            : 'Guardar'}
+                                                    {isSubmitting
+                                                        ? 'Guardando...'
+                                                        : 'Guardar'}
                                                 </button>
                                             </div>
                                         </Form>

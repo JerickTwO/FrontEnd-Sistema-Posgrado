@@ -65,26 +65,6 @@ const uploadPdfDocument = async (id, pdfData) => {
     }
 };
 
-const checkPdfExists = async (id) => {
-    try {
-        const response = await axios.get(`${PDF_API_URL}/${id}/exists`, getAuthHeaders());
-        return response.data.exists;
-    } catch (error) {
-        console.error('Error checking if PDF exists', error);
-        throw error;
-    }
-};
-
-const viewPdfDocument = async (id) => {
-    try {
-        const response = await axios.get(`${PDF_API_URL}/${id}/view`, getAuthHeaders());
-        return response.data.pdfData;
-    } catch (error) {
-        console.error('Error viewing PDF document', error);
-        throw error;
-    }
-};
-
 const deletePdfDocument = async (id) => {
     try {
         const response = await axios.delete(`${PDF_API_URL}/${id}/delete`, getAuthHeaders());
@@ -95,14 +75,11 @@ const deletePdfDocument = async (id) => {
     }
 };
 
-// Exportar todos los métodos
 export default {
     getAllConstancyThesis,
     editConstancyThesis,
     getConstancyByStudentCode,
     deleteConstancyThesis,
     uploadPdfDocument,
-    checkPdfExists,
-    viewPdfDocument,
     deletePdfDocument,
 };

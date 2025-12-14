@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import PdfFive from '../pdfSteps/Paso-5-1';
 import Pagination from '../Pagination';
-import ThesisUpload from './ThesisUpload';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 
@@ -21,7 +20,6 @@ const ThesisTable = ({ thesis, onEdit }) => {
                 infoStepTable={thesisItem}
                 PdfDocument={PdfFive}
                 fileName={fileName}
-                fields = {{ constacia: 1 }}
             />
         );
     };
@@ -36,7 +34,6 @@ const ThesisTable = ({ thesis, onEdit }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
-                            <th>PDF</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -68,9 +65,6 @@ const ThesisTable = ({ thesis, onEdit }) => {
                                     <td>{thesisItem.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.name || 'N/A'}</td>
                                     <td>{thesisItem.meetsRequirements ? 'Sí' : 'No'}</td>
                                     <td>{formatDate(thesisItem.updatedAt)}</td>
-                                    <td>
-                                        <ThesisUpload thesisId={thesisItem.id} />
-                                    </td>
                                     <td className="flex gap-4 items-center justify-center">
                                         {
                                             getDownloadButton(thesisItem)

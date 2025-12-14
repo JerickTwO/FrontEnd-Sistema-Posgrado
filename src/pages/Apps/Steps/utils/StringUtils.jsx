@@ -91,8 +91,8 @@ export function extractJurysInfo(THREE_STEP_INFO) {
 
     const presidentNames = `${president?.degree} ${president?.firstNames} ${president?.lastName} ${president?.middleName || ''}`?.toUpperCase().trim();
     const firstMemberNames = `${firstMember?.degree} ${firstMember?.firstNames} ${firstMember?.lastName} ${firstMember?.middleName || ''}`?.toUpperCase().trim();
-    const secondMemberNames = `${secondMember?.degree} ${secondMember?.firstNames} ${secondMember?.firstNames} ${secondMember?.lastName} ${secondMember?.middleName || ''}`?.toUpperCase().trim();
-    const accessoryNames = `${accessory?.degree} ${accessory?.firstNames} ${accessory?.firstNames} ${accessory?.lastName} ${accessory?.middleName || ''}`?.toUpperCase().trim();
+    const secondMemberNames = `${secondMember?.degree} ${secondMember?.firstNames} ${secondMember?.lastName} ${secondMember?.middleName || ''}`?.toUpperCase().trim();
+    const accessoryNames = `${accessory?.degree} ${accessory?.firstNames} ${accessory?.lastName} ${accessory?.middleName || ''}`?.toUpperCase().trim();
 
     return {
         presidentNames,
@@ -101,3 +101,25 @@ export function extractJurysInfo(THREE_STEP_INFO) {
         accessoryNames,
     };
 }
+
+
+const normalizeUrl = (value = '') => {
+    const trimmed = value.trim();
+    if (!trimmed) {
+        return '';
+    }
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const urlRegex = /^(https?:\/\/)([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*)$/i;
+
+export const validateUrl = (value) => {
+    const normalized = normalizeUrl(value);
+    if (!normalized) {
+        return 'Ingrese la url';
+    }
+    if (!urlRegex.test(normalized)) {
+        return 'Ingrese una URL válida';
+    }
+    return undefined;
+};
