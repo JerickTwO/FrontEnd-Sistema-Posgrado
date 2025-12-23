@@ -15,7 +15,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
     const deanName = institutionalInfo?.deanName;
     const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${actualDate}`;
-    const articleNumber = infoStep?.secondDeanResolution;
+    const articleNumber = infoStep?.articleNumber;
     const additionalInputsList =
         typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
             ? infoStep.additionalInputs
