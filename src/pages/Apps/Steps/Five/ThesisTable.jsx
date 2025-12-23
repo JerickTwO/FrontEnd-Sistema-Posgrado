@@ -3,6 +3,7 @@ import PdfFive from '../pdfSteps/Paso-5-1';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
+import ConstancyView from './ConstancyView';
 
 const ThesisTable = ({ thesis, onEdit }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,6 +35,7 @@ const ThesisTable = ({ thesis, onEdit }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
+                            <th className="!text-center">PDF</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -65,6 +67,9 @@ const ThesisTable = ({ thesis, onEdit }) => {
                                     <td>{thesisItem.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.name || 'N/A'}</td>
                                     <td>{thesisItem.meetsRequirements ? 'Sí' : 'No'}</td>
                                     <td>{formatDate(thesisItem.updatedAt)}</td>
+                                    <td>
+                                        <ConstancyView constancyId={thesisItem.id} />
+                                    </td>
                                     <td className="flex gap-4 items-center justify-center">
                                         {
                                             getDownloadButton(thesisItem)

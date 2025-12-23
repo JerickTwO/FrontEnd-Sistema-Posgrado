@@ -4,6 +4,7 @@ import Pagination from '../Pagination';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import PdfTwo from '../pdfSteps/PdfTwo';
 import DownloadDocs from '../utils/DownloadButton';
+import ApprovalView from './ApprovalView';
 
 const ApprovalTable = ({ projects, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,6 +42,7 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                             <th>Asesor</th>
                             <th>Co-Asesor</th>
                             <th>Última Actualización</th>
+                            <th className="!text-center">PDF</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -70,6 +72,9 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                                     <td>{project.adviser ? `${project.adviser.firstNames || ' '} ${project.adviser.lastName || ' '}` : 'N/A'}</td>
                                     <td>{project.coadviser ? `${project.coadviser.firstNames || ' '} ${project.coadviser.lastName || ' '}` : 'N/A'}</td>
                                     <td>{formatDate(project.updatedAt)}</td>
+                                    <td>
+                                        <ApprovalView approvalId={project.id} />
+                                    </td>
                                     <td className="flex gap-4 items-center justify-center">
                                         {getDownloadButton(project)}
                                         <button

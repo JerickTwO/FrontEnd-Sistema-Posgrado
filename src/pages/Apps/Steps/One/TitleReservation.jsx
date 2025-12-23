@@ -112,14 +112,13 @@ const TitleReservation = () => {
         }
     };
 
-    const addTitleReservations = async (selectedStudents, thesisTitle) => {
+    const addTitleReservations = async (selectedStudents) => {
         setIsLoading(true);
         setIsDisabled(true);
         try {
             const titleReservationData = {
                 student: { id: selectedStudents[0].value },
                 studentTwo: selectedStudents.length > 1 ? { id: selectedStudents[1].value } : undefined,
-                title: thesisTitle || '',
             };
             const response = await titleReservationsService.addTitleReservation(titleReservationData);
             if (!response) {
@@ -267,12 +266,10 @@ const TitleReservation = () => {
                 initialValues={{
                     career: editingReservation ? editingReservation.career : null,
                     students: editingReservation ? editingReservation.students : [],
-                    thesisTitle: editingReservation?.title || '',
                 }}
                 validationSchema={Yup.object().shape({
                     career: Yup.object().nullable().required('Debes seleccionar una carrera'),
                     students: Yup.array().min(1, 'Debes seleccionar al menos un estudiante').max(2, 'Solo puedes seleccionar hasta dos estudiantes'),
-                    thesisTitle: Yup.string().required('El título de tesis es obligatorio'),
                 })}
                 enableReinitialize={true}
                 onSubmit={(values, { setSubmitting, resetForm }) => {

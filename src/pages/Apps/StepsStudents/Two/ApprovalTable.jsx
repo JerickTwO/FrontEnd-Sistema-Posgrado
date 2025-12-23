@@ -1,4 +1,5 @@
 import { showObservations } from "../utils/ShowObservations";
+import ApprovalUpload from './ApprovalUpload';
 const ApprovalTable = ({ project }) => {
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -38,9 +39,11 @@ const ApprovalTable = ({ project }) => {
 
                                 <td>{new Date(project.updatedAt).toLocaleString()}</td>
                                 <td>
-                                    <button className="btn btn-sm btn-outline-success" onClick={() => showObservations(project.observations)}>
-                                        Observaciones
-                                    </button>
+                                    <ApprovalUpload 
+                                        projectId={project.id} 
+                                        meetsRequirements={project.meetRequirements} 
+                                        observations={project.observations}
+                                    />
                                 </td>
                             </tr>
                         ) : (

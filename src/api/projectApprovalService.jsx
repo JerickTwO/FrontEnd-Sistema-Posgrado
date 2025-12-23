@@ -113,6 +113,49 @@ const deleteProjectApproval = async (id) => {
     }
 };
 
+// PDF (Base64) para Paso 2
+const uploadPdfBase64 = async (id, pdfData) => {
+    try {
+        const response = await axios.post(`${PROJECTAPPROVAL_API_URL}/${id}/uploadPdf`, { pdfData }, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al subir el PDF (base64):', error);
+        throw error;
+    }
+};
+
+const viewPdfBase64 = async (id) => {
+    try {
+        const response = await axios.get(`${PROJECTAPPROVAL_API_URL}/${id}/viewPdf`, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return response.data.pdfData;
+    } catch (error) {
+        console.error('Error al obtener el PDF (base64):', error);
+        throw error;
+    }
+};
+
+const deletePdfBase64 = async (id) => {
+    try {
+        const response = await axios.delete(`${PROJECTAPPROVAL_API_URL}/${id}/deletePdf`, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al eliminar el PDF (base64):', error);
+        throw error;
+    }
+};
+
 export default {
     getProjectApproval,
     addProjectApproval,
@@ -120,4 +163,7 @@ export default {
     getProjectByStudentCode,
     getProjectApprovalById,
     deleteProjectApproval,
+    uploadPdfBase64,
+    viewPdfBase64,
+    deletePdfBase64,
 };

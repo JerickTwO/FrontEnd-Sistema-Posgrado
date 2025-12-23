@@ -51,6 +51,17 @@ const deleteConstancyThesis = async (id) => {
     }
 };
 
+// Ver PDF (base64) Paso 5
+const viewPdfDocument = async (id) => {
+    try {
+        const response = await axios.get(`${PDF_API_URL}/${id}/view`, getAuthHeaders());
+        return response.data.pdfData;
+    } catch (error) {
+        console.error('Error getting PDF document', error);
+        throw error;
+    }
+};
+
 const uploadPdfDocument = async (id, pdfData) => {
     if (!id) {
         console.error('ID is undefined!');
@@ -82,4 +93,5 @@ export default {
     deleteConstancyThesis,
     uploadPdfDocument,
     deletePdfDocument,
+    viewPdfDocument,
 };
