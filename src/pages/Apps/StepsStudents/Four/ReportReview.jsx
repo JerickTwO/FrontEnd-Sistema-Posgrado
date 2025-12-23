@@ -24,7 +24,7 @@ const ReportReview = () => {
     }, [user.username]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Revisión de Reporte'));
+        dispatch(setPageTitle('Filtro de similitud II'));
 
         if (user.username) {
             fetchReports();
@@ -37,7 +37,7 @@ const ReportReview = () => {
 
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 4 - Revisión de Reporte</h1>
+            <h1 className="text-2xl font-bold mb-5">Paso 4 - Filtro de similitud II</h1>
             <ReportTable approval={report} />
         </>
     );

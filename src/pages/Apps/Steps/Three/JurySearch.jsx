@@ -14,7 +14,7 @@ const Header = ({ search, setSearch, careerOptions, selectedCareer, setSelectedC
     return (
         <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex flex-col">
-                <h2 className="text-2xl font-bold mb-5">Designación de Jurados</h2>
+                <h2 className="text-2xl font-bold mb-5">Revisión de Tesis</h2>
 
             </div>
             <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto">

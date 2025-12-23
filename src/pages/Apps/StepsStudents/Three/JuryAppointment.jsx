@@ -33,7 +33,7 @@ const JuryAppointment = () => {
   }
   return (
     <>
-      <h1 className="text-2xl font-bold mb-5">Paso 3 - Designación de Jurados</h1>
+      <h1 className="text-2xl font-bold mb-5">Paso 3 - Revisión de Tesis</h1>
       <JuryTable jury={jury} />
     </>
   );

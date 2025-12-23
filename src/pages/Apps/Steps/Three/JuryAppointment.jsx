@@ -24,7 +24,7 @@ const JuryAppoiment = () => {
     const [info, setInfo] = useState(null);
 
     useEffect(() => {
-        dispatch(setPageTitle('Designación de Jurados'));
+        dispatch(setPageTitle('Revisión de Tesis'));
         fetchJuryAppointment();
         fetchCareers();
         fetchInfo();

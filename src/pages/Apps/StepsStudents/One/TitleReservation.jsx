@@ -36,7 +36,7 @@ const TitleReservation = () => {
     }, [dispatch, user.username, fetchTitleReservationStepOne]);
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 1 - Subir Proyecto de Tesis</h1>
+            <h1 className="text-2xl font-bold mb-5">Paso 1 - Reserva de Título</h1>
             <ReservationTable reservation={reservation} user={user.username} apiError={apiError} />
         </>
     );

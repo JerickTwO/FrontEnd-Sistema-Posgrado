@@ -24,7 +24,7 @@ const ProjectApproval = () => {
     }, [user.username]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Aprobación de Proyecto'));
+        dispatch(setPageTitle('Filtro de Similitud'));
         if (user.username) {
             fetchProjects();
         }
@@ -32,8 +32,7 @@ const ProjectApproval = () => {
 
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 2 - Aprobación de Proyecto</h1>
-            {/* Puedes pasar la información de proyectos al componente de tabla */}
+            <h1 className="text-2xl font-bold mb-5">Paso 2 - Filtro de Similitud</h1>
             <ApprovalTable project={project} />
         </>
     );
