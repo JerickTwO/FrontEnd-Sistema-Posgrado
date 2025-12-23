@@ -142,7 +142,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                     }}
                                     enableReinitialize
                                 >
-                                    {({ setFieldValue }) => {
+                                    {({ setFieldValue, values  }) => {
                                         return (
 
                                             <Form className="grid gap-6 grid-cols-2 w-[100%]">
@@ -179,69 +179,11 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                         </label>
                                                     </div>
                                                 </div>
-                                                
-                                                
-                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                    Información de Actas
-                                                </div>
-                                                                                                <div className="col-span-1">
-                                                    <label htmlFor="secondDeanResolution">Número de Artículo</label>
-                                                    <Field name="secondDeanResolution" type="text" id="secondDeanResolution" placeholder="000" className="form-input" />
-                                                    <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="actDate">Primera Fecha de Acta</label>
-                                                    <Field name="actDate" type="date" id="actDate" placeholder="Ingrese la Fecha de Acta" className="form-input" />
-                                                    <ErrorMessage name="actDate" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="actTime">Primera Hora de Acta</label>
-                                                    <Field name="actTime" type="time" id="actTime" placeholder="Ingrese la Hora de Acta" className="form-input" />
-                                                    <ErrorMessage name="actTime" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="secondActDate">Segunda fecha de Acta</label>
-                                                    <Field name="secondActDate" type="date" id="secondActDate" placeholder="Ingrese la Segunda Fecha de Acta" className="form-input" />
-                                                    <ErrorMessage name="secondActDate" component="div" className="text-danger mt-1" />
-                                                </div>
-
-                                                <div className="col-span-1">
-                                                    <label htmlFor="hour">Segunda Hora de Acta</label>
-                                                    <Field name="hour" type="time" id="hour" placeholder="Ingrese la hora" className="form-input" />
-                                                    <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="numberFolio">Número de Folio</label>
-                                                    <Field name="numberFolio" type="text" id="numberFolio" placeholder="Ingrese el número de folio" className="form-input" />
-                                                    <ErrorMessage name="numberFolio" component="div" className="text-danger mt-1" />
-                                                </div> */}
-                                                {/* TERCER RESOLUCION */}
-                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-
-                                                    Información de Carta
-                                                </div> */}
-                                                {/* <div className="col-span-1">
-                                                    <label htmlFor="futDate">Fecha FUT</label>
-                                                    <Field name="futDate" type="date" id="futDate" className="form-input" />
-                                                    <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
-                                                </div> */}
-
-                                                {/* <div className="col-span-1">
-                                                    <label htmlFor="numberDeanResolution">Fecha de Acta de Jurados</label>
-                                                    <Field name="numberDeanResolution" type="date" id="numberDeanResolution" placeholder="Ingrese el número de resolución decanal" className="form-input" />
-                                                    <ErrorMessage name="numberDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div> */}
-
-                                                {/* <div className="col-span-1">
-                                                    <label htmlFor="secondNumberDeanResolution">Segunda Fecha de Acta de Jurados</label>
-                                                    <Field name="secondNumberDeanResolution" type="date" id="secondNumberDeanResolution" placeholder="Ingrese el segundo número de resolución decanal" className="form-input" />
-                                                    <ErrorMessage name="secondNumberDeanResolution" component="div" className="text-danger mt-1" />
-                                                </div> */}
-                                                {/* <FieldArray name="additionalInputs">
+                                                <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
                                                         values.additionalInputs.map((_, index) => (
                                                             <div key={index} className="col-span-1">
-                                                                <label htmlFor="additionalInputs">Resolución {index + 1}</label>
+                                                                <label htmlFor="additionalInputs">Ref {index + 1}</label>
                                                                 <div className="flex gap-2">
 
                                                                     <Field
@@ -271,147 +213,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                             </div>
                                                         ))
                                                     )}
-                                                </FieldArray> */}
-                                                {/* <FieldArray name="textattached">
-                                                    {({ push, remove }) => (
-                                                        values.textattached.map((_, index) => (
-                                                            <div key={index} className="col-span-1">
-                                                                <label htmlFor="textAtached">Texto Adjuntado {index + 1}</label>
-                                                                <div className="flex gap-2">
-
-                                                                    <Field
-                                                                        name={`textattached.${index}`}
-                                                                        type="text"
-                                                                        placeholder={`Campo ${index + 1}`}
-                                                                        className="form-input"
-                                                                    />
-                                                                    <button
-                                                                        type="button"
-                                                                        className="btn btn-sm btn-danger"
-                                                                        onClick={() => remove(index)}
-                                                                    >
-                                                                        ×
-                                                                    </button>
-
-                                                                    {index === values.textattached.length - 1 && values.textattached.length < 5 && (
-                                                                        <button
-                                                                            type="button"
-                                                                            className="btn btn-sm btn-outline-primary"
-                                                                            onClick={() => push('')}
-                                                                        >
-                                                                            +
-                                                                        </button>
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        ))
-                                                    )}
-                                                </FieldArray> */}
-                                                {/* <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                    Información de Carta Multiple
-                                                </div>
-
-                                                <div className="col-span-1">
-                                                    <label htmlFor="secondArticleNumber">Segundo Número de Artículo</label>
-                                                    <Field name="secondArticleNumber" type="text" id="secondArticleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
-                                                    <ErrorMessage name="secondArticleNumber" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="refDateMCart">Fecha de Referencia</label>
-                                                    <Field
-                                                        name="refDateMCart"
-                                                        type="date"
-                                                        id="refDateMCart"
-                                                        placeholder="Ingrese la fecha de Referencia"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="refDateMCart" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="reg">Reg</label>
-                                                    <Field
-                                                        name="reg"
-                                                        type="number"
-                                                        id="reg"
-                                                        placeholder="Ingrese el reg"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                                </div>
-                                            
-                                                <div className="col-span-1">
-                                                    <label htmlFor="observations">Observaciones</label>
-                                                    <Field name="observations" as="textarea" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}
-                                                        style={{
-                                                            cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
-                                                            opacity: values.meetRequirements === 'yes' ? 0.5 : 1,
-                                                        }} />
-                                                    <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-
-                                                    Jurados
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="president">Seleccionar Presidente</label>
-                                                    <Select
-                                                        id="president"
-                                                        styles={styles}
-                                                        options={filterOptions(selectedValues, values.president)}
-                                                        value={values.president}
-                                                        onChange={(option) => setFieldValue('president', option)}
-                                                        placeholder="Seleccione un presidente..."
-                                                        isClearable
-                                                    />
-                                                </div>
-
-                                                <div className="col-span-1">
-                                                    <label htmlFor="firstMember">Seleccionar Primer Miembro</label>
-                                                    <Select
-                                                        id="firstMember"
-                                                        styles={styles}
-                                                        options={filterOptions(selectedValues, values.firstMember)}
-                                                        value={values.firstMember}
-                                                        onChange={(option) => setFieldValue('firstMember', option)}
-                                                        placeholder="Seleccione un primer miembro..."
-                                                        isClearable
-                                                    />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="secondMember">Seleccionar Segundo Miembro</label>
-                                                    <Select
-                                                        id="secondMember"
-                                                        styles={styles}
-                                                        options={filterOptions(selectedValues, values.secondMember)}
-                                                        value={values.secondMember}
-                                                        onChange={(option) => setFieldValue('secondMember', option)}
-                                                        placeholder="Seleccione un segundo miembro..."
-                                                        isClearable
-                                                    />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="accessory">Seleccionar Accesitario</label>
-                                                    <Select
-                                                        id="accessory"
-                                                        styles={styles}
-                                                        options={filterOptions(selectedValues, values.accessory)}
-                                                        value={values.accessory}
-                                                        onChange={(option) => setFieldValue('accessory', option)}
-                                                        placeholder="Seleccione un accesitario..."
-                                                        isClearable
-                                                    />
-                                                </div>
-
-                                                <div className="col-span-1">
-                                                    <label htmlFor="adviser">Asesor</label>
-                                                    <Select id="adviser" styles={styles} value={values.adviser} isDisabled placeholder="Asesor seleccionado" />
-                                                </div>
-
-                                                <div className="col-span-1">
-                                                    <label htmlFor="coadviser">Segundo Asesor</label>
-                                                    <Select id="coadviser" styles={styles} value={values.coadviser} isDisabled placeholder="Segundo Asesor seleccionado" />
-                                                </div>
-                                                */}
+                                                </FieldArray>
                                                 <div className="flex justify-end items-center mt-8 col-span-2">
                                                     <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                         Cancelar

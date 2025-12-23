@@ -43,8 +43,20 @@ const styles = StyleSheet.create({
     underline: {
         textDecoration: 'underline',
     },
-    right : {
+    right: {
         textAlign: 'right',
+    },
+    row: {
+        flexDirection: 'row',
+        marginBottom: 2,
+    },
+    label: {
+        width: 60,
+        fontSize: 11,
+    },
+    content: {
+        flex: 1,
+        fontSize: 11,
     },
 });
 export default styles;

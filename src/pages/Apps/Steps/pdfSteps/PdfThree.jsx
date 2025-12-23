@@ -16,6 +16,13 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
     const deanName = institutionalInfo?.deanName;
     const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${actualDate}`;
     const articleNumber = infoStep?.secondDeanResolution;
+    const additionalInputsList =
+        typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
+            ? infoStep.additionalInputs
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean)
+            : null;
 
     return (
         <PdfBase commemorativeText={false} registrationNumber={infoStep?.reg}>
@@ -33,8 +40,22 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                 <Text style={[styles.bold, styles.underline]}>Presente.-</Text>
             </View>
             <View style={styles.section}>
-                <Text><Text>Asunto</Text>                      :Formalizar aprobación del Proyecto de tesis.</Text>
-                <Text><Text>Ref.</Text>                           :Solicitud S/N</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Asunto</Text>
+                    <Text style={styles.content}>: Formalizar aprobación del Proyecto de tesis.</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Ref.</Text>
+                    <View style={styles.content}>
+                        {additionalInputsList && additionalInputsList.map((input, idx) => (
+                            <Text key={idx}>
+                                {idx === 0 ? `: Solicitud ${input}` : `  ${input}`}
+                            </Text>
+                        ))}
+                    </View>
+                </View>
+            </View>
+            <View style={styles.section}>
                 <Text><Text style={styles.right}>Reg. N°</Text> {regNumber}</Text>
             </View>
             <View style={styles.section}>
