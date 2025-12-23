@@ -20,7 +20,6 @@ const NotificationTable = ({ notification, onEdit }) => {
                 infoStepTable={notification}
                 PdfDocument={PdfSixMM}
                 fileNames={fileName}
-                fields = {{ memorando_mult: 1 }}
             />
         );
 

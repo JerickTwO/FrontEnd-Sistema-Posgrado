@@ -23,6 +23,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
             location: notification?.location || '',
             articleNumber: notification?.articleNumber || '',
             reg: notification?.reg || '',
+            memorando_mult: notification?.memorando_mult || '',
             additionalInputs: notification?.additionalInputs?.split(', ') || [''],
         }),
         [notification]
@@ -60,6 +61,8 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                             location: values.location,
                                             articleNumber: values.articleNumber,
                                             reg: values.reg || '',
+                                            // Nuevo campo para memorando múltiple, como string
+                                            memorando_mult: values.memorando_mult || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                         };
                                         if (values.meetRequirements === 'yes' && notification?.meetRequirements !== true) {
@@ -181,6 +184,17 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="memorando_mult">Nº Memorando Múltiple</label>
+                                                <Field
+                                                    name="memorando_mult"
+                                                    type="text"
+                                                    id="memorando_mult"
+                                                    placeholder="Ingrese el número de memorando"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="memorando_mult" component="div" className="text-danger mt-1" />
                                             </div>
                                             <FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (

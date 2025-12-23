@@ -25,7 +25,7 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
     return (
         <PdfBase showCommemorativeText={false} registrationNumber={infoStep?.reg}>
             <Text style={styles.h1}>
-                MEMORANDO MULTIPLE Nº {incrementFields?.memorando_mult}-{anio}-D. UI-FI-UNAMBA.
+                MEMORANDO MULTIPLE Nº {infoStep?.memorando_mult}-{anio}-D. UI-FI-UNAMBA.
             </Text>
             <Text>{formattedDayWithAddedOne}</Text>
             <View style={styles.section}>
