@@ -112,13 +112,14 @@ const TitleReservation = () => {
         }
     };
 
-    const addTitleReservations = async (selectedStudents) => {
+    const addTitleReservations = async (selectedStudents, thesisTitle) => {
         setIsLoading(true);
         setIsDisabled(true);
         try {
             const titleReservationData = {
                 student: { id: selectedStudents[0].value },
                 studentTwo: selectedStudents.length > 1 ? { id: selectedStudents[1].value } : undefined,
+                title: thesisTitle || '',
             };
             const response = await titleReservationsService.addTitleReservation(titleReservationData);
             if (!response) {
@@ -190,6 +191,7 @@ const TitleReservation = () => {
                 meetsRequirements: values.meetRequirements === 'yes',
                 observations: values.observation || '',
                 message: values.message || '',
+                title: values.title || values.thesisTitle || '',
                 lineOfResearch: values.lineOfResearch ? { id: values.lineOfResearch.value } : null,
             };
 
@@ -265,10 +267,12 @@ const TitleReservation = () => {
                 initialValues={{
                     career: editingReservation ? editingReservation.career : null,
                     students: editingReservation ? editingReservation.students : [],
+                    thesisTitle: editingReservation?.title || '',
                 }}
                 validationSchema={Yup.object().shape({
                     career: Yup.object().nullable().required('Debes seleccionar una carrera'),
                     students: Yup.array().min(1, 'Debes seleccionar al menos un estudiante').max(2, 'Solo puedes seleccionar hasta dos estudiantes'),
+                    thesisTitle: Yup.string().required('El título de tesis es obligatorio'),
                 })}
                 enableReinitialize={true}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -283,7 +287,7 @@ const TitleReservation = () => {
                                 })
                                 .catch(() => setSubmitting(false));
                         } else {
-                            addTitleReservations(selectedStudents)
+                            addTitleReservations(selectedStudents, values.thesisTitle)
                                 .then(() => {
                                     resetForm();
                                     setSubmitting(false);

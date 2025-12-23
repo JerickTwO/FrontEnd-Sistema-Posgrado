@@ -38,6 +38,7 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
     // Validación reducida a los campos realmente presentes en el formulario
     const validationSchema = Yup.object({
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
+        title: Yup.string().required('El título de tesis es obligatorio'),
         message: Yup.string().required('El título/mensaje es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         observation: Yup.string(),
@@ -48,12 +49,13 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         studentTwoCode: reservation?.studentTwo?.studentCode || '',
         meetRequirements: reservation?.meetsRequirements ? 'yes' : 'no',
         observation: reservation?.observations || '',
-        message: reservation?.message || reservation?.message || '',
+        title: reservation?.title || '',
+        message: reservation?.message || reservation?.mensaje || '',
         lineOfResearch: lineOptions.find((option) => option.value === reservation?.lineOfResearch?.id) || null,
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        const payload = { ...values, message: values.message };
+        const payload = { ...values, title: values.title, message: values.message };
         await onSave(reservation.id, payload);
         setSubmitting(false);
     };
@@ -104,6 +106,17 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                         <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                     </div>
                                                 )}
+                                                <div className={submitCount && errors.title ? 'has-error' : ''}>
+                                                    <label htmlFor="title">Título de tesis</label>
+                                                    <Field
+                                                        name="title"
+                                                        type="text"
+                                                        id="title"
+                                                        placeholder="Ingrese el título de la tesis"
+                                                        className="form-input"
+                                                    />
+                                                    <ErrorMessage name="title" component="div" className="text-danger mt-1" />
+                                                </div>
                                                 <div className={submitCount && errors.message ? 'has-error' : ''}>
                                                     <label htmlFor="message">Mensaje</label>
                                                     <Field

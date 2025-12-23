@@ -4,24 +4,6 @@ import titleReservationsService from '../../../../api/titleReservationsService';
 import { showObservations } from '../utils/ShowObservations';
 const TitleUpload = ({ reservaId, meetsRequirements, observations }) => {
     const [pdfDocumentId, setPdfDocumentId] = useState(null);
-    useEffect(() => {
-        if (!reservaId) {
-            console.error('El ID de la reserva es undefined.');
-            return;
-        } // Llamada al backend para verificar si hay un PDF asociado
-        titleReservationsService
-            .viewPdf(reservaId)
-            .then((pdfData) => {
-                if (pdfData) {
-                    setPdfDocumentId(true); // Indica que el PDF está cargado
-                } else {
-                    setPdfDocumentId(null);
-                }
-            })
-            .catch((error) => {
-                console.error('Error al cargar la reservación:', error);
-            });
-    }, [reservaId]);
 
     const uploadFile = () => {
         Swal.fire({
