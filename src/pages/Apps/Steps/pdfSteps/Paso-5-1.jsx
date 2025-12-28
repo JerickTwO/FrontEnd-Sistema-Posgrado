@@ -1,12 +1,15 @@
 import PdfBase from './PdfBase';
 import { Text, View, Link } from '@react-pdf/renderer';
+import { useEffect, useState } from 'react';
+import TeacherService from '../../../../api/teacherService.jsx';
 import styles from './styles/PdfFive';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 
 const PdfFiveOne = ({ infoStep, incrementFields }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
-    const jurados = infoStep?.jurados || [
+
+    const defaultNombrados = [
         'Dr. DANIEL AMILCAR PINTO PAGAZA',
         'Dr. JOSÉ ABDON SOTOMAYOR CHAHUAYLLA',
         'Dr. MAURICIO RAÚL ESCALANTE CÁRDENAS',
@@ -29,6 +32,21 @@ const PdfFiveOne = ({ infoStep, incrementFields }) => {
         'Mgt. ERIKA LOA NAVARRO',
         'Mg. EDGAR MEZA MESCCO',
     ];
+    const [nombrados, setNombrados] = useState(infoStep?.nombrados || defaultNombrados);
+
+    useEffect(() => {
+        const fetchNombrados = async () => {
+            try {
+                const teachers = await TeacherService.getTeachers();
+                const activos = (teachers || []).filter(t => t.nombrado === true);
+                const pref = grado => grado ? `${grado}.` : '';
+                const nombres = activos.map(t => `${pref(t.degree)} ${t.firstNames} ${t.lastName} ${t.middleName}`.trim());
+                if (nombres.length > 0) setNombrados(nombres);
+            } catch (e) {
+                console.error('Error fetching teachers for nombrados:', e);}
+        };
+        fetchNombrados();
+    }, []);
     
     const asunto = 'COMUNICO PROGRAMACIÓN DE SORTEO DE JURADOS DE TESIS, DE MANERA PRESENCIAL Y/O VIRTUAL';
     const fechaSorteo = infoStep?.fechaSorteo || '';
@@ -47,13 +65,13 @@ const PdfFiveOne = ({ infoStep, incrementFields }) => {
                 <Text style={styles.bold}>Señores:</Text>
                 <View style={{ flexDirection: 'row', width: '100%' }}>
                     <View style={{ width: '50%', marginRight: '6px' }}>
-                        {jurados.slice(0, Math.ceil(jurados.length / 2)).map((nombre, idx) => (
+                        {nombrados.slice(0, Math.ceil(nombrados.length / 2)).map((nombre, idx) => (
                             <Text key={idx} style={styles.justify}>{nombre}</Text>
                         ))}
                     </View>
                     <View style={{ width: '50%' }}>
-                        {jurados.slice(Math.ceil(jurados.length / 2)).map((nombre, idx) => (
-                            <Text key={idx + Math.ceil(jurados.length / 2)} style={styles.justify}>{nombre}</Text>
+                        {nombrados.slice(Math.ceil(nombrados.length / 2)).map((nombre, idx) => (
+                            <Text key={idx + Math.ceil(nombrados.length / 2)} style={styles.justify}>{nombre}</Text>
                         ))}
                     </View>
                 </View>

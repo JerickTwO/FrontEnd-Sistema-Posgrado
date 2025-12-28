@@ -38,6 +38,7 @@ const validationSchema = Yup.object().shape({
         .matches(/\d+/, 'Celular solo puede contener números'),
     address: Yup.string().required('Dirección es requerida').max(255, 'Dirección debe tener menos de 255 caracteres'),
     career: Yup.object().required('Campo requerido').nullable(),
+    nombrado: Yup.boolean(),
 
 });
 
@@ -100,6 +101,7 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                         address: teacher?.address || '',
                                         career: careerOptions.find((option) => option.value === teacher?.career?.id) || null,
                                         degree: teacher ? gradoOptions.find(opt => opt.label === teacher.degree) : null,
+                                        nombrado: teacher?.nombrado ?? false,
                                     }}
                                     enableReinitialize={true}
                                     validationSchema={validationSchema}
@@ -107,6 +109,7 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                         const formData = {
                                             ...values,
                                             degree: values.degree?.value,
+                                            nombrado: values.nombrado,
                                         };
                                         onSave(formData);
                                         resetForm();
@@ -219,6 +222,13 @@ const TeacherModal = ({ isOpen, onClose, onSave, teacher, careerOptions }) => {
                                                 <Field name="address" type="text" id="address" placeholder="Ingrese la dirección" maxLength={255} className="form-input" />
                                                 <ErrorMessage name="address" component="div" className="text-danger mt-1" />
                                             </div>
+                                            <div className="col-span-2">
+                                                <label htmlFor="nombrado" className="inline-flex items-center space-x-2">
+                                                    <Field name="nombrado" type="checkbox" id="nombrado" className="form-checkbox" />
+                                                    <span>Nombrado</span>
+                                                </label>
+                                                <ErrorMessage name="nombrado" component="div" className="text-danger mt-1" />
+                                            </div>
                                             <div className="flex justify-end items-center mt-8 col-span-2">
                                                 <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                     Cancelar
@@ -248,10 +258,11 @@ TeacherModal.propTypes = {
         firstNames: PropTypes.string,
         lastName: PropTypes.string,
         middleName: PropTypes.string,
-        birthDate: PropTypes.string, // Asegúrate de que el formato de fecha sea consistente con lo que se espera
+        birthDate: PropTypes.string,
         institutionalEmail: PropTypes.string,
         phone: PropTypes.string,
         address: PropTypes.string,
+        nombrado: PropTypes.bool,
         career: PropTypes.shape({
             id: PropTypes.number.isRequired,
             name: PropTypes.string

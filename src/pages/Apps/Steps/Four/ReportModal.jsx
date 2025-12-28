@@ -105,41 +105,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                 <label htmlFor="secondArticleNumber">Porcentaje de Similitud  </label>
                                                 <Field name="secondArticleNumber" id="secondArticleNumber" placeholder="Ingrese el porcentaje de similitud" className="form-input" />
                                             </div>
-                                            <FieldArray name="additionalInputs">
-                                                {({ push, remove }) => (
-                                                    values.additionalInputs.map((_, index) => (
-                                                        <div key={index} className="col-span-1">
-                                                            <label htmlFor="secondDeanResolution">Resolución {index + 2}</label>
-                                                            <div className="flex gap-2">
-
-                                                                <Field
-                                                                    name={`additionalInputs.${index}`}
-                                                                    type="text"
-                                                                    placeholder={`Campo ${index + 1}`}
-                                                                    className="form-input"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-sm btn-danger"
-                                                                    onClick={() => remove(index)}
-                                                                >
-                                                                    ×
-                                                                </button>
-
-                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 4 && (
-                                                                    <button
-                                                                        type="button"
-                                                                        className="btn btn-sm btn-outline-primary"
-                                                                        onClick={() => push('')}
-                                                                    >
-                                                                        +
-                                                                    </button>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                )}
-                                            </FieldArray>
                                             < div className="col-span-1" >
                                                 <label htmlFor="observations" > Observaciones </label>
                                                 < Field name="observations" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}

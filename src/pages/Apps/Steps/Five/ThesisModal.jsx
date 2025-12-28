@@ -86,6 +86,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                 >
                                     {({ setFieldValue, values, submitCount, errors, isSubmitting }) => (
                                         <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                Primer Documento
+                                            </div>
                                             <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
                                                 <label htmlFor="studentCode">Primer Estudiante</label>
                                                 <Field
@@ -216,6 +219,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                Segundo Documento
                                             </div>
                                             {
                                                 !thesis.meetsRequirements && (

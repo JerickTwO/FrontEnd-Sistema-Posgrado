@@ -7,6 +7,7 @@ class Teacher {
     lastName: string;
     middleName: string;
     birthDate: string;
+    nombrado: boolean;
     institutionalEmail: string;
     phone: string;
     address: string;
@@ -19,6 +20,7 @@ class Teacher {
         lastName: string,
         middleName: string,
         birthDate: string,
+        nombrado: boolean,
         institutionalEmail: string,
         phone: string,
         address: string,
@@ -31,6 +33,7 @@ class Teacher {
         this.lastName = lastName;
         this.middleName = middleName;
         this.birthDate = birthDate;
+        this.nombrado = nombrado;
         this.institutionalEmail = institutionalEmail;
         this.phone = phone;
         this.address = address;
