@@ -15,11 +15,27 @@ const PdfFiveTwo = ({ infoStep, incrementFields }) => {
     const tituloTesis = infoStep?.tituloTesis || '“Marketing en redes sociales y su relación con la experiencia del cliente en empresas formales del sector pastelerías de la ciudad de Abancay, 2025”';
     const presentados = infoStep?.presentados || 'SHABELY SALDIVAR ORTIZ, ESTEFANY INDIRA BRICEÑO SALAS';
 
-    const presidente = infoStep?.presidente || 'Dra Rosario Leticia Valer Montesinos';
-    const primerMiembro = infoStep?.primerMiembro || 'Dr. Julián Oré Leiva';
-    const segundoMiembro = infoStep?.segundoMiembro || 'Mag. Josué Huamani Cayllahua';
-    const accesitario = infoStep?.accesitario || 'Dr. Mauricio Raúl Escalante Cárdenas';
-    const asesor = infoStep?.asesor || 'Dr. José Abdón Sotomayor Chahuaylla';
+    const formatTeacher = (t) => {
+        if (!t) return null;
+        const first = t.firstNames || t.nombres || '';
+        const last = t.lastName || t.apellidos || '';
+        return `${first} ${last}`.trim();
+    };
+
+    const stepThree = infoStep?.reportReviewStepFour?.juryAppointmentStepThree;
+
+    const presidente = (stepThree?.president && formatTeacher(stepThree.president))
+        || infoStep?.presidente || 'Dra Rosario Leticia Valer Montesinos';
+    const primerMiembro = (stepThree?.firstMember && formatTeacher(stepThree.firstMember))
+        || infoStep?.primerMiembro || 'Dr. Julián Oré Leiva';
+    const segundoMiembro = (stepThree?.secondMember && formatTeacher(stepThree.secondMember))
+        || infoStep?.segundoMiembro || 'Mag. Josué Huamani Cayllahua';
+    const accesitario = (stepThree?.accessory && formatTeacher(stepThree.accessory))
+        || infoStep?.accesitario || 'Dr. Mauricio Raúl Escalante Cárdenas';
+    const asesor = (stepThree?.projectApprovalStepTwo?.adviser && formatTeacher(stepThree.projectApprovalStepTwo.adviser))
+        || infoStep?.asesor || 'Dr. José Abdón Sotomayor Chahuaylla';
+    const segundoAsesor = (stepThree?.projectApprovalStepTwo?.coadviser && formatTeacher(stepThree.projectApprovalStepTwo.coadviser))
+        || infoStep?.segundoAsesor || null;
 
     const table = {
         row: { flexDirection: 'row' },
@@ -70,6 +86,12 @@ const PdfFiveTwo = ({ infoStep, incrementFields }) => {
                     <Text style={table.cellCondicion}>Asesor</Text>
                     <Text style={table.cellDato}>{asesor}</Text>
                 </View>
+                {segundoAsesor && (
+                    <View style={table.row}>
+                        <Text style={table.cellCondicion}>Segundo Asesor</Text>
+                        <Text style={table.cellDato}>{segundoAsesor}</Text>
+                    </View>
+                )}
             </View>
 
             <View style={styles.section}>
