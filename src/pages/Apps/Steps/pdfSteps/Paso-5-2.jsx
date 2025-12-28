@@ -24,16 +24,17 @@ const PdfFiveTwo = ({ infoStep, incrementFields }) => {
 
     const stepThree = infoStep?.reportReviewStepFour?.juryAppointmentStepThree;
 
+    const dash = '—';
     const presidente = (stepThree?.president && formatTeacher(stepThree.president))
-        || infoStep?.presidente || 'Dra Rosario Leticia Valer Montesinos';
+        || infoStep?.presidente || dash;
     const primerMiembro = (stepThree?.firstMember && formatTeacher(stepThree.firstMember))
-        || infoStep?.primerMiembro || 'Dr. Julián Oré Leiva';
+        || infoStep?.primerMiembro || dash;
     const segundoMiembro = (stepThree?.secondMember && formatTeacher(stepThree.secondMember))
-        || infoStep?.segundoMiembro || 'Mag. Josué Huamani Cayllahua';
+        || infoStep?.segundoMiembro || dash;
     const accesitario = (stepThree?.accessory && formatTeacher(stepThree.accessory))
-        || infoStep?.accesitario || 'Dr. Mauricio Raúl Escalante Cárdenas';
+        || infoStep?.accesitario || dash;
     const asesor = (stepThree?.projectApprovalStepTwo?.adviser && formatTeacher(stepThree.projectApprovalStepTwo.adviser))
-        || infoStep?.asesor || 'Dr. José Abdón Sotomayor Chahuaylla';
+        || infoStep?.asesor || dash;
     const segundoAsesor = (stepThree?.projectApprovalStepTwo?.coadviser && formatTeacher(stepThree.projectApprovalStepTwo.coadviser))
         || infoStep?.segundoAsesor || null;
 

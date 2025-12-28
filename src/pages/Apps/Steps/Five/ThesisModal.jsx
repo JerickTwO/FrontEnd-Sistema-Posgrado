@@ -26,7 +26,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         firstMember: Yup.object().nullable(),
         secondMember: Yup.object().nullable(),
         accessory: Yup.object().nullable(),
-        adviser: Yup.object().nullable().required('Selecciona asesor'),
+        adviser: Yup.object().nullable(),
         coadviser: Yup.object().nullable(),
     });
 
@@ -172,7 +172,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         />
                                                         <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                    <div className="col-span-1">
+                                                    {/* <div className="col-span-1">
                                                         <label htmlFor="projectSimilarity">Porcentaje de Similitud</label>
                                                         <Field
                                                             name="projectSimilarity"
@@ -199,7 +199,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             className="form-input"
                                                         />
                                                         <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
-                                                    </div>
+                                                    </div> */}
 
                                                     <div className="col-span-1">
                                                         <label htmlFor="reg">Reg</label>
