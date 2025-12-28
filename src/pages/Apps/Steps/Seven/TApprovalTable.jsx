@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PdfSevenC from '../pdfSteps/PdfSevenC';
+import PdfSevenC from '../Pdfs/pdf-6';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';

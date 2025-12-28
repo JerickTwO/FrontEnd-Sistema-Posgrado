@@ -1,8 +1,8 @@
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
-import Logo from './BANNER2025.png';
-import styles from './styles/PdfBaseStyles';
+import Logo from './images/BANNER2025.png';
+import styles from './styles/styleBase';
 import { formatNumberWithZero } from '../utils/Dates';
-import WatermarkLogo from './marcaAgua.png';
+import WatermarkLogo from './images/marcaAgua.png';
 const ConstancyVoucher = ({
     showCommemorativeText,
     commemorativeText,

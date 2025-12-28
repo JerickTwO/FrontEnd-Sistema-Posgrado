@@ -1,6 +1,6 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View, Link } from '@react-pdf/renderer';
-import styles from './styles/PdfSixMMStyles';
+import styles from './styles/Style-6';
 import { formatNumberWithZero, getYear, getWrittenDateFromInput, getWrittenDate, formatDateSpanish } from '../utils/Dates';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
@@ -138,7 +138,7 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                 <Text style={[styles.p]}>Sin otro en particular, aprovecho la oportunidad para expresarle las muestras de mi especial consideración y deferencia personal.</Text>
                 <Text style={[styles.bold, { textAlign: 'center' }]} >Atentamente,</Text>
             </View>
-        </PdfBase >
+        </PdfBase>
     );
 };
 

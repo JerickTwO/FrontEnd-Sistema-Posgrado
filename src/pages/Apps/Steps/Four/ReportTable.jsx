@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import { getReportDetails, formatDate } from '../utils/ReportUtils';
-import PdfFourCM from '../pdfSteps/PdfFourCM';
+import PdfFourCM from '../Pdfs/pdf-4';
 import DownloadDocs from '../utils/DownloadButton'
 
 const ReportTable = ({ reports, onEdit, info }) => {

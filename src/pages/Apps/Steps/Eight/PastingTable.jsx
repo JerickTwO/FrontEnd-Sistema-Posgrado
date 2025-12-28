@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
-import PdfEightCN from '../pdfSteps/PdfEightCN';
+import PdfStepEight from '../Pdfs/pdf-8';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 const PastingTable = ({ pastings, onEdit, info }) => {
@@ -17,7 +17,7 @@ const PastingTable = ({ pastings, onEdit, info }) => {
         return (
             <DownloadDocs
                 infoStepTable={pasting}
-                PdfDocument={PdfEightCN}
+                PdfDocument={PdfStepEight}
                 institutionalInfo={info}
                 fileNames={fileName}
                 fields = {{ constacia: 1 }}

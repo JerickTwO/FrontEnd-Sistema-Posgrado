@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
-import PdfTwo from '../pdfSteps/PdfTwo';
+import PdfTwo from '../Pdfs/pdf-2';
 import DownloadDocs from '../utils/DownloadButton';
 import ApprovalView from './ApprovalView';
 

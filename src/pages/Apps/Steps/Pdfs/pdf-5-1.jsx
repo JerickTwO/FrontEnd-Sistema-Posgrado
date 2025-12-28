@@ -1,9 +1,9 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View, Link } from '@react-pdf/renderer';
 import { useEffect, useState } from 'react';
 import TeacherService from '../../../../api/teacherService.jsx';
-import styles from './styles/PdfFive';
-import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
+import styles from './styles/style-5.jsx';
+import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates.jsx';
 
 const PdfFiveOne = ({ infoStep, incrementFields }) => {
     const anio = getYear();
@@ -91,9 +91,13 @@ const PdfFiveOne = ({ infoStep, incrementFields }) => {
                     {url && (
                         <Text>
                             , y virtual Ingresar al siguiente link:
-                            <Text style={styles.bold}>
-                                <Link src={linkHref} target="_blank"> {url}</Link>
-                            </Text>
+                            {'\n'}
+                            {'\n'}
+                        </Text>
+                    )}
+                    {url && (
+                        <Text style={styles.bold}>  
+                            <Link src={linkHref} target="_blank"> {url}</Link>
                         </Text>
                     )}
                 </Text>

@@ -1,7 +1,7 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
-import styles from './styles/PdfFive.jsx';
-import { getYear } from '../utils/Dates';
+import styles from './styles/style-5.jsx';
+import { getYear } from '../utils/Dates.jsx';
 
 const PdfFiveTwo = ({ infoStep, incrementFields }) => {
     const anio = getYear();

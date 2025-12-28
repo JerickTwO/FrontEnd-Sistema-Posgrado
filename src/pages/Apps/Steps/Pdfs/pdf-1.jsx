@@ -1,4 +1,4 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/PdfTwoStyles';
 import { getWrittenDateYearWrite, getYear } from '../utils/Dates';
@@ -15,7 +15,7 @@ const Pdfone = ({ infoStep, incrementFields, institutionalInfo }) => {
     const commemorativeText = institutionalInfo?.commemorativeText || '';
 
     return (
-        <PdfBase registrationNumber={infoStep?.reg || institutionalInfo?.regNumber} showCommemorativeText={true} commemorativeText={commemorativeText}>
+        <pdfBase registrationNumber={infoStep?.reg || institutionalInfo?.regNumber} showCommemorativeText={true} commemorativeText={commemorativeText}>
             <Text style={styles.h1}>
                 CONSTANCIA Nº {incrementFields?.constacia}-{anio}-D. UIFI-UNAMBA
             </Text>
@@ -50,7 +50,7 @@ const Pdfone = ({ infoStep, incrementFields, institutionalInfo }) => {
             <Text style={styles.p}>Se expide la presente, a solicitud del interesado, a los  {getWrittenDateYearWrite()}, para los fines que estime conveniente.</Text>
             <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]} >Atentamente,</Text>
 
-        </PdfBase >
+        </pdfBase>
     );
 };
 

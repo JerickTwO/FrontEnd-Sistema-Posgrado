@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
-import PdfThree from '../pdfSteps/PdfThree';
+import PdfThree from '../Pdfs/pdf-3';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 

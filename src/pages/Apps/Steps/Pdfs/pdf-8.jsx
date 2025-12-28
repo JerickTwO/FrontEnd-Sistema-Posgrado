@@ -1,9 +1,9 @@
-import styles from './styles/PdfEightCNStyles';
-import Logo from './BANNER2025.png';
+import styles from './styles/style-8';
+import Logo from './images/BANNER2025.png';
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
 import { getYear, formatNumberWithZero, getWrittenDateEmpresa } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
-import WatermarkLogo from './marcaAgua.png';
+import WatermarkLogo from './images/marcaAgua.png';
 
 const PdfEightCN = ({ infoStep, institutionalInfo, incrementFields }) => {
     const currentYear = getYear();

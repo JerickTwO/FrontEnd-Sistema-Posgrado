@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import PdfFiveOne from '../pdfSteps/Paso-5-1';
-import PdfFiveTwo from '../pdfSteps/Paso-5-2';
+import PdfFiveOne from '../Pdfs/pdf-5-1';
+import PdfFiveTwo from '../Pdfs/pdf-5-2';
 import Pagination from '../Pagination';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';

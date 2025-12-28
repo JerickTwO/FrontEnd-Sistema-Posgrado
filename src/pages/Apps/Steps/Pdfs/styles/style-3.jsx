@@ -2,7 +2,6 @@ import { StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
     h1: {
-        textAlign: 'center',
         fontSize: 14,
         marginVertical: 10,
         fontFamily: 'Times-Bold',

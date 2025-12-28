@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
-import PdfSixMM from '../pdfSteps/PdfSixMM';
+import PdfSixMM from '../Pdfs/pdf-6';
 import DownloadDocs from '../utils/DownloadButton';
 const NotificationTable = ({ notification, onEdit }) => {
 

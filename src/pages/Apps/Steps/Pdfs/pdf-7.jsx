@@ -1,6 +1,6 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
-import styles from './styles/PdfSevenCStyles';
+import styles from './styles/Style-7';
 import { getWrittenDate, getYear, formatNumberWithZero } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 import { useEffect, useState } from 'react';
@@ -82,7 +82,6 @@ const PdfThreeC = ({ infoStep, institutionalInfo, incrementFields }) => {
                     </View>
                 </View>
             </View>
-            {/* Cuerpo del texto */}
             <View style={styles.section}>
                 <Text style={styles.text}>
                     De mi mayor consideración:                    </Text>

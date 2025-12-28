@@ -1,6 +1,6 @@
-import PdfBase from './PdfBase';
+import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
-import styles from './styles/PdfTwoStyles';
+import styles from './styles/Style-2';
 import { getWrittenDate, getYear, formatNumberWithZero } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
