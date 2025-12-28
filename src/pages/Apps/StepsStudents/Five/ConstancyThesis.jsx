@@ -24,7 +24,7 @@ const ConstancyThesis = () => {
     }, [user.username]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Constancia de Tesis'));
+        dispatch(setPageTitle('Presentación de Informe'));
         if (user.username) {
             fetchThesis();
         }
@@ -36,7 +36,7 @@ const ConstancyThesis = () => {
     }
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 5 - Constancia de Tesis</h1>
+            <h1 className="text-2xl font-bold mb-5">Paso 5 - Presentación de Informe</h1>
             <ThesisTable thesis={currentThesis} />
         </>
     );

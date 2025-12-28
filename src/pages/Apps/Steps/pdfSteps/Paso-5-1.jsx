@@ -3,7 +3,7 @@ import { Text, View, Link } from '@react-pdf/renderer';
 import styles from './styles/PdfFive';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 
-const PdfFive = ({ infoStep, incrementFields }) => {
+const PdfFiveOne = ({ infoStep, incrementFields }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
     const jurados = infoStep?.jurados || [
@@ -88,4 +88,4 @@ const PdfFive = ({ infoStep, incrementFields }) => {
     );
 };
 
-export default PdfFive;
+export default PdfFiveOne;

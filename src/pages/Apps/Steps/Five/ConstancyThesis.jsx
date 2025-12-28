@@ -4,7 +4,7 @@ import { setPageTitle } from '../../../../store/themeConfigSlice';
 import Swal from 'sweetalert2';
 import ThesisTable from './ThesisTable';
 import ThesisModal from './ThesisModal';
-import ThesisSearch from './ThesisSearch'; // Asegúrate de tener este componente
+import ThesisSearch from './ThesisSearch';
 import careerService from '../../../../api/careerService';
 import constancyThesisService from '../../../../api/constancyThesisService';
 

@@ -111,6 +111,112 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
+                                            <div className="col-span-1">
+                                                <label htmlFor="lugarPresencial">Lugar Presencial</label>
+                                                <Field
+                                                    name="lugarPresencial"
+                                                    type="text"
+                                                    id="lugarPresencial"
+                                                    placeholder="Ingrese el lugar presencial"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="projectSimilarity">Porcentaje de Similitud</label>
+                                                <Field
+                                                    name="projectSimilarity"
+                                                    id="projectSimilarity"
+                                                    type="text"
+                                                    placeholder="Ingrese porcentaje de similitud"
+                                                    onInput={(e) => {
+                                                        let value = e.target.value;
+
+                                                        value = value.replace(/\D/g, '');
+                                                        if (value) {
+                                                            const numericValue = parseInt(value, 10);
+                                                            if (numericValue > 25) {
+                                                                value = '25';
+                                                            } else {
+                                                                value = numericValue.toString();
+                                                            }
+                                                        }
+
+                                                        e.target.value = value;
+                                                        setFieldValue('projectSimilarity', value);
+                                                    }}
+
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field
+                                                    name="reg"
+                                                    type="number"
+                                                    id="reg"
+                                                    placeholder="Ingrese el reg"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="refDate">Fecha de Referencia</label>
+                                                <Field
+                                                    name="refDate"
+                                                    type="date"
+                                                    id="refDate"
+                                                    placeholder="Seleccione la fecha de referencia"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="refDate" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="cartNumber">Número de Carta</label>
+                                                <Field
+                                                    name="cartNumber"
+                                                    type="text"
+                                                    id="cartNumber"
+                                                    placeholder="Ingrese el número de carta"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="url">URL</label>
+                                                <Field
+                                                    name="url"
+                                                    type="text"
+                                                    id="url"
+                                                    placeholder="Ingrese la URL"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="url" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
+                                                <Field
+                                                    name="fechaSorteo"
+                                                    type="text"
+                                                    id="fechaSorteo"
+                                                    placeholder="Ingrese la fecha de sorteo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="fechaSorteo" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="horaSorteo">Hora de Sorteo</label>
+                                                <Field
+                                                    name="horaSorteo"
+                                                    type="text"
+                                                    id="horaSorteo"
+                                                    placeholder="Ingrese la hora de sorteo"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
+                                            </div>
                                             {
                                                 !thesis.meetsRequirements && (
                                                     <div className="col-span-1">
@@ -146,112 +252,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
                                                 )
                                             }
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="projectSimilarity">Porcentaje de Similitud</label>
-                                                <Field
-                                                    name="projectSimilarity"
-                                                    id="projectSimilarity"
-                                                    type="text"
-                                                    placeholder="Ingrese porcentaje de similitud"
-                                                    onInput={(e) => {
-                                                        let value = e.target.value;
-
-                                                        value = value.replace(/\D/g, '');
-                                                        if (value) {
-                                                            const numericValue = parseInt(value, 10);
-                                                            if (numericValue > 25) {
-                                                                value = '25';
-                                                            } else {
-                                                                value = numericValue.toString();
-                                                            }
-                                                        }
-
-                                                        e.target.value = value;
-                                                        setFieldValue('projectSimilarity', value);
-                                                    }}
-
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field
-                                                    name="reg"
-                                                    type="number"
-                                                    id="reg"
-                                                    placeholder="Ingrese el reg"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="refDate">Fecha de Referencia</label>
-                                                <Field
-                                                    name="refDate"
-                                                    type="date"
-                                                    id="refDate"
-                                                    placeholder="Seleccione la fecha de referencia"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="refDate" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="cartNumber">Número de Carta</label>
-                                                <Field
-                                                    name="cartNumber"
-                                                    type="text"
-                                                    id="cartNumber"
-                                                    placeholder="Ingrese el número de carta"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="url">URL</label>
-                                                <Field
-                                                    name="url"
-                                                    type="text"
-                                                    id="url"
-                                                    placeholder="Ingrese la URL"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="url" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
-                                                <Field
-                                                    name="fechaSorteo"
-                                                    type="text"
-                                                    id="fechaSorteo"
-                                                    placeholder="Ingrese la fecha de sorteo"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="fechaSorteo" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="horaSorteo">Hora de Sorteo</label>
-                                                <Field
-                                                    name="horaSorteo"
-                                                    type="text"
-                                                    id="horaSorteo"
-                                                    placeholder="Ingrese la hora de sorteo"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="lugarPresencial">Lugar Presencial</label>
-                                                <Field
-                                                    name="lugarPresencial"
-                                                    type="text"
-                                                    id="lugarPresencial"
-                                                    placeholder="Ingrese el lugar presencial"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
-                                            </div>
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field
@@ -268,7 +268,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                 />
                                                 <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                             </div>
-
                                             <div className="flex justify-end items-center mt-8 col-span-2">
                                                 <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                     Cancelar

@@ -18,7 +18,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
             articleNumber: report?.articleNumber || '',
             secondArticleNumber: report?.secondArticleNumber || '',
             deanResolution: report?.deanResolution || '',
-            reg: report?.reg || '',
             additionalInputs: report?.additionalInputs?.split(', ') || [''],
         }),
         [report, adviserOptions]
@@ -44,7 +43,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                             secondArticleNumber: values.secondArticleNumber,
                                             deanResolution: values.deanResolution,
                                             observations: values.observations,
-                                            reg: values.reg || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                         };
                                         if (values.meetRequirements === 'yes' && report?.meetRequirements !== true) {
@@ -95,10 +93,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
 
                                                 )
                                             }
-                                            < div className="col-span-1" >
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
-                                            </div>
                                             < div className="col-span-1" >
                                                 <label htmlFor="deanResolution">Número de Constancia </label>
                                                 <Field name="deanResolution" id="deanResolution" placeholder="000" className="form-input" />

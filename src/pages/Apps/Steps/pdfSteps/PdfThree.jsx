@@ -2,7 +2,7 @@ import PdfBase from './PdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/PdfTwoStyles';
 import { extractStudentsInfo } from '../utils/StringUtils';
-import { getWrittenDate, formatNumberWithZero } from '../utils/Dates';
+import { getWrittenDate, formatNumberWithZero, getYear } from '../utils/Dates';
 
 const PdfThree = ({ infoStep, institutionalInfo }) => {
 
@@ -12,9 +12,11 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
     const regNumber = infoStep?.reg;
     const actualDate = getWrittenDate();
 
+    const anio = getYear();
+
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
     const deanName = institutionalInfo?.deanName;
-    const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${actualDate}`;
+    const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${anio}`;
     const articleNumber = infoStep?.articleNumber;
     const additionalInputsList =
         typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
@@ -49,7 +51,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                     <View style={styles.content}>
                         {additionalInputsList && additionalInputsList.map((input, idx) => (
                             <Text key={idx}>
-                                {idx === 0 ? `: Solicitud ${input}` : `  ${input}`}
+                                {idx === 0 ? `: ${input}` : ` ${input}`}
                             </Text>
                         ))}
                     </View>

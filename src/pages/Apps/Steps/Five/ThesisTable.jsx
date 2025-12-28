@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import PdfFive from '../pdfSteps/Paso-5-1';
+import PdfFiveOne from '../pdfSteps/Paso-5-1';
+import PdfFiveTwo from '../pdfSteps/Paso-5-2';
 import Pagination from '../Pagination';
-import { formatDate } from '../utils/Dates';
+import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 import ConstancyView from './ConstancyView';
 
@@ -15,15 +16,25 @@ const ThesisTable = ({ thesis, onEdit }) => {
     const currentThesis = thesis.slice(indexOfFirstItem, indexOfLastItem);
 
     const getDownloadButton = (thesisItem) => {
-        const fileName = `thesis_${thesisItem.id}.pdf`;
+        const fileNameStep = `P5 PDF Nº ${formatNumberWithZero(thesisItem.id)}.pdf`;
         return (
-            <DownloadDocs
-                infoStepTable={thesisItem}
-                PdfDocument={PdfFive}
-                fileName={fileName}
-            />
+            <>
+                <DownloadDocs
+                    infoStepTable={thesisItem}
+                    PdfDocument={PdfFiveOne}
+                    fileName={fileNameStep}
+                />
+                <DownloadDocs
+                    infoStepTable={thesisItem}
+                    // institutionalInfo={info}
+                    PdfDocument={PdfFiveTwo}
+                    fileName={fileNameStep}
+                    
+                />
+            </>
         );
     };
+    
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

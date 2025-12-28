@@ -61,7 +61,6 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                             location: values.location,
                                             articleNumber: values.articleNumber,
                                             reg: values.reg || '',
-                                            // Nuevo campo para memorando múltiple, como string
                                             memorando_mult: values.memorando_mult || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                         };
@@ -149,21 +148,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
-                                            </div>
-
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="location">Lugar</label>
-                                                <Field
-                                                    name="location"
-                                                    id="location"
-                                                    placeholder="Ingrese observaciones"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
-                                            </div>
-
-
+                                            </div>  
                                             <div className="col-span-1">
                                                 <label htmlFor="articleNumber">Número de Artículo</label>
                                                 <Field

@@ -15,7 +15,7 @@ const PdfFourCM = ({ infoStep }) => {
     const { combinedNamesOnly, career, title } = extractStudentsInfo(FIRST_STEP_INFO);
 
     return (
-        <PdfBase commemorativeText={false} registrationNumber={infoStep?.reg}>
+        <PdfBase commemorativeText={false} >
             <View >
                 <Text style={styles?.h1}>
                     CONSTANCIA DE SIMILITUD
