@@ -151,7 +151,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/revision-de-informe',
+        path: 'apps/paso/aprobacion-de-informe',
         element: (
             <ProtectedRoute>
                 <JuryNotifications />
@@ -159,7 +159,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/aprobacion-de-tesis',
+        path: 'apps/paso/solicitud-de-tesis',
         element: (
             <ProtectedRoute>
                 <ThesisApproval />
@@ -167,7 +167,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/aprobacion-de-empastados',
+        path: 'apps/paso/filtro-de-similitud-tres',
         element: (
             <ProtectedRoute>
                 <PastingApproval />
@@ -216,7 +216,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/revision-de-informe',
+        path: 'apps/paso-estudiante/aprobacion-de-informe',
         element: (
             <StudentRoute>
                 <JuryNotificationsStudents />
@@ -224,7 +224,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/aprobacion-de-tesis',
+        path: 'apps/paso-estudiante/solicitud-de-tesis',
         element: (
             <StudentRoute>
                 <ThesisApprovalStudents />
@@ -232,7 +232,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/aprobacion-de-empastados',
+        path: 'apps/paso-estudiante/filtro-de-similitud-tres',
         element: (
             <StudentRoute>
                 <PastingApprovalStudents />
