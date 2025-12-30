@@ -3,33 +3,32 @@ import useDarkMode from '../utils/darkMode';
 import { ErrorMessage } from 'formik';
 import '../../styles/toggleSwitch.css';
 import { HandleMode } from '../../styles/selectStyles';
+import React from 'react';
 
-// Asumiendo que tienes un componente SelectCareer, aquí debería ser cómo manejas el cambio de opción.
-const SelectCareer = ({ options, value, setFieldValue, filterStudentsByCareer, errors, submitCount, onChange }) => {
+
+const SelectCareer = ({ setFieldValue, filterStudentsByCareer, errors, submitCount, onChange }) => {
     const isDarkMode = useDarkMode();
-    const styles = HandleMode(isDarkMode); // Aplicar los estilos según el modo
+    const styles = HandleMode(isDarkMode);
+    const adminCareer = { value: 1, label: 'Administración de Empresas' };
 
-    const handleOnChange = (option) => {
-        setFieldValue('career', option); // Ajusta el valor de carrera en Formik
-        filterStudentsByCareer(option ? option.value : null); // Llama al filtrado de estudiantes
-        onChange(option); // Notificar al componente padre
-    };
+    React.useEffect(() => {
+        setFieldValue('career', adminCareer);
+        filterStudentsByCareer(1);
+        if (onChange) onChange(adminCareer);
+    }, []);
 
     return (
         <div>
             <label htmlFor="career" className="block mb-1">
                 Carrera
             </label>
-
             <Select
                 name="career"
-                options={options}
-                value={value}
+                options={[adminCareer]}
+                value={adminCareer}
                 styles={styles}
-                onChange={handleOnChange}
-                placeholder="Selecciona una carrera"
-                isClearable={true}
-                isSearchable={true}
+                isDisabled={true}
+                placeholder="Administración de Empresas"
                 className={submitCount && errors.career ? 'error' : ''}
             />
             <ErrorMessage name="career" component="div" className="text-danger mt-1" />

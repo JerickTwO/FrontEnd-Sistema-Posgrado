@@ -5,12 +5,10 @@ import IconLoader from '../../../../components/Icon/IconLoader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
-import careerService from '../../../../api/careerService';
 import lineResearchService from '../../../../api/LineResearchService';
 import studentService from '../../../../api/studentService';
 import titleReservationsService from '../../../../api/titleReservationsService';
 import SelectCareer from './SelectCareer';
-import InfoService from '../../../../api/institucionalInfoService';
 import MultiSelectStudent from './MultiSelectStudent';
 import ReservationTable from './ReservationTable';
 import ReservationModal from './ReservationModal';
@@ -19,8 +17,6 @@ import IconSearch from '../../../../components/Icon/IconSearch';
 const TitleReservation = () => {
     const dispatch = useDispatch();
     const [titleReservations, setTitleReservations] = useState([]);
-    const [careerOptions, setCareerOptions] = useState([]);
-    const [selectedCareer, setSelectedCareer] = useState(null);
     const [lineOptions, setLineOptions] = useState([]);
     const [studentOptions, setStudentOptions] = useState([]);
     const [filteredStudentOptions, setFilteredStudentOptions] = useState([]);
@@ -28,26 +24,15 @@ const TitleReservation = () => {
     const [editingReservation, setEditingReservation] = useState(null);
     const [addContactModal, setAddContactModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [info, setInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
     useEffect(() => {
         dispatch(setPageTitle('Reserva de Título'));
-        fetchCareers();
         fetchStudents();
-        fetchInfo();
         fetchTitleReservations();
     }, [dispatch]);
-    const fetchInfo = useCallback(async () => {
-        try {
-            const response = await InfoService.getInfo();
-            setInfo(response)
-        } catch (error) {
-            setApiError('Error al cargar la información institucional.');
-        }
-    }, []);
-    // Fetch de estudiantes
+
     const fetchStudents = useCallback(async () => {
         try {
             const students = await studentService.getStudents();
@@ -77,21 +62,7 @@ const TitleReservation = () => {
         }
     }, [studentOptions]);
 
-    const fetchCareers = useCallback(async () => {
-        try {
-            const careers = await careerService.getCareers();
-            const options = careers.map((career) => ({
-                value: career.id,
-                label: career.name,
-                data: career,
-            }));
-            setCareerOptions(options);
-            setApiError(null);
-        } catch (error) {
-            setApiError('Error al cargar las carreras.');
-        }
-    }, []);
-
+   
     const filterStudents = (students) => {
         const reservedStudentIds = titleReservations.map((reservation) => reservation.student.id);
         const filtered = students.filter((student) => !reservedStudentIds.includes(parseInt(student.value)));
@@ -299,10 +270,8 @@ const TitleReservation = () => {
                 {({ errors, submitCount, values, setFieldValue, isSubmitting }) => (
                     <Form className="flex flex-row items-center gap-4">
                         <SelectCareer
-                            options={careerOptions}
                             value={values.career}
                             setFieldValue={setFieldValue}
-                            onChange={setSelectedCareer}
                             filterStudentsByCareer={filterStudentsByCareer}
                             errors={errors}
                             submitCount={submitCount}
@@ -344,10 +313,8 @@ const TitleReservation = () => {
             />
 
             <ReservationTable
-                selectedCareer={selectedCareer}
                 titleReservations={titleReservations}
                 apiError={apiError}
-                info={info}
                 onEdit={editReservation}
                 onDelete={deleteTitleReservation}
                 searchTerm={searchTerm}

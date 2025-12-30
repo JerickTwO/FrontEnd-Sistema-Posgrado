@@ -1,10 +1,6 @@
 import IconSearch from '../../../../components/Icon/IconSearch';
-import useDarkMode from '../utils/darkMode';
-import { HandleMode } from '../../styles/selectStyles';
-const Header = ({ search, setSearch }) => {
-    const isDarkMode = useDarkMode();
-    const styles = HandleMode(isDarkMode);
 
+const Header = ({ search, setSearch }) => {
     return (
         <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex flex-col">

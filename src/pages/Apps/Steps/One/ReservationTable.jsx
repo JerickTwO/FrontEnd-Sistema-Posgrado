@@ -3,7 +3,7 @@ import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
 
 
-const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit, onDelete, searchTerm, info }) => {
+const ReservationTable = ({ titleReservations, selectedCareer, apiError, onEdit, onDelete, searchTerm }) => {
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
 
