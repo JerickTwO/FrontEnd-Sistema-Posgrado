@@ -5,7 +5,7 @@ import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
 import IconX from '../../../../components/Icon/IconX';
 
-const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => {
+const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
 
@@ -17,12 +17,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
             studentFirstNames: project?.titleReservationStepOne?.student?.firstNames || 'N/A',
             studentTwoFirstNames: project?.titleReservationStepOne?.studentTwo?.firstNames || '',
             observation: project?.observations || '',
-            adviser: project?.adviser
-                ? { value: project.adviser.id, label: `${project.adviser.firstNames} ${project.adviser.lastName}` }
-                : null,
-            coadviser: project?.coadviser
-                ? { value: project.coadviser.id, label: `${project.coadviser.firstNames} ${project.coadviser.lastName}` }
-                : null,
             engineeringFaculty: project?.engineeringFaculty
                 ? {
                     value: project.engineeringFaculty.id,
@@ -68,8 +62,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project, adviserOptions }) => 
                                         }
                                         const transformedValues = {
                                             titleReservationStepOne: { id: values.titleReservationStepOne },
-                                            adviser: { id: values.adviser?.value || null },
-                                            coadviser: values.coadviser ? { id: values.coadviser.value } : null,
                                             engineeringFaculty: values.engineeringFaculty
                                                 ? { id: values.engineeringFaculty.value }
                                                 : null,

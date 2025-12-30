@@ -1,18 +1,20 @@
 import PdfBase from './pdfBase';
 import { Text, View, Link } from '@react-pdf/renderer';
-import styles from './styles/Style-6';
+import styles from './styles/style-6';
 import { formatNumberWithZero, getYear, getWrittenDateFromInput, getWrittenDate, formatDateSpanish } from '../utils/Dates';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
 const PdfSixMM = ({ infoStep, incrementFields }) => {
     const anio = getYear();
 
+    const FIVE_STEP_INFO = infoStep?.constancyThesisStepFive;
     const THREE_STEP_INFO = infoStep?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree;
-    const TWO_STEP_INFO = THREE_STEP_INFO.projectApprovalStepTwo;
+    const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
-    const { adviserNames, coAdviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
-    const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(THREE_STEP_INFO);
+    // Extraer asesores y jurados desde Paso 5
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
+    const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(FIVE_STEP_INFO);
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
     const articleNumber = infoStep?.articleNumber || '46';
     const contactEmail = infoStep?.email || '182009@unamba.edu.pe';
@@ -67,7 +69,7 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                             <Text>Asesor</Text>
                         </View>
                     </View>
-                    {TWO_STEP_INFO?.coadviser && (
+                    {FIVE_STEP_INFO?.coadviser && (
                         <View style={styles.tableRow}>
                             <Text style={styles.tableColHeader}>
                                 {coAdviserNames}

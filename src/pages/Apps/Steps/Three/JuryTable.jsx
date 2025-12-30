@@ -4,7 +4,7 @@ import PdfThree from '../Pdfs/pdf-3';
 import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 
-const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
+const JuryTable = ({ currentJury, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const totalPages = Math.ceil(currentJury.length / itemsPerPage);
@@ -37,13 +37,6 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                             <th>Código(s)</th>
                             <th>Cumple Requisitos</th>
                             <th>Carrera</th>
-
-                            <th>Presidente</th>
-                            <th>Primer Miembro</th>
-                            <th>Segundo Miembro</th>
-                            <th>Accesitario</th>
-                            <th>Asesor</th>
-                            <th>Segundo Asesor</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
@@ -72,20 +65,6 @@ const JuryTable = ({ currentJury, onEdit, onSave, info }) => {
                                     </td>
                                     <td>{jury.meetRequirements ? 'Sí' : 'No'}</td>
                                     <td>{jury.projectApprovalStepTwo?.titleReservationStepOne.student.career?.name || 'N/A'}</td>
-                                    <td>{jury.president ? `${jury.president.firstNames || ' '} ${jury.president.lastName || ' '}` : 'N/A'}</td>
-                                    <td>{jury.firstMember ? `${jury.firstMember.firstNames || ' '} ${jury.firstMember.lastName || ' '}` : 'N/A'}</td>
-                                    <td>{jury.secondMember ? `${jury.secondMember.firstNames || ' '} ${jury.secondMember.lastName || ' '}` : 'N/A'}</td>
-                                    <td>{jury.accessory ? `${jury.accessory.firstNames || ' '} ${jury.accessory.lastName || ' '}` : 'N/A'}</td>
-                                    <td>
-                                        {jury.projectApprovalStepTwo?.adviser
-                                            ? `${jury.projectApprovalStepTwo?.adviser.firstNames || ' '} ${jury.projectApprovalStepTwo?.adviser.lastName || ' '}`
-                                            : 'N/A'}
-                                    </td>
-                                    <td>
-                                        {jury.projectApprovalStepTwo?.coadviser
-                                            ? `${jury.projectApprovalStepTwo?.coadviser.firstNames || ' '} ${jury.projectApprovalStepTwo?.coadviser.lastName || ' '}`
-                                            : 'N/A'}
-                                    </td>
                                     <td>{formatDate(jury.updatedAt)}</td>
                                     <td>
                                         {getDownloadButton(jury)}

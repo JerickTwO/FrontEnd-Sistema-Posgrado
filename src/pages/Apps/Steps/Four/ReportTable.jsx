@@ -38,8 +38,6 @@ const ReportTable = ({ reports, onEdit, info }) => {
                             <th>Código(s)</th>
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
-                            <th>Asesor</th>
-                            <th>Co-Asesor</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
@@ -47,7 +45,7 @@ const ReportTable = ({ reports, onEdit, info }) => {
                     <tbody className="dark:text-white-dark">
                         {currentReports.length > 0 ? (
                             currentReports.map((report) => {
-                                const { student, studentTwo, adviser, coadviser, meetRequirements, updatedAt } = getReportDetails(report);
+                                const { student, studentTwo, meetRequirements, updatedAt } = getReportDetails(report);
 
                                 return (
                                     <tr key={report.id}>
@@ -72,8 +70,6 @@ const ReportTable = ({ reports, onEdit, info }) => {
                                         </td>
                                         <td>{student?.career?.name || 'N/A'}</td>
                                         <td>{meetRequirements ? 'Sí' : 'No'}</td>
-                                        <td>{adviser ? `${adviser.firstNames || ' '} ${adviser.lastName || ' '}` : 'N/A'}</td>
-                                        <td>{coadviser ? `${coadviser.firstNames || ' '} ${coadviser.lastName || ' '}` : 'N/A'}</td>
                                         <td>{formatDate(updatedAt)}</td>
                                         <td className="flex gap-4 items-center justify-center">
                                             {getDownloadButton(report)}

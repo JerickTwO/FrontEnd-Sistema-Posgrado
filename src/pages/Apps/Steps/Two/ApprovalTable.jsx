@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from '../Pagination';
-import { formatDate, formatNumberWithZero } from '../utils/Dates';
+import { formatDate } from '../utils/Dates';
 import PdfTwo from '../Pdfs/pdf-2';
 import DownloadDocs from '../utils/DownloadButton';
 import ApprovalView from './ApprovalView';
@@ -39,8 +39,6 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                             <th>Código(s)</th>
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
-                            <th>Asesor</th>
-                            <th>Co-Asesor</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">PDF</th>
                             <th className="!text-center">Acciones</th>
@@ -69,8 +67,6 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                                     </td>
                                     <td>{project.titleReservationStepOne.student.career?.name || 'N/A'}</td>
                                     <td>{project.meetRequirements ? 'Sí' : 'No'}</td>
-                                    <td>{project.adviser ? `${project.adviser.firstNames || ' '} ${project.adviser.lastName || ' '}` : 'N/A'}</td>
-                                    <td>{project.coadviser ? `${project.coadviser.firstNames || ' '} ${project.coadviser.lastName || ' '}` : 'N/A'}</td>
                                     <td>{formatDate(project.updatedAt)}</td>
                                     <td>
                                         <ApprovalView approvalId={project.id} />
