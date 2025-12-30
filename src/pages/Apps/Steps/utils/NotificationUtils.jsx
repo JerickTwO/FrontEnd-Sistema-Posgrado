@@ -1,4 +1,3 @@
-// Función para extraer detalles de un reporte
 export const getNotificationsDetails = (notifications = {}) => {
     const id = notifications?.id ?? null;
 
@@ -6,18 +5,18 @@ export const getNotificationsDetails = (notifications = {}) => {
     const studentTwo = notifications.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo ?? null;
 
     const observations = notifications?.observations ?? null;
-    const updatedAt = notifications?.updatedAt ?? null;
+    const futDate = notifications?.futDate ?? null;
     const deanResolution = notifications?.deanResolution ?? null
     const secondDeanResolution = notifications?.secondDeanResolution ?? null
     const day = notifications?.day ?? null
     const hour = notifications?.hour ?? null
     const location = notifications?.location ?? null
     const articleNumber = notifications?.articleNumber ?? null
-    const futDate = notifications?.futDate ?? null;
+    const reg = notifications?.reg ?? null
     const meetRequirements = notifications?.meetRequirements ?? null;
+    const memorandoMult = notifications?.memorandoMult ?? null;
     const additionalInputs = notifications?.additionalInputs ?? null;
-
-
+    const updatedAt = notifications?.updatedAt ?? null;
 
     return {
         id,
@@ -29,7 +28,9 @@ export const getNotificationsDetails = (notifications = {}) => {
         secondDeanResolution,
         day,
         additionalInputs,
+        memorandoMult,
         hour,
+        reg,
         location,
         futDate,
         articleNumber,

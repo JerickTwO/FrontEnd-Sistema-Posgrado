@@ -23,12 +23,11 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
             location: notification?.location || '',
             articleNumber: notification?.articleNumber || '',
             reg: notification?.reg || '',
-            memorando_mult: notification?.memorando_mult || '',
+            memorandoMult: notification?.memorandoMult || '',
             additionalInputs: notification?.additionalInputs?.split(', ') || [''],
         }),
         [notification]
     );
-    const today = new Date();
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -50,6 +49,16 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validate={values => {
+                                        const errors = {};
+                                        if (values.secondDeanResolution) {
+                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                            if (!emailRegex.test(values.secondDeanResolution)) {
+                                                errors.secondDeanResolution = 'Ingrese un correo electrónico válido';
+                                            }
+                                        }
+                                        return errors;
+                                    }}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
@@ -61,7 +70,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                             location: values.location,
                                             articleNumber: values.articleNumber,
                                             reg: values.reg || '',
-                                            memorando_mult: values.memorando_mult || '',
+                                            memorandoMult: values.memorandoMult || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                         };
                                         if (values.meetRequirements === 'yes' && notification?.meetRequirements !== true) {
@@ -87,99 +96,16 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
-
-
                                             <div className="col-span-1">
-                                                <label htmlFor="futDate">Fecha de Fut</label>
+                                                <label htmlFor="memorandoMult">Memorando Múltiple</label>
                                                 <Field
-                                                    name="futDate"
-                                                    id="futDate"
-                                                    type="date"
-                                                    placeholder="Ingrese fecha de Fut"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="futDate" component="div" className="text-danger mt-1" />
-                                            </div>
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="deanResolution">Resolución decanal</label>
-                                                <Field
-                                                    name="deanResolution"
-                                                    id="deanResolution"
-                                                    placeholder="000-2025"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="secondDeanResolution">Segunda Resolución decanal</label>
-                                                <Field
-                                                    name="secondDeanResolution"
-                                                    id="secondDeanResolution"
-                                                    placeholder="000-2025"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="day">Día</label>
-                                                <Field
-                                                    name="day"
-                                                    id="day"
-                                                    type="date"
-                                                    placeholder="Ingrese el Día"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="day" component="div" className="text-danger mt-1" />
-                                            </div>
-
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="hour">Hora</label>
-                                                <Field
-                                                    name="hour"
-                                                    id="hour"
-                                                    type="time"
-                                                    placeholder="Ingrese la Hora"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
-                                            </div>  
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo</label>
-                                                <Field
-                                                    name="articleNumber"
-                                                    id="articleNumber"
-                                                    placeholder="Ingrese observaciones"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field
-                                                    name="reg"
-                                                    type="number"
-                                                    id="reg"
-                                                    placeholder="Ingrese el reg"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="memorando_mult">Nº Memorando Múltiple</label>
-                                                <Field
-                                                    name="memorando_mult"
+                                                    name="memorandoMult"
                                                     type="text"
-                                                    id="memorando_mult"
+                                                    id="memorandoMult"
                                                     placeholder="Ingrese el número de memorando"
                                                     className="form-input"
                                                 />
-                                                <ErrorMessage name="memorando_mult" component="div" className="text-danger mt-1" />
+                                                <ErrorMessage name="memorandoMult" component="div" className="text-danger mt-1" />
                                             </div>
                                             <FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (
@@ -217,6 +143,41 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                     ))
                                                 )}
                                             </FieldArray>
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg</label>
+                                                <Field
+                                                    name="reg"
+                                                    type="number"
+                                                    id="reg"
+                                                    placeholder="Ingrese el reg"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="secondDeanResolution">Correo</label>
+                                                <Field
+                                                    name="secondDeanResolution"
+                                                    id="secondDeanResolution"
+                                                    placeholder="info@gmail.com"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            
+                                            <div className="col-span-1">
+                                                <label htmlFor="articleNumber">Número de Artículo</label>
+                                                <Field
+                                                    name="articleNumber"
+                                                    id="articleNumber"
+                                                    placeholder="Ingrese observaciones"
+                                                    className="form-input"
+                                                />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                           
+                                            
+                                            
                                             {!notification.meetRequirements &&
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>

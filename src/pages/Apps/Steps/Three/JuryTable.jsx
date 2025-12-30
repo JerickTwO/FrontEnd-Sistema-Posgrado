@@ -66,7 +66,7 @@ const JuryTable = ({ currentJury, onEdit, info }) => {
                                     <td>{jury.meetRequirements ? 'Sí' : 'No'}</td>
                                     <td>{jury.projectApprovalStepTwo?.titleReservationStepOne.student.career?.name || 'N/A'}</td>
                                     <td>{formatDate(jury.updatedAt)}</td>
-                                    <td>
+                                    <td className='flex gap-2'>
                                         {getDownloadButton(jury)}
                                         <button
                                             onClick={() => onEdit(jury)}

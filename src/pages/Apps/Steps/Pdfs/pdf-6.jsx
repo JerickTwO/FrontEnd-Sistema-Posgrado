@@ -1,35 +1,34 @@
 import PdfBase from './pdfBase';
 import { Text, View, Link } from '@react-pdf/renderer';
 import styles from './styles/style-6';
-import { formatNumberWithZero, getYear, getWrittenDateFromInput, getWrittenDate, formatDateSpanish } from '../utils/Dates';
+import { formatNumberWithZero, getYear, getWrittenDate } from '../utils/Dates';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfSixMM = ({ infoStep, incrementFields }) => {
+const PdfSixMM = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
 
     const FIVE_STEP_INFO = infoStep?.constancyThesisStepFive;
-    const THREE_STEP_INFO = infoStep?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree;
+    const THREE_STEP_INFO = FIVE_STEP_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
-    // Extraer asesores y jurados desde Paso 5
     const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
     const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(FIVE_STEP_INFO);
-    const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
-    const articleNumber = infoStep?.articleNumber || '46';
-    const contactEmail = infoStep?.email || '182009@unamba.edu.pe';
-
-
-    const dayWithAddedOne = new Date(infoStep?.day);
-    dayWithAddedOne.setDate(dayWithAddedOne.getDate() + 1);
-
-    const formattedDayWithAddedOne = formatDateSpanish(dayWithAddedOne);
+    const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
+    const articleNumber = infoStep?.articleNumber;
+    const contactEmail = infoStep?.secondDeanResolution;
+    const anioInstitutional = institutionalInfo?.commemorativeText ;
     return (
         <PdfBase showCommemorativeText={false} registrationNumber={infoStep?.reg}>
-            <Text style={styles.h1}>
-                MEMORANDO MULTIPLE Nº {infoStep?.memorando_mult}-{anio}-D. UI-FI-UNAMBA.
+            <Text style={styles.institutionalYearHeader}>
+                “{anioInstitutional}”
             </Text>
-            <Text>{formattedDayWithAddedOne}</Text>
+            <Text style={{ textAlign: 'right', fontSize: 12, }}>
+                Abancay, {getWrittenDate()}
+            </Text>
+            <Text style={styles.h1}>
+                MEMORANDO MULTIPLE Nº {infoStep?.memorandoMult}-{anio}-D. UI-FI-UNAMBA.
+            </Text>
             <View style={styles.section}>
                 <Text style={[styles.bold, styles.textTableHeader]}>
                     SEÑORES:
@@ -39,7 +38,7 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                         <Text style={styles.tableColHeader}>{presidentNames}</Text>
                         <View style={styles.tableCol}>
                             <Text>
-                                <Text>Presidente</Text>
+                                : <Text style={styles.bold} >Presidente</Text>
                             </Text>
                         </View>
                     </View>
@@ -47,26 +46,34 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                     <View style={styles.tableRow}>
                         <Text style={styles.tableColHeader}>{firstMemberNames}</Text>
                         <View style={styles.tableCol}>
-                            <Text>Primer Miembro</Text>
+                            <Text>
+                                : <Text style={styles.bold} >Primer Miembro</Text>
+                            </Text>
                         </View>
                     </View>
 
                     <View style={styles.tableRow}>
                         <Text style={styles.tableColHeader}>{secondMemberNames}</Text>
                         <View style={styles.tableCol}>
-                            <Text>Segundo Miembro</Text>
+                            <Text>
+                                : <Text style={styles.bold} >Segundo Miembro</Text>
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.tableRow}>
                         <Text style={styles.tableColHeader}>{accessoryNames}</Text>
                         <View style={styles.tableCol}>
-                            <Text>Accesitario</Text>
+                            <Text>
+                                : <Text style={styles.bold} >Accesitario</Text>
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.tableRow}>
                         <Text style={styles.tableColHeader}>{adviserNames}</Text>
                         <View style={styles.tableCol}>
-                            <Text>Asesor</Text>
+                            <Text>
+                                : <Text style={styles.bold} >Asesor</Text>
+                            </Text>
                         </View>
                     </View>
                     {FIVE_STEP_INFO?.coadviser && (
@@ -75,14 +82,13 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                                 {coAdviserNames}
                             </Text>
                             <View style={styles.tableCol}>
-                                <Text style={styles.bold}>Segundo Asesor</Text>
+                                <Text>
+                                    : <Text style={styles.bold} >Segundo Asesor</Text>
+                                </Text>
                             </View>
                         </View>
                     )}
                 </View>
-                <Text style={[styles.bold, styles.fontSizeTableSubTitle, { marginTop: 8 }]}>
-                    MIEMBROS JURADO EVALUADOR Y ASESOR DE TESIS EAP. {career}
-                </Text>
             </View>
 
             <View style={styles.semiTable}>
@@ -91,53 +97,48 @@ const PdfSixMM = ({ infoStep, incrementFields }) => {
                     <Text style={styles.semiTableColHeader} wrap={false}>ASUNTO:</Text>
                     <View style={styles.semiTableCol}>
                         <Text>
-                            <Text style={styles.bold}>Comunico fecha y hora de sustentación de Tesis de manera Presencial.</Text>
+                            <Text style={styles.bold}>Revisión y aprobación de informe de tesis.</Text>
                         </Text>
                     </View>
                 </View>
-
                 {/* Referencias */}
                 <View style={[styles.semiTableRow, styles.customTable]}>
                     <Text style={styles.semiTableColHeader}>Ref.:</Text>
                     <View style={styles.semiTableCol}>
-                        <Text>
-                            <Text>Fut de fecha {getWrittenDateFromInput(infoStep?.futDate)}</Text>
-                            <Text style={styles.bold}>                                         REG. Nº {formatNumberWithZero(infoStep?.reg)}</Text>
-                        </Text>
-                        <Text>RESOLUCIÓN DECANAL N° {infoStep?.deanResolution}-DFI-UNAMBA</Text>
-                        <Text>RESOLUCIÓN DECANAL Nº {infoStep?.secondDeanResolution}-DFI-UNAMBA</Text>
-                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 && (
-                            infoStep.additionalInputs
-                                .split(',')
-                                .map((input, idx, arr) => (
-                                    <Text key={idx}>
-                                        {input.trim()}
-                                    </Text>
-                                ))
-                        )}
+                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 ? (
+                            (() => {
+                                const inputs = infoStep.additionalInputs.split(',');
+                                return (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+                                        <Text>{inputs[0].trim()}</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <Text style={styles.bold}>REG. Nº {formatNumberWithZero(infoStep?.reg)}</Text>
+                                    </View>
+                                );
+                            })()
+                        ) : null}
+                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 &&
+                            infoStep.additionalInputs.split(',').slice(1).map((input, idx) => (
+                                <Text key={idx}>
+                                    {input.trim()}
+                                </Text>
+                            ))}
                     </View>
                 </View>
-                <View style={[styles.semiTableRow, styles.customTable]}>
-                    <Text style={styles.semiTableColHeader}>Fecha: </Text>
-                    <View style={styles.semiTableCol}>
-                        <Text>
-                            Tamburco, {getWrittenDate()}
-                        </Text>
-                    </View>
-                </View>
+               
             </View>
-            <Text>-------------------------------------------------------------------------</Text>
-            <View style={styles.section}>
+            <Text>******************************************************</Text>
+            <View style={[styles.section, styles.gap]}>
                 <Text style={styles.p}>
-                    Previo un cordial saludo, mediante el presente remito Informe de Tesis titulada: <Text style={styles.bold}>“{title}”</Text>, presentado por el Bachiller: <Text style={styles.bold}>{combinedNamesOnly}</Text>.
+                    Previo un cordial saludo, mediante el presente remito Informe de Tesis titulada: <Text style={styles.bold}>“{title}”</Text>, presentado por: <Text style={styles.bold}>{combinedNamesOnly}</Text>.
                 </Text>
+
                 <Text style={styles.p}>
                     Una vez recibido el trabajo de investigación o tesis por los jurados evaluadores, se procederá a evaluar en forma y fondo en un plazo de quince días hábiles. Los miembros están obligados a participar en las diferentes etapas de la revisión del informe; su incumplimiento constituye falta sujeta a sanción prevista en el Estatuto de la UNAMBA y normas conexas.
                 </Text>
                 <Text style={styles.p}>
                     Dentro de los días establecidos en el Art. {articleNumber}, el Jurado evaluador devolverá el trabajo de investigación o tesis con las observaciones realizadas a la interesada al siguiente correo <Link src={`mailto:${contactEmail}`}>{contactEmail}</Link> y a la Dirección de la Unidad de Investigación; en caso de ser aprobado, será el presidente quien eleve el informe final a la Unidad de Investigación para su trámite correspondiente.
                 </Text>
-                <Text style={[styles.p]}>Sin otro en particular, aprovecho la oportunidad para expresarle las muestras de mi especial consideración y deferencia personal.</Text>
                 <Text style={[styles.bold, { textAlign: 'center' }]} >Atentamente,</Text>
             </View>
         </PdfBase>

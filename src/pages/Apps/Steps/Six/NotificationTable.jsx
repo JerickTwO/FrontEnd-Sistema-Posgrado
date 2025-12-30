@@ -3,7 +3,7 @@ import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
 import PdfSixMM from '../Pdfs/pdf-6';
 import DownloadDocs from '../utils/DownloadButton';
-const NotificationTable = ({ notification, onEdit }) => {
+const NotificationTable = ({ notification, onEdit, info }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -12,12 +12,12 @@ const NotificationTable = ({ notification, onEdit }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentNotification = notification?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
-
     const getDownloadButton = (notification) => {
         const fileName = `notificación_jurados_${notification.id}.pdf`;
         return (
             <DownloadDocs
                 infoStepTable={notification}
+                institutionalInfo={info}
                 PdfDocument={PdfSixMM}
                 fileNames={fileName}
             />
@@ -35,7 +35,6 @@ const NotificationTable = ({ notification, onEdit }) => {
                             <th>Código(s)</th>
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
-                            <th>Fecha de Tesis</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
@@ -63,8 +62,6 @@ const NotificationTable = ({ notification, onEdit }) => {
                                     </td>
                                     <td>{notification?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.student.career?.name || 'N/A'}</td>
                                     <td>{notification?.meetRequirements ? 'Sí' : 'No'}</td>
-                                    <td>{notification?.thesisDate}</td>
-
                                     <td>{formatDate(notification?.updatedAt)}</td>
 
                                     <td className="flex gap-4 items-center justify-center">
