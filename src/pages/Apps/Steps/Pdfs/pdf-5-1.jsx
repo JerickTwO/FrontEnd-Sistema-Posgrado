@@ -9,30 +9,7 @@ const PdfFiveOne = ({ infoStep, incrementFields }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
-    const defaultNombrados = [
-        'Dr. DANIEL AMILCAR PINTO PAGAZA',
-        'Dr. JOSÉ ABDON SOTOMAYOR CHAHUAYLLA',
-        'Dr. MAURICIO RAÚL ESCALANTE CÁRDENAS',
-        'Dr. PERCY LEFITO PAZ',
-        'Dra. ROSITA LETICIA VALER MONTESINOS',
-        'Dra. SILVIA SOLEDAD LÓPEZ IBÁÑEZ',
-        'Dr. JULIANA DE LEÓN',
-        'Dra. MARÍA PAREJA PAREJA',
-        'Mgt. YAMILET ADEHIM BARRIONUEVO INCA ROCA',
-        'Mgt. GREGORIO GAUNA CHINO',
-        'Mgt. MÁXIMO SOTO PAREJA',
-        'Mgt. JOSUÉ HUAMANI CAYLLAHUA',
-        'Mgt. JOSÉ CARLOS VILCA NAVÁEZ',
-        'Mgt. ELIO NOLASCO CARBAJAL',
-        'Dr. LUIS PORRAS DURAND',
-        'Mgt. ALFREDO HUAMÁN',
-        'Mgt. DAVID BARRIAL ACOSTA',
-        'Mgt. WILBER OSORIO TORRES',
-        'Mgt. HERMENGILDO CHACCARÁ HUACHACA',
-        'Mgt. ERIKA LOA NAVARRO',
-        'Mg. EDGAR MEZA MESCCO',
-    ];
-    const [nombrados, setNombrados] = useState(infoStep?.nombrados || defaultNombrados);
+    const [nombrados, setNombrados] = useState(infoStep?.nombrados || []);
 
     useEffect(() => {
         const fetchNombrados = async () => {

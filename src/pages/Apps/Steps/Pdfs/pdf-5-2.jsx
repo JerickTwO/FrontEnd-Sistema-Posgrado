@@ -3,10 +3,9 @@ import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/style-5.jsx';
 import { getYear } from '../utils/Dates.jsx';
 
-const PdfFiveTwo = ({ infoStep, incrementFields }) => {
+const PdfFiveTwo = ({ infoStep }) => {
     const anio = getYear();
-
-    const actaCode = infoStep?.actaCode || `${incrementFields?.acta || '045'}-${anio}`;
+    const actaCode = `${infoStep?.cartNumber}-${anio}`;
     const horaInicio = infoStep?.horaInicio || '10:00 am';
     const horaFin = infoStep?.horaFin || '10:15 am';
     const fechaActa = infoStep?.fechaActa || 'viernes 08 de agosto de 2025';
@@ -47,7 +46,7 @@ const PdfFiveTwo = ({ infoStep, incrementFields }) => {
     };
 
     return (
-        <PdfBase commemorativeText={false} registrationNumber={incrementFields?.regNumber}>
+        <PdfBase commemorativeText={false} registrationNumber={infoStep?.regNumber}>
             <Text style={styles.h1}>ACTA DE SORTEO DE JURADOS – {actaCode}</Text>
 
             <View style={styles.section}>
@@ -99,7 +98,7 @@ const PdfFiveTwo = ({ infoStep, incrementFields }) => {
                 <Text style={styles.justify}>Se da por concluido el acto académico del sorteo de jurados, siendo las {horaFin} del mismo día.</Text>
             </View>
 
-            <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]}>Firma del Director de la Unidad de Investigación</Text>
+            <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]}>Atentamente</Text>
         </PdfBase>
     );
 };

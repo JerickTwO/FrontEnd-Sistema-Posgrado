@@ -16,7 +16,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         observations: Yup.string(),
-        refDate: Yup.string(),
         cartNumber: Yup.string(),
         url: Yup.string(),
         fechaSorteo: Yup.string(),
@@ -43,8 +42,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                 ? { value: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.id, label: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.name }
                 : null,
             projectSimilarity: thesis?.projectSimilarity || '',
-            reg: thesis?.reg || '',
-            refDate: thesis?.refDate || '',
             cartNumber: thesis?.cartNumber || '',
             url: thesis?.url || '',
             fechaSorteo: thesis?.fechaSorteo || '',
@@ -72,7 +69,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             }
         };
         if (isOpen) loadTeachers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
 
     const filterOptions = (selectedValues, currentFieldValue) => {
@@ -83,7 +79,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         const normalizedValues = {
             ...values,
             meetsRequirements: values.meetsRequirements === 'yes' ? true : false,
-            refDate: values.refDate,
             cartNumber: values.cartNumber,
             url: values.url,
             fechaSorteo: values.fechaSorteo,
@@ -111,7 +106,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                 <div className="fixed inset-0 bg-[black]/60" />
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center px-4 py-8">
-                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-lg text-black dark:text-white-dark">
+                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full  text-black dark:text-white-dark max-w-[800px]">
                             <button
                                 type="button"
                                 onClick={onClose}
@@ -120,7 +115,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {thesis ? 'Editar Constancia' : 'Crear Constancia'}
+                                {thesis ? 'Editar Presentación' : 'Crear Presentación'}
                             </div>
                             <div className="p-5">
                                 <Formik
@@ -132,8 +127,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                     {({ setFieldValue, values, submitCount, errors, isSubmitting }) => {
                                         const selectedValues = [values.president, values.firstMember, values.secondMember, values.accessory, values.adviser, values.coadviser];
                                         return (
-                                            <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                                    <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                            <Form className="grid grid-cols-2 gap-4 sm:grid-cols-3 ">
+                                                     
+                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Primer Documento
                                                     </div>
                                                     <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
@@ -162,68 +158,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         </div>
                                                     )}
                                                     <div className="col-span-1">
-                                                        <label htmlFor="lugarPresencial">Lugar Presencial</label>
-                                                        <Field
-                                                            name="lugarPresencial"
-                                                            type="text"
-                                                            id="lugarPresencial"
-                                                            placeholder="Ingrese el lugar presencial"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
-                                                    </div>
-                                                    {/* <div className="col-span-1">
-                                                        <label htmlFor="projectSimilarity">Porcentaje de Similitud</label>
-                                                        <Field
-                                                            name="projectSimilarity"
-                                                            id="projectSimilarity"
-                                                            type="text"
-                                                            placeholder="Ingrese porcentaje de similitud"
-                                                            onInput={(e) => {
-                                                                let value = e.target.value;
-
-                                                                value = value.replace(/\D/g, '');
-                                                                if (value) {
-                                                                    const numericValue = parseInt(value, 10);
-                                                                    if (numericValue > 25) {
-                                                                        value = '25';
-                                                                    } else {
-                                                                        value = numericValue.toString();
-                                                                    }
-                                                                }
-
-                                                                e.target.value = value;
-                                                                setFieldValue('projectSimilarity', value);
-                                                            }}
-
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="projectSimilarity" component="div" className="text-danger mt-1" />
-                                                    </div> */}
-
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="reg">Reg</label>
-                                                        <Field
-                                                            name="reg"
-                                                            type="number"
-                                                            id="reg"
-                                                            placeholder="Ingrese el reg"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                                    </div>
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="refDate">Fecha de Referencia</label>
-                                                        <Field
-                                                            name="refDate"
-                                                            type="date"
-                                                            id="refDate"
-                                                            placeholder="Seleccione la fecha de referencia"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="refDate" component="div" className="text-danger mt-1" />
-                                                    </div>
-                                                    <div className="col-span-1">
                                                         <label htmlFor="cartNumber">Número de Carta</label>
                                                         <Field
                                                             name="cartNumber"
@@ -233,6 +167,29 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             className="form-input"
                                                         />
                                                         <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                   
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
+                                                        <Field
+                                                            name="fechaSorteo"
+                                                            type="text"
+                                                            id="fechaSorteo"
+                                                            placeholder="Ingrese la fecha"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="fechaSorteo" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="horaSorteo">Hora de Sorteo</label>
+                                                        <Field
+                                                            name="horaSorteo"
+                                                            type="text"
+                                                            id="horaSorteo"
+                                                            placeholder="Ingrese la hora"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
                                                     </div>
                                                     <div className="col-span-1">
                                                         <label htmlFor="url">URL</label>
@@ -246,76 +203,69 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         <ErrorMessage name="url" component="div" className="text-danger mt-1" />
                                                     </div>
                                                     <div className="col-span-1">
-                                                        <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
+                                                        <label htmlFor="lugarPresencial">Lugar Presencial</label>
                                                         <Field
-                                                            name="fechaSorteo"
+                                                            name="lugarPresencial"
                                                             type="text"
-                                                            id="fechaSorteo"
-                                                            placeholder="Ingrese la fecha de sorteo"
+                                                            id="lugarPresencial"
+                                                            placeholder="Ingrese el lugar "
                                                             className="form-input"
                                                         />
-                                                        <ErrorMessage name="fechaSorteo" component="div" className="text-danger mt-1" />
+                                                        <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="horaSorteo">Hora de Sorteo</label>
-                                                        <Field
-                                                            name="horaSorteo"
-                                                            type="text"
-                                                            id="horaSorteo"
-                                                            placeholder="Ingrese la hora de sorteo"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="horaSorteo" component="div" className="text-danger mt-1" />
-                                                    </div>
-                                                    <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                   
+                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Segundo Documento
                                                     </div>
+                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                        Jurados
+                                                    </div>
                                                     <div className="col-span-1">
-                                                        <label htmlFor="president">Seleccionar Presidente</label>
+                                                        <label htmlFor="president"> Presidente</label>
                                                         <Select
                                                             id="president"
                                                             styles={styles}
                                                             options={filterOptions(selectedValues, values.president)}
                                                             value={values.president}
                                                             onChange={(option) => setFieldValue('president', option)}
-                                                            placeholder="Seleccione un presidente..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
 
                                                     <div className="col-span-1">
-                                                        <label htmlFor="firstMember">Seleccionar Primer Miembro</label>
+                                                        <label htmlFor="firstMember"> Primer Miembro</label>
                                                         <Select
                                                             id="firstMember"
                                                             styles={styles}
                                                             options={filterOptions(selectedValues, values.firstMember)}
                                                             value={values.firstMember}
                                                             onChange={(option) => setFieldValue('firstMember', option)}
-                                                            placeholder="Seleccione un primer miembro..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
                                                     <div className="col-span-1">
-                                                        <label htmlFor="secondMember">Seleccionar Segundo Miembro</label>
+                                                        <label htmlFor="secondMember"> Segundo Miembro</label>
                                                         <Select
                                                             id="secondMember"
                                                             styles={styles}
                                                             options={filterOptions(selectedValues, values.secondMember)}
                                                             value={values.secondMember}
                                                             onChange={(option) => setFieldValue('secondMember', option)}
-                                                            placeholder="Seleccione un segundo miembro..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
                                                     <div className="col-span-1">
-                                                        <label htmlFor="accessory">Seleccionar Accesitario</label>
+                                                        <label htmlFor="accessory"> Accesitario</label>
                                                         <Select
                                                             id="accessory"
                                                             styles={styles}
                                                             options={filterOptions(selectedValues, values.accessory)}
                                                             value={values.accessory}
                                                             onChange={(option) => setFieldValue('accessory', option)}
-                                                            placeholder="Seleccione un accesitario..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
@@ -328,7 +278,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             options={filterOptions(selectedValues, values.adviser)}
                                                             value={values.adviser}
                                                             onChange={(option) => setFieldValue('adviser', option)}
-                                                            placeholder="Seleccione asesor..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
@@ -341,14 +291,14 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             options={filterOptions(selectedValues, values.coadviser)}
                                                             value={values.coadviser}
                                                             onChange={(option) => setFieldValue('coadviser', option)}
-                                                            placeholder="Seleccione segundo asesor (opcional)..."
+                                                            placeholder="Seleccione un docente..."
                                                             isClearable
                                                         />
                                                     </div>
 
                                                     {
                                                         !thesis.meetsRequirements && (
-                                                            <div className="col-span-1">
+                                                            <div className="col-span-2">
                                                                 <label htmlFor="meetsRequirements">Cumple Requisitos</label>
                                                                 <div className="flex gap-4">
                                                                     <label>
@@ -381,7 +331,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             </div>
                                                         )
                                                     }
-                                                    <div className="col-span-2">
+                                                    <div className="col-span-4">
                                                         <label htmlFor="observations">Observaciones</label>
                                                         <Field
                                                             name="observations"
@@ -397,7 +347,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         />
                                                         <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                    <div className="flex justify-end items-center mt-8 col-span-2">
+                                                    <div className="flex justify-end items-center mt-8 col-span-4">
                                                         <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                             Cancelar
                                                         </button>
