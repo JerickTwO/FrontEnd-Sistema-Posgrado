@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '../../../../store/themeConfigSlice';
 import TapprovalTable from './TApprovalTable';
 import TapprovalModal from './TApprovalModal';
 import TapprovalSearch from './TApprovalSearch';
 import thesisApprovalService from '../../../../api/ThesisApprovalService';
-import careerService from '../../../../api/careerService';
 import InfoService from '../../../../api/institucionalInfoService';
 import Swal from 'sweetalert2';
 
@@ -15,14 +14,12 @@ const ThesisApproval = () => {
     const [selectedTapproval, setSelectedTapproval] = useState(null);
     const [selectedCareer, setSelectedCareer] = useState(null);
     const [search, setSearch] = useState('');
-    const [careerOptions, setCareerOptions] = useState([]);
     const [tapprovals, setTapprovals] = useState([]);
     const [info, setInfo] = useState(null);
 
     useEffect(() => {
-        dispatch(setPageTitle('Aprobación de Tesis'));
+        dispatch(setPageTitle('Aprobación de Informe'));
         fetchTapprovals();
-        fetchCareers();
         fetchInfo();
     }, [dispatch]);
 
@@ -32,21 +29,6 @@ const ThesisApproval = () => {
             setInfo(response)
         } catch (error) {
             console.error('Error al cargar la información institucional.');
-        }
-    }, []);
-
-
-    const fetchCareers = useCallback(async () => {
-        try {
-            const careers = await careerService.getCareers();
-            const options = careers.map((career) => ({
-                value: career.id,
-                label: career.name,
-                data: career,
-            }));
-            setCareerOptions(options);
-        } catch (error) {
-            console.error('Error fetching careers:', error);
         }
     }, []);
 
@@ -60,8 +42,6 @@ const ThesisApproval = () => {
     }, []);
 
     const handleEdit = async (tapproval) => {
-        // const juryDetails = getTapprovalsDetails(tapproval);
-        // setSelectedTapproval(juryDetails);
         setSelectedTapproval(tapproval);
 
         setIsModalOpen(true);
@@ -111,7 +91,6 @@ const ThesisApproval = () => {
             <TapprovalSearch
                 search={search}
                 setSearch={setSearch}
-                careerOptions={careerOptions}
                 selectedCareer={selectedCareer}
                 setSelectedCareer={setSelectedCareer}
             />

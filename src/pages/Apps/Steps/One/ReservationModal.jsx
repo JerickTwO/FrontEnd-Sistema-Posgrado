@@ -67,7 +67,7 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center px-4 py-8">
                         <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-lg text-black dark:text-white-dark">
-                            <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3">Aceptar Reservación</div>
+                            <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3">{reservation ? 'Editar Registro' : 'Crear Registro'}</div>
                             <div className="p-5">
                                 {readyToInit && (
                                     <Formik

@@ -98,7 +98,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 <label htmlFor="reportNumber">Número de Informe</label>
                                                 <Field
                                                     name="reportNumber"
-                                                    type="text"
+                                                    type="number"
                                                     id="reportNumber"
                                                     placeholder="Ingrese número de informe"
                                                     className="form-input"

@@ -44,7 +44,7 @@ const RecompositionModal = ({ isOpen, onClose, onSave, recomposition }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {recomposition ? 'Editar Recomposición de Jurado' : 'Crear Recomposición de Jurado'}
+                                {recomposition ? 'Editar Registro' : 'Crear Registro'}
                             </div>
                             <div className="p-5">
                                 <Formik

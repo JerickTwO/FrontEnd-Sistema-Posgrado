@@ -115,7 +115,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {thesis ? 'Editar Presentación' : 'Crear Presentación'}
+                                {thesis ? 'Editar Registro' : 'Crear Registro'}
                             </div>
                             <div className="p-5">
                                 <Formik

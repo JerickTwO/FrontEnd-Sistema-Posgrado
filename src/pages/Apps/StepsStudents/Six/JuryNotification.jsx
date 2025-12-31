@@ -24,7 +24,7 @@ const JuryNotification = () => {
     }, [user.username]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Notificación de Jurados'));
+        dispatch(setPageTitle('Revisión de Informe'));
 
         if (user.username) {
             fetchjury();
@@ -37,7 +37,7 @@ const JuryNotification = () => {
 
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 6 - Notificación de Jurados</h1>
+            <h1 className="text-2xl font-bold mb-5">Paso 6 - Revisión de Informe</h1>
             <JuryTable jury={jury} />
         </>
     );

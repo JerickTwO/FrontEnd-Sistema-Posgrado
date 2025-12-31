@@ -2,15 +2,10 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FieldArray } from 'formik';
-import Select from 'react-select';
-import { HandleMode } from '../../styles/selectStyles';
-import { useSelector } from 'react-redux';
 import IconLoader from '../../../../components/Icon/IconLoader';
 import IconX from '../../../../components/Icon/IconX';
 
 const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, isLoading }) => {
-    const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
-    const styles = HandleMode(isDarkMode);
     const initialValues = React.useMemo(
         () => ({
             studentCode: juryAppointment?.projectApprovalStepTwo?.titleReservationStepOne?.student?.studentCode || 'N/A',
@@ -19,42 +14,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
             studentTwoFirstNames: juryAppointment?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.firstNames || '',
             observations: juryAppointment?.observations || '',
             meetRequirements: juryAppointment?.meetRequirements ? 'yes' : 'no',
-            president: juryAppointment?.president
-                ? {
-                    value: juryAppointment.president.id,
-                    label: `${juryAppointment.president.firstNames} ${juryAppointment.president.lastName}`,
-                }
-                : null,
-            firstMember: juryAppointment?.firstMember
-                ? {
-                    value: juryAppointment.firstMember.id,
-                    label: `${juryAppointment.firstMember.firstNames} ${juryAppointment.firstMember.lastName}`,
-                }
-                : null,
-            secondMember: juryAppointment?.secondMember
-                ? {
-                    value: juryAppointment.secondMember.id,
-                    label: `${juryAppointment.secondMember.firstNames} ${juryAppointment.secondMember.lastName}`,
-                }
-                : null,
-            accessory: juryAppointment?.accessory
-                ? {
-                    value: juryAppointment.accessory.id,
-                    label: `${juryAppointment.accessory.firstNames} ${juryAppointment.accessory.lastName}`,
-                }
-                : null,
-            adviser: juryAppointment?.projectApprovalStepTwo?.adviser
-                ? {
-                    value: juryAppointment?.projectApprovalStepTwo?.adviser.id,
-                    label: `${juryAppointment?.projectApprovalStepTwo?.adviser.firstNames} ${juryAppointment?.projectApprovalStepTwo?.adviser.lastName}`,
-                }
-                : null,
-            coadviser: juryAppointment?.projectApprovalStepTwo?.coadviser
-                ? {
-                    value: juryAppointment?.projectApprovalStepTwo?.coadviser.id,
-                    label: `${juryAppointment?.projectApprovalStepTwo?.coadviser.firstNames} ${juryAppointment?.projectApprovalStepTwo?.coadviser.lastName}`,
-                }
-                : null,
             hour: juryAppointment?.hour || '',
             futDate: juryAppointment?.futDate || '',
             numberFolio: juryAppointment?.numberFolio || '',
@@ -75,17 +34,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
         [juryAppointment]
     );
 
-    const filterOptions = (selectedValues, currentFieldValue) => {
-        const selectedIds = selectedValues.filter((val) => val && val.value !== currentFieldValue?.value).map((val) => val.value);
-
-        return adviserOptions
-            .filter((adviser) => !selectedIds.includes(adviser.id))
-            .map((adviser) => ({
-                value: adviser.id,
-                label: `${adviser.firstNames} ${adviser.lastName}`,
-            }));
-    };
-
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" open={isOpen} onClose={onClose} className="relative z-[51] ">
@@ -96,7 +44,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                             <button type="button" onClick={onClose} className="absolute top-4 ltr:right-4 rtl:left-4 text-gray-400 hover:text-gray-800 dark:hover:text-gray-600 outline-none">
                                 <IconX />
                             </button>
-                            <div className="text-2xl font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">Crear Jurados</div>
+                            <div className="text-2xl font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">{juryAppointment ? 'Editar Registro' : 'Crear Registro'}</div>
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
@@ -115,10 +63,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                         };
 
                                         const transformedValues = {
-                                            president: values.president ? { id: values.president.value } : null,
-                                            firstMember: values.firstMember ? { id: values.firstMember.value } : null,
-                                            secondMember: values.secondMember ? { id: values.secondMember.value } : null,
-                                            accessory: values.accessory ? { id: values.accessory.value } : null,
                                             meetRequirements: values.meetRequirements === 'yes' ? true : false,
                                             observations: values.observations || '',
                                             hour: values.hour,
@@ -161,7 +105,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                     <Field name="articleNumber" type="text" id="articleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
                                                     <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                                 </div>
-                                                 <div>
+                                                {!juryAppointment.meetRequirements && (<div className="col-span-1">
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>
                                                     <div className="flex gap-4">
                                                         <label>
@@ -179,6 +123,8 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                                                         </label>
                                                     </div>
                                                 </div>
+                                                )}
+                                                 
                                                 <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
                                                         values.additionalInputs.map((_, index) => (

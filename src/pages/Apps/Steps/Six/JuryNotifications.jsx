@@ -18,7 +18,7 @@ const JuryNotifications = () => {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Notificación de Jurados'));
+        dispatch(setPageTitle('Revisión de Informe'));
         fetchNotifications();
         fetchInstitutionalInfo();
     }, [dispatch]);

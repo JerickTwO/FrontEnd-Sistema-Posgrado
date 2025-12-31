@@ -151,7 +151,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/aprobacion-de-informe',
+        path: 'apps/paso/revision-de-informe',
         element: (
             <ProtectedRoute>
                 <JuryNotifications />
@@ -159,7 +159,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/solicitud-de-tesis',
+        path: 'apps/paso/aprobacion-de-informe',
         element: (
             <ProtectedRoute>
                 <ThesisApproval />
@@ -167,7 +167,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/filtro-de-similitud-tres',
+        path: 'apps/paso/solicitud-de-tesis',
         element: (
             <ProtectedRoute>
                 <PastingApproval />

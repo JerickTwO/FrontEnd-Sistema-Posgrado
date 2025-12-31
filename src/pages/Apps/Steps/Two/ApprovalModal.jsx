@@ -47,7 +47,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {project ? 'Editar Proyecto' : 'Crear Proyecto'}
+                                {project ? 'Editar Registro' : 'Crear Registro'}
                             </div>
                             <div className="p-5">
                                 <Formik

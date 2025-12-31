@@ -22,7 +22,7 @@ const ThesisApproval = () => {
         }
     }, [user.username]);
     useEffect(() => {
-        dispatch(setPageTitle('Aprobación de Tesis'));
+        dispatch(setPageTitle('Aprobación de Informe'));
         if (user.username) {
             fetchThesis();
         }
