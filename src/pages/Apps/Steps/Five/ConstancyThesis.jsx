@@ -10,7 +10,7 @@ import constancyThesisService from '../../../../api/constancyThesisService';
 
 const ConstancyThesis = () => {
     const dispatch = useDispatch();
-    const [currentThesis, setCurrentThesis] = useState([]);
+    const [thesis, setThesis] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedThesis, setSelectedThesis] = useState(null);
     const [selectedCareer, setSelectedCareer] = useState(null);
@@ -42,9 +42,8 @@ const ConstancyThesis = () => {
     const fetchThesis = useCallback(async () => {
         try {
             const thesis = await constancyThesisService.getAllConstancyThesis();
-            setCurrentThesis(thesis);
+            setThesis(thesis);
         } catch (error) {
-            console.error('Error al obtener las constancias de tesis:', error);
             setApiError('Error al cargar las constancias de tesis.');
         }
     }, []);
@@ -66,26 +65,6 @@ const ConstancyThesis = () => {
         }
     };
 
-    const normalizeText = (text) => {
-        return text
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase();
-    };
-
-    const filteredThesis = useMemo(() => {
-        const normalizedSearch = normalizeText(search);
-        return currentThesis.filter((thesis) => {
-            const fullName = `${thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.firstNames} ${thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.lastName}`;
-            const normalizedFullName = normalizeText(fullName);
-            const studentCodeMatch = normalizeText(thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.studentCode).includes(normalizedSearch);
-            const matchesSearch = normalizedFullName.includes(normalizedSearch) || studentCodeMatch;
-            const matchesCareer = selectedCareer ? thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.id === selectedCareer.value : true;
-
-            return matchesSearch && matchesCareer;
-        });
-    }, [currentThesis, search, selectedCareer]);
-
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedThesis(null);
@@ -104,7 +83,7 @@ const ConstancyThesis = () => {
             {apiError && <div className="text-danger">{apiError}</div>}
 
             <ThesisTable
-                thesis={filteredThesis}
+                thesis={thesis}
                 onEdit={handleEdit}
             />
 

@@ -35,8 +35,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         () => ({
             studentCode: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.studentCode || 'N/A',
             studentTwoCode: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.studentTwo?.studentCode || '',
-            meetsRequirements: thesis?.meetsRequirements ? 'yes' : 'no',
-            observations: thesis?.observations || '',
+            meetsRequirements: thesis?.meetsRequirements === true ? 'yes' : 'no',
             title: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.title || '',
             lineOfResearch: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch
                 ? { value: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.id, label: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.name }
@@ -47,12 +46,12 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             fechaSorteo: thesis?.fechaSorteo || '',
             horaSorteo: thesis?.horaSorteo || '',
             lugarPresencial: thesis?.lugarPresencial || '',
-            president: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.president) || null,
-            firstMember: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.firstMember) || null,
-            secondMember: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.secondMember) || null,
-            accessory: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.accessory) || null,
-            adviser: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.adviser) || null,
-            coadviser: mapTeacherToOption(thesis?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.coadviser) || null,
+            president: mapTeacherToOption(thesis?.president) || null,
+            firstMember: mapTeacherToOption(thesis?.firstMember) || null,
+            secondMember: mapTeacherToOption(thesis?.secondMember) || null,
+            accessory: mapTeacherToOption(thesis?.accessory) || null,
+            adviser: mapTeacherToOption(thesis?.adviser) || null,
+            coadviser: mapTeacherToOption(thesis?.coadviser) || null,
         }),
         [thesis]
     );
@@ -78,7 +77,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         const normalizedValues = {
             ...values,
-            meetsRequirements: values.meetsRequirements === 'yes' ? true : false,
+            meetsRequirements: values.meetsRequirements === 'yes',
             cartNumber: values.cartNumber,
             url: values.url,
             fechaSorteo: values.fechaSorteo,
@@ -92,13 +91,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             coadviser: values.coadviser ? { id: values.coadviser.value } : null,
 
         };
-        if (thesis?.meetsRequirements === true) {
-            delete normalizedValues.meetsRequirements;
-        }
-
         await onSave(thesis.id, normalizedValues);
         setSubmitting(false);
-        resetForm();
     };
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -115,7 +109,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {thesis ? 'Editar Registro' : 'Crear Registro'}
+                                {thesis ? 'Editar Presentación' : 'Crear Presentación'}
                             </div>
                             <div className="p-5">
                                 <Formik
@@ -301,30 +295,32 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                             <div className="col-span-2">
                                                                 <label htmlFor="meetsRequirements">Cumple Requisitos</label>
                                                                 <div className="flex gap-4">
-                                                                    <label>
+                                                                    <label className="flex items-center cursor-pointer">
                                                                         <Field
                                                                             type="radio"
                                                                             name="meetsRequirements"
                                                                             value="yes"
                                                                             className="form-radio"
-                                                                            onChange={() => {
+                                                                            // Importante: Si quieres que solo se pueda marcar "Sí" una vez y no volver atrás, 
+                                                                            // puedes dejar el disabled, pero si quieres libertad de cambio, quítalo.
+                                                                            onChange={(e) => {
                                                                                 setFieldValue('meetsRequirements', 'yes');
-                                                                                setFieldValue('observations', '');
+                                                                                setFieldValue('observations', ''); // Limpia observaciones si dice que sí
                                                                             }}
                                                                         />
-                                                                        Sí
+                                                                        <span className="ml-2">Sí</span>
                                                                     </label>
-                                                                    <label>
+                                                                    <label className="flex items-center cursor-pointer">
                                                                         <Field
                                                                             type="radio"
                                                                             name="meetsRequirements"
                                                                             value="no"
                                                                             className="form-radio"
-                                                                            onChange={() => {
+                                                                            onChange={(e) => {
                                                                                 setFieldValue('meetsRequirements', 'no');
                                                                             }}
                                                                         />
-                                                                        No
+                                                                        <span className="ml-2">No</span>
                                                                     </label>
                                                                 </div>
                                                                 <ErrorMessage name="meetsRequirements" component="div" className="text-danger mt-1" />
