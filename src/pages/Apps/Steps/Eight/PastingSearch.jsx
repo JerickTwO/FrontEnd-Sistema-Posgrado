@@ -4,7 +4,7 @@ const PastingSearch = ({ search, setSearch }) => {
     return (
         <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex flex-col">
-                <h2 className="text-2xl font-bold mb-5">Aprobación de Empastados</h2>
+                <h2 className="text-2xl font-bold mb-5">Solicitud de Tesis</h2>
             </div>
             <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto">
                 <div className="flex items-center gap-4">

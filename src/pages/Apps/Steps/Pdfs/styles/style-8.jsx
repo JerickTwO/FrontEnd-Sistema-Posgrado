@@ -1,6 +1,5 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
-// Style Sheet
 const styles = StyleSheet.create({
     pageStyle: {
         height: '100vh',
@@ -9,87 +8,76 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#FFF',
         fontFamily: 'Times-Roman',
-        justifyContent: 'space-between',
-        padding: '0px 60px',
-        height: '78%',
+        padding: '40px 60px', // Aumentamos padding superior para el banner del PdfBase
+        height: '100%',
+    },
+    section: {
+        fontSize: 12,
     },
     bold: {
         fontFamily: 'Times-Bold',
     },
-    header: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    textHeader: {
-        fontSize: 18,
-        paddingHorizontal: 70,
-        textAlign: 'center',
-        marginBottom: 5,
-    },
-    logo: {
-        marginBottom: 15,
-    },
+    // Estilo para el texto curvo/itálico de arriba (si no lo maneja PdfBase)
     headerSection: {
-        fontSize: 10,
+        fontSize: 9,
         textAlign: 'center',
-    },
-    title: {
-        fontSize: 18,
-        paddingHorizontal: 40,
-        textDecoration: 'underline',
-        textAlign: 'center',
-        marginTop: 19,
-    },
-    underline: {
-        borderTop: '1px dashed #000',
-        paddingHorizontal: 180,
-        paddingBottom: 15,
-    },
-    textMain: {
-        fontSize: 14,
-        marginTop: 10,
-    },
-    body: {
-        textAlign: 'justify',
-        fontSize: 16,
-        marginBottom: 20,
-        lineHeight: 1.1,
-    },
-    footerBody: {
-        fontSize: 16,
-        textAlign: 'right',
-    },
-    headerText: {
-        fontSize: 7,
         fontStyle: 'italic',
+        marginBottom: 20,
     },
-    footerText: {
-        fontSize: 8,
-
-        fontFamily: 'Times-Bold'
-    },
-    hr: {
-        borderBottom: '0.5pt solid red',
-    },
-    footerInfo: {
+    // Fecha alineada a la derecha
+    tamburco: {
+        fontSize: 11,
         textAlign: 'right',
-        fontSize: 10,
-        marginTop: 10,
+        marginBottom: 10,
     },
+    // El número de carta (CARTA N° 001-...)
+    letterId: {
+        fontSize: 11,
+        fontFamily: 'Times-Bold',
+        marginBottom: 15,
+        textDecoration: 'underline',
+    },
+    // Texto general de la carta
+    body: {
+        fontSize: 11,
+        lineHeight: 1.5, // Espaciado interlineal para mejor lectura
+    },
+    justify: {
+        fontSize: 11,
+        textAlign: 'justify',
+        lineHeight: 1.5,
+    },
+    // Estilos para el destinatario
+    recipient: {
+        fontSize: 11,
+        marginBottom: 2,
+    },
+    // Ajuste de marcas de agua y decoraciones
     watermarkContainer: {
         position: 'absolute',
-        bottom: 10,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1,
+        top: '30%',
+        left: '15%',
+        opacity: 0.1,
+        zIndex: -1,
     },
-
     watermarkImage: {
-        width: 300,
-        height: 300,
-        objectFit: 'contain',
+        width: 350,
+        height: 350,
+    },
+    // Footer - Texto muy pequeño como en la imagen
+    footerText: {
+        fontSize: 8,
+        fontFamily: 'Times-Roman',
+    },
+    hr: {
+        borderBottom: '1pt solid #e5e7eb', // Un gris suave es más elegante que rojo puro
+        marginVertical: 5,
+    },
+    footerInfo: {
+        textAlign: 'center',
+        fontSize: 9,
+        color: '#4b5563',
     },
 });
+
 export default styles;

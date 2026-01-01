@@ -1,91 +1,97 @@
-import styles from './styles/style-8';
-import Logo from './images/BANNER2025.png';
-import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
-import { getYear, formatNumberWithZero, getWrittenDateEmpresa } from '../utils/Dates';
+import React from 'react';
+import { Text, View } from '@react-pdf/renderer';
+import PdfBase from './pdfBase';
+import styles from './styles/style-8'; // Asumiendo que usas un archivo de estilos similar al 5
+import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
-import WatermarkLogo from './images/marcaAgua.png';
 
-const PdfEightCN = ({ infoStep, institutionalInfo, incrementFields }) => {
-    const currentYear = getYear();
-    const commemorativeText = institutionalInfo?.commemorativeText || '';
+const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
+    const anio = getYear();
+    const actualDate = getWrittenDate();
 
+    // Navegación por la jerarquía de objetos para obtener datos de la tesis
     const FIRST_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
 
     const {
         combinedNames,
-        title,  
-        dni,
-        code,
-        career,
+        title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    const deanResolution = formatNumberWithZero(infoStep?.deanResolution || '');
-    const articleNumber = infoStep?.articleNumber || 'N/A';
+    // Campos Editables (vienen de infoStep o valores por defecto)
+    const cartaNumero = formatNumberWithZero(infoStep?.cartNumber || incrementFields?.cartaNumero || 0);
+    const destinatario =  'Dr. Daniel Amílcar Pinto Pagaza';
+    const cargo = infoStep?.cargo || 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
+    const aulaSustentacion = infoStep?.aulaSustentacion || 'Aula Magna de la UNAMBA';
+    const fechaSustentacion = infoStep?.fechaSustentacion || 'Jueves, 28 de agosto de 2025';
+    const horaSustentacion = infoStep?.horaSustentacion || '11:00 am - 1:00 pm';
 
     return (
-        <Document>
-            <Page size="A4" style={styles.pageStyle}> 
-                {/* Header */}
-                <View style={styles.header}>
-                    <Image style={styles.logo} src={Logo} />
-                    <Text style={styles.headerSection}>“{commemorativeText}”</Text>
-                    <Text style={[styles.title, styles.bold]}>
-                        CONSTANCIA Nº {formatNumberWithZero(incrementFields?.constacia)}-{currentYear}-D. UIFI-UNAMBA
-                    </Text>
-                </View>
-                <View style={styles.page}>
-                    {/* Main Content */}
-                    <View>
-                        <View style={styles.watermarkContainer}>
-                            <Image src={WatermarkLogo} style={styles.watermarkImage} />
-                        </View>
-                        <Text style={[styles.textMain, { marginBottom: 15 }]}>
-                            EL DIRECTOR DE LA UNIDAD DE INVESTIGACIÓN DE LA FACULTAD DE INGENIERÍA DE LA UNIVERSIDAD NACIONAL
-                            MICAELA BASTIDAS DE APURÍMAC.
-                        </Text>
-                        <Text style={[styles.textMain, { marginBottom: 5 }]}>HACE CONSTAR:</Text>
-                        <Text style={styles.body}>
-                            Que, <Text style={styles.bold}>{combinedNames}</Text>{' '}
-                            <Text style={styles.bold}>{dni}</Text>, y con Código N°{' '}
-                            <Text style={styles.bold}>{code}</Text>, Bachiller de la Escuela Académico Profesional de{' '}
-                            <Text style={styles.bold}>{career}</Text>, de la Facultad de Ingeniería de la{' '}
-                            <Text style={styles.bold}>Universidad Nacional Micaela Bastidas de Apurímac</Text>,{' '}
-                            <Text style={styles.bold}>
-                                HA CUMPLIDO CON LA PRESENTACIÓN DE 02 EMPASTADO del informe final de tesis titulado:
-                            </Text>{' '}
-                            <Text style={styles.bold}>
-                                “{title}”
-                            </Text>, debidamente refrendados con firma original de los jurados evaluadores, en mérito a la{' '}
-                            <Text style={styles.bold}>
-                                RESOLUCIÓN N° {deanResolution}-{currentYear}-CFI-UNAMBA
-                            </Text>, que aprueba el{' '}
-                            <Text style={styles.bold}>Acta de Sustentación de tesis</Text> antes mencionada.
-                        </Text>
-                        <Text style={styles.body}>
-                            Se expide la presente constancia a solicitud del interesado, a los{' '}
-                            <Text style={styles.bold}>{getWrittenDateEmpresa()}</Text>, en
-                            cumplimiento del Artículo N°{' '}
-                            <Text style={styles.bold}>{articleNumber} inciso (n) del Reglamento de Grados y Títulos de la UNAMBA</Text>{' '}
-                            y para los fines que estime conveniente.
-                        </Text>
-                        <Text style={[styles.bold, { textAlign: 'center' }]} >Atentamente,</Text>
-                    </View>
+        <PdfBase 
+            commemorativeText={true} 
+            registrationNumber={incrementFields?.regNumber || infoStep?.reg}
+        >
+            {/* Fecha alineada a la derecha */}
+            <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>
+                <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>
+            </View>
 
-                    {/* Footer */}
-                    <View style={styles.footerText}>
-                        <Text>C. c.</Text>
-                        <Text>Archivo</Text>
-                        <Text>REG. N° {formatNumberWithZero(infoStep?.reg || institutionalInfo?.regNumber)}</Text>
-                        <View style={styles.hr} />
-                        <View style={styles.footerInfo}>
-                            <Text>Av. Inca Garcilaso de la Vega S/N Tamburco, Abancay | (083) 636 050 | www.unamba.edu.pe</Text>
-                        </View>
-                    </View>
-                </View>
+            {/* Número de Carta */}
+            <Text style={[styles.bold, { marginBottom: 5, fontSize: 12, textDecoration: 'underline' }]}>
+                CARTA N° {cartaNumero}-{anio}-D-UI-FA-UNAMBA
+            </Text>
 
-            </Page>
-        </Document>
+            {/* Bloque del Destinatario */}
+            <View style={styles.section}>
+                <Text style={styles.body}>Señor:</Text>
+                <Text style={[styles.bold, { fontSize: 10 }]}>{destinatario}</Text>
+                <Text style={[styles.bold, { fontSize: 10 }]}>{cargo}</Text>
+                <Text style={[styles.bold, { fontSize: 10 }]}>UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</Text>
+                <Text style={[styles.bold, { marginTop: 10, fontSize: 10 }]}>Presente.-</Text>
+            </View>
+
+            <View style={[styles.section, { flexDirection: 'row', marginTop: 10, fontSize: 12 }]}>
+                <Text>Asunto             </Text>
+                <Text>              :SOLICITO USO DE AUDITORIO PARA SUSTENTACIÓN DE TESIS</Text>
+            </View>
+            <Text>******************************************************</Text>
+            <View style={styles.section}>
+                <Text style={styles.justify}>
+                    Es sumamente grato dirigirme a usted, en atención a los documentos de referencia, mediante su autoridad, 
+                    tenga a bien de solicitar el uso del <Text style={styles.bold}>{aulaSustentacion}</Text>; para realizar la 
+                    sustentación de tesis de manera presencial según detalle siguiente:
+                </Text>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.justify}>
+                    <Text style={styles.bold}>Tesis Titulada:</Text> “{title}”, presentado por <Text style={styles.bold}>{combinedNames}</Text>, según el siguiente detalle:
+                </Text>
+            </View>
+
+            <View style={[styles.section, { marginBottom: 5 }]}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ width: 40 }}>Día</Text>
+                    <Text>: {fechaSustentacion}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ width: 40 }}>Hora</Text>
+                    <Text>: {horaSustentacion}</Text>
+                </View>
+            </View>
+
+            {/* Despedida */}
+            <View style={styles.section}>
+                <Text style={styles.justify}>
+                    Sin otro en particular, aprovecho la ocasión para renovarle las muestras de mi especial consideración.
+                </Text>
+            </View>
+
+            {/* Firma */}
+            <View style={{ marginTop: 20 }}>
+                <Text style={[styles.bold, { textAlign: 'center', fontSize: 12 }]}>Atentamente,</Text>
+            </View>
+        </PdfBase>
     );
 };
 
-export default PdfEightCN;
+export default PdfEightOne;
