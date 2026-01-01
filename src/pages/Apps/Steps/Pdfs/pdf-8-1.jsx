@@ -1,7 +1,6 @@
-import React from 'react';
 import { Text, View } from '@react-pdf/renderer';
 import PdfBase from './pdfBase';
-import styles from './styles/style-8'; // Asumiendo que usas un archivo de estilos similar al 5
+import styles from './styles/style-8';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
@@ -9,7 +8,6 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
-    // Navegación por la jerarquía de objetos para obtener datos de la tesis
     const FIRST_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
 
     const {
@@ -17,13 +15,13 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    // Campos Editables (vienen de infoStep o valores por defecto)
-    const cartaNumero = formatNumberWithZero(infoStep?.cartNumber || incrementFields?.cartaNumero || 0);
-    const destinatario =  'Dr. Daniel Amílcar Pinto Pagaza';
-    const cargo = infoStep?.cargo || 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
-    const aulaSustentacion = infoStep?.aulaSustentacion || 'Aula Magna de la UNAMBA';
-    const fechaSustentacion = infoStep?.fechaSustentacion || 'Jueves, 28 de agosto de 2025';
-    const horaSustentacion = infoStep?.horaSustentacion || '11:00 am - 1:00 pm';
+    // Campos Editables (vienen de infoStep o valores particleNumberor defecto)
+    const cartaNumero = formatNumberWithZero(infoStep?.articleNumber);
+    const destinatario = institutionalInfo?.deanName;
+    const cargo = 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
+    const aulaSustentacion = infoStep?.location;
+    const fechaSustentacion = infoStep?.deanResolution;
+    const horaSustentacion = infoStep?.reg;
 
     return (
         <PdfBase 

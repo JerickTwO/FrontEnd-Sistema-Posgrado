@@ -5,6 +5,7 @@ export const getApprovalDetails = (project = {}) => {
     const student = project?.titleReservationStepOne?.student ?? null;
     const studentTwo = project?.titleReservationStepOne?.studentTwo ?? null;
 
+    const location = project?.observations ?? null;
     const observations = project?.observations ?? null;
     const articleNumber = project?.articleNumber ?? null;
     const secondArticleNumber = project?.secondArticleNumber ?? null;
@@ -20,6 +21,7 @@ export const getApprovalDetails = (project = {}) => {
         secondArticleNumber,
         meetsRequirements,
         referenceDate,
+        location,
         observations,
         updatedAt,
     };

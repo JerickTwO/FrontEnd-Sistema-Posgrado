@@ -24,6 +24,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                 pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.lastName ||
                 '',
             meetRequirements: pasting?.meetRequirements ? 'yes' : 'no',
+            location: pasting?.location || '',
             observations: pasting?.observations || '',
             deanResolution: pasting?.deanResolution || '',
             registrationNumber: pasting?.registrationNumber || '',
@@ -50,6 +51,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                     initialValues={initialValues}
                                     onSubmit={(values) => {
                                         const transformedValues = {
+                                            location: values.location,
                                             observations: values.observations,
                                             deanResolution: values.deanResolution,
                                             registrationNumber: values.registrationNumber,
@@ -78,23 +80,27 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
-
                                             <div className="col-span-1">
-                                                <label htmlFor="deanResolution">Resolución del Decano</label>
-                                                <Field name="deanResolution" type="text" id="deanResolution" className="form-input" placeholder="000-2025" />
-                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo</label>
+                                                <label htmlFor="articleNumber">Número de Carta</label>
                                                 <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
                                                 <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field name="reg" type="number" id="reg" placeholder="Ingrese el reg" className="form-input" />
+                                                <label htmlFor="location">Ubicación</label>
+                                                <Field name="location" type="text" id="location" className="form-input" />
+                                                <ErrorMessage name="location" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="deanResolution">Día</label>
+                                                <Field name="deanResolution" type="date" id="deanResolution" className="form-input" />
+                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Hora</label>
+                                                <Field name="reg" type="time" id="reg" className="form-input" />
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
-                                            {pasting.meetRequirements &&
+                                            {!pasting.meetRequirements &&
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>
                                                     <div className="flex gap-4">

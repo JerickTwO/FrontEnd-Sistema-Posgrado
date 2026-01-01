@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
-import PdfStepEight from '../Pdfs/pdf-8';
+import PdfStepEight from '../Pdfs/pdf-8-1';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 const PastingTable = ({ pastings, onEdit, info }) => {
