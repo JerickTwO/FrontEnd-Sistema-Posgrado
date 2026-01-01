@@ -20,6 +20,9 @@ import ConstancyThesis from '../pages/Apps/Steps/Five/ConstancyThesis';
 import JuryNotifications from '../pages/Apps/Steps/Six/JuryNotifications';
 import ThesisApproval from '../pages/Apps/Steps/Seven/ThesisApproval';
 import PastingApproval from '../pages/Apps/Steps/Eight/PastingApproval';
+import Resolution from '../pages/Apps/Steps/Nine/Resolution';
+import TitleDelivery from '../pages/Apps/Steps/Ten/TitleDelivery';
+import FinalStep from '../pages/Apps/Steps/Eleven/FinalStep';
 import JuryRecomposition from '../pages/Apps/Steps/Extra/JuryRecomposition';
 import ChangeAdvisor from '../pages/Apps/Steps/Extra/ChangeAdvisor';
 import PassageExpansion from '../pages/Apps/Steps/Extra/PassageExpansion';
@@ -34,6 +37,9 @@ import ConstancyThesisStudents from '../pages/Apps/StepsStudents/Five/ConstancyT
 import JuryNotificationsStudents from '../pages/Apps/StepsStudents/Six/JuryNotification';
 import ThesisApprovalStudents from '../pages/Apps/StepsStudents/Seven/ThesisApproval';
 import PastingApprovalStudents from '../pages/Apps/StepsStudents/Eight/PastingApproval';
+import ResolutionStudents from '../pages/Apps/StepsStudents/Nine/Resolution';
+import TitleDeliveryStudents from '../pages/Apps/StepsStudents/Ten/TitleDelivery';
+import FinalStepStudents from '../pages/Apps/StepsStudents/Eleven/FinalStep';
 // <--End Students Imports-->
 
 import AuthRoute from '../security/AuthRoute ';
@@ -174,6 +180,30 @@ const routes = [
             </ProtectedRoute>
         ),
     },
+    {
+        path: 'apps/paso/filtro-de-similitud-tres',
+        element: (
+            <ProtectedRoute>
+                <Resolution />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: 'apps/paso/constancia-de-empastados',
+        element: (
+            <ProtectedRoute>
+                <TitleDelivery />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: 'apps/paso/emision-de-tesis',
+        element: (
+            <ProtectedRoute>
+                <FinalStep />
+            </ProtectedRoute>
+        ),
+    },
     // Estudiantes
     {
         path: 'apps/paso-estudiante/reserva-de-titulo',
@@ -236,6 +266,30 @@ const routes = [
         element: (
             <StudentRoute>
                 <PastingApprovalStudents />
+            </StudentRoute>
+        ),
+    },
+    {
+        path: 'apps/paso-estudiante/filtro-de-similitud-tres',
+        element: (
+            <ProtectedRoute>
+                <ResolutionStudents />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: 'apps/paso-estudiante/constancia-de-empastados',
+        element: (
+            <StudentRoute>
+                <TitleDeliveryStudents />
+            </StudentRoute>
+        ),
+    },
+    {
+        path: 'apps/paso-estudiante/emision-de-tesis',
+        element: (
+            <StudentRoute>
+                <FinalStepStudents />
             </StudentRoute>
         ),
     },

@@ -1,11 +1,10 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '../../../../store/themeConfigSlice';
 import TapprovalTable from './PastingTable';
 import TapprovalModal from './PastingModal';
 import TapprovalSearch from './PastingSearch';
 import pastingApprovalService from '../../../../api/pastingApprovalService';
-import careerService from '../../../../api/careerService';
 import InfoService from '../../../../api/institucionalInfoService';
 import Swal from 'sweetalert2';
 
