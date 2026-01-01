@@ -4,6 +4,18 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
+    const to12WithSuffix = (value) => {
+        if (!value) return '';
+        const match = value.match(/^(\d{1,2}):(\d{2})$/);
+        if (!match) return value;
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const suffix = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        return `${hours}:${minutes} ${suffix}`;
+    };
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -32,11 +44,13 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             articleNumber: pasting?.articleNumber || '',
             reg: pasting?.reg || '',
             additionalInputs: pasting?.additionalInputs?.split(', ') || [''],
+            cartNumber: pasting?.cartNumber || '',
+            memorandumNumber: pasting?.memorandumNumber || '',
             day: pasting?.day || '',
+            day2: pasting?.day2 || '',
             hour: pasting?.hour || '',
             hour2: pasting?.hour2 || '',
             location2: pasting?.location2 || '',
-            articleNumber2: pasting?.articleNumber2 || '',
         }),
         [pasting]
     );
@@ -63,13 +77,15 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             deanResolution: values.deanResolution,
                                             registrationNumber: values.registrationNumber,
                                             articleNumber: values.articleNumber,
-                                            reg: values.reg || '',
+                                            reg: to12WithSuffix(values.reg) || '',
                                             additionalInputs: values.additionalInputs.join(', '),
+                                            cartNumber: values.cartNumber,
+                                            memorandumNumber: values.memorandumNumber,
                                             day: values.day,
-                                            hour: values.hour,
-                                            hour2: values.hour2,
+                                            day2: values.day2,
+                                            hour: to12WithSuffix(values.hour),
+                                            hour2: to12WithSuffix(values.hour2),
                                             location2: values.location2,
-                                            articleNumber2: values.articleNumber2,
                                         };
                                         if (values.meetRequirements === 'yes' && pasting?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
@@ -95,9 +111,9 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 </div>
                                             )}
                                             <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Carta</label>
-                                                <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                                <label htmlFor="cartNumber">Número de Carta</label>
+                                                <Field name="cartNumber" type="text" id="cartNumber" className="form-input" />
+                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="location">Ubicación</label>
@@ -105,74 +121,73 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 <ErrorMessage name="location" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="deanResolution">Día</label>
-                                                <Field name="deanResolution" type="date" id="deanResolution" className="form-input" />
-                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="reg">Hora</label>
-                                                <Field name="reg" type="time" id="reg" className="form-input" />
-                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <FieldArray name="additionalInputs">
-                                                {({ push, remove }) => (
-                                                    values.additionalInputs.map((_, index) => (
-                                                        <div key={index} className="col-span-1">
-                                                            <label htmlFor="additionalInputs">Ref {index + 1}</label>
-                                                            <div className="flex gap-2">
-                                                                <Field
-                                                                    name={`additionalInputs.${index}`}
-                                                                    type="text"
-                                                                    placeholder={`Campo ${index + 1}`}
-                                                                    className="form-input"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-sm btn-danger"
-                                                                    onClick={() => remove(index)}
-                                                                >
-                                                                    ×
-                                                                </button>
-                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 5 && (
-                                                                    <button
-                                                                        type="button"
-                                                                        className="btn btn-sm btn-outline-primary"
-                                                                        onClick={() => push('')}
-                                                                    >
-                                                                        +
-                                                                    </button>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                )}
-                                            </FieldArray>
-                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
-                                            <div className="col-span-1">
                                                 <label htmlFor="day">Día</label>
                                                 <Field name="day" type="date" id="day" className="form-input" />
                                                 <ErrorMessage name="day" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="hour">Hora</label>
-                                                <Field name="hour" type="time" id="hour" className="form-input" />
+                                                <div className="flex items-center gap-2">
+                                                    <Field name="hour" type="time" id="hour" className="form-input" />
+                                                </div>
                                                 <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
                                             </div>
+                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
                                             <div className="col-span-1">
-                                                <label htmlFor="hour2">Hora 2</label>
-                                                <Field name="hour2" type="time" id="hour2" className="form-input" />
+                                                <label htmlFor="memorandumNumber">Número de Memorando</label>
+                                                <Field name="memorandumNumber" type="text" id="memorandumNumber" className="form-input" />
+                                                <ErrorMessage name="memorandumNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="day2">Día</label>
+                                                <Field name="day2" type="date" id="day2" className="form-input" />
+                                                <ErrorMessage name="day2" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="hour2">Hora</label>
+                                                <div className="flex items-center gap-2">
+                                                    <Field name="hour2" type="time" id="hour2" className="form-input" />                                                </div>
                                                 <ErrorMessage name="hour2" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="location2">Ubicación 2</label>
+                                                <label htmlFor="location2">Ubicación</label>
                                                 <Field name="location2" type="text" id="location2" className="form-input" />
                                                 <ErrorMessage name="location2" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="articleNumber2">Número de Artículo 2</label>
-                                                <Field name="articleNumber2" type="text" id="articleNumber2" className="form-input" />
-                                                <ErrorMessage name="articleNumber2" component="div" className="text-danger mt-1" />
+                                                <label htmlFor="articleNumber">Número de Artículo </label>
+                                                <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg</label>
+                                                <div className="flex items-center gap-2">
+                                                    <Field name="reg" type="time" id="reg" className="form-input" />
+                                                </div>
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+                                                <FieldArray name="additionalInputs">
+                                                {({ push, remove }) =>
+                                                    values.additionalInputs.map((_, index) => (
+                                                        <div key={index} className="col-span-1">
+                                                            <label htmlFor="additionalInputs">Ref {index + 1}</label>
+                                                            <div className="flex gap-2">
+                                                                <Field name={`additionalInputs.${index}`} type="text" placeholder={`Campo ${index + 1}`} className="form-input" />
+                                                                <button type="button" className="btn btn-sm btn-danger" onClick={() => remove(index)}>
+                                                                    ×
+                                                                </button>
+                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 5 && (
+                                                                    <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => push('')}>
+                                                                        +
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </FieldArray>
+
                                             {!pasting.meetRequirements && (
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>

@@ -16,12 +16,13 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
     // Campos Editables (vienen de infoStep o valores particleNumberor defecto)
-    const cartaNumero = formatNumberWithZero(infoStep?.articleNumber);
+    const cartaNumero = formatNumberWithZero(infoStep?.cartNumber);
     const destinatario = institutionalInfo?.deanName;
     const cargo = 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
     const aulaSustentacion = infoStep?.location;
-    const fechaSustentacion = infoStep?.deanResolution;
-    const horaSustentacion = infoStep?.reg;
+    const fechaSustentacion = infoStep?.day;
+    console.log('fechaSustentacion:', fechaSustentacion);
+    const horaSustentacion = infoStep?.hour;
 
     return (
         <PdfBase 
