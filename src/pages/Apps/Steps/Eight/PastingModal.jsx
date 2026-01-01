@@ -4,6 +4,19 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
+    const from12To24 = (value) => {
+        if (!value) return '';
+        const lower = value.trim().toLowerCase();
+        const match = lower.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
+        if (!match) return value; // assume already HH:mm
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const period = match[3];
+        if (period === 'pm' && hours !== 12) hours += 12;
+        if (period === 'am' && hours === 12) hours = 0;
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+    };
+
     const to12WithSuffix = (value) => {
         if (!value) return '';
         const match = value.match(/^(\d{1,2}):(\d{2})$/);
@@ -42,14 +55,14 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             deanResolution: pasting?.deanResolution || '',
             registrationNumber: pasting?.registrationNumber || '',
             articleNumber: pasting?.articleNumber || '',
-            reg: pasting?.reg || '',
+            reg: from12To24(pasting?.reg),
             additionalInputs: pasting?.additionalInputs?.split(', ') || [''],
             cartNumber: pasting?.cartNumber || '',
             memorandumNumber: pasting?.memorandumNumber || '',
             day: pasting?.day || '',
             day2: pasting?.day2 || '',
-            hour: pasting?.hour || '',
-            hour2: pasting?.hour2 || '',
+            hour: from12To24(pasting?.hour),
+            hour2: from12To24(pasting?.hour2),
             location2: pasting?.location2 || '',
         }),
         [pasting]
@@ -163,7 +176,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             <div className="col-span-1">
                                                 <label htmlFor="reg">Reg</label>
                                                 <div className="flex items-center gap-2">
-                                                    <Field name="reg" type="time" id="reg" className="form-input" />
+                                                    <Field name="reg" type="text" id="reg" className="form-input" />
                                                 </div>
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
