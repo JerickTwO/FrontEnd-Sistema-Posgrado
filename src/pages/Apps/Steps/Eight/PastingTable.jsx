@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
 import PdfStepEight from '../Pdfs/pdf-8-1';
+import TwOPdfStepEight from '../Pdfs/pdf-8-2';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 const PastingTable = ({ pastings, onEdit, info }) => {
@@ -13,18 +14,15 @@ const PastingTable = ({ pastings, onEdit, info }) => {
     const currentNotification = pastings?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
 
     const getDownloadButton = (pasting) => {
-        const fileName = `pasting_${pasting.id}.pdf`;
+        const firstFileName = `pasting_${pasting.id}.pdf`;
+        const secondFileName = `2_pasting_${pasting.id}.pdf`;
         return (
-            <DownloadDocs
-                infoStepTable={pasting}
-                PdfDocument={PdfStepEight}
-                institutionalInfo={info}
-                fileNames={fileName}
-                fields = {{ constacia: 1 }}
-            />
-        );
-
-    }
+            <>
+                <DownloadDocs infoStepTable={pasting} PdfDocument={PdfStepEight} institutionalInfo={info} fileName={firstFileName} />
+                <DownloadDocs infoStepTable={pasting} PdfDocument={TwOPdfStepEight} institutionalInfo={info} fileName={secondFileName} />
+            </>
+        );infoStepTable
+    };
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -44,12 +42,27 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                             currentNotification.map((pasting) => (
                                 <tr key={pasting?.id}>
                                     <td>
-                                        {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.student.firstNames} {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.student.lastName}
-                                        {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo && (
+                                        {
+                                            pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo
+                                                ?.titleReservationStepOne?.student.firstNames
+                                        }{' '}
+                                        {
+                                            pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo
+                                                ?.titleReservationStepOne?.student.lastName
+                                        }
+                                        {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo
+                                            ?.titleReservationStepOne?.studentTwo && (
                                             <>
                                                 <span className="font-bold"> - </span>
                                                 <br />
-                                                {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo.firstNames} {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo.lastName}
+                                                {
+                                                    pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree
+                                                        .projectApprovalStepTwo?.titleReservationStepOne?.studentTwo.firstNames
+                                                }{' '}
+                                                {
+                                                    pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree
+                                                        .projectApprovalStepTwo?.titleReservationStepOne?.studentTwo.lastName
+                                                }
                                             </>
                                         )}
                                     </td>
@@ -58,12 +71,12 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                                             ?.titleReservationStepOne?.student?.studentCode || 'N/A'}
                                         {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo
                                             ?.titleReservationStepOne?.studentTwo && (
-                                                <>
-                                                    <br />
-                                                    {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree
-                                                        .projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.studentCode || 'N/A'}
-                                                </>
-                                            )}
+                                            <>
+                                                <br />
+                                                {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree
+                                                    .projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.studentCode || 'N/A'}
+                                            </>
+                                        )}
                                     </td>
                                     <td>
                                         {pasting?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo
@@ -76,14 +89,9 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                                     <td className="flex gap-4 items-center justify-center">
                                         {getDownloadButton(pasting)}
 
-                                        <button
-                                            onClick={() => onEdit(pasting)}
-                                            className="btn btn-sm btn-outline-primary"
-                                        >
+                                        <button onClick={() => onEdit(pasting)} className="btn btn-sm btn-outline-primary">
                                             Editar
                                         </button>
-
-
                                     </td>
                                 </tr>
                             ))
@@ -98,7 +106,7 @@ const PastingTable = ({ pastings, onEdit, info }) => {
                 </table>
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div >
+        </div>
     );
 };
 

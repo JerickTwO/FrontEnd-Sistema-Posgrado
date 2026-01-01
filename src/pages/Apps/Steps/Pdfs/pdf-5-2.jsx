@@ -21,20 +21,18 @@ const PdfFiveTwo = ({ infoStep }) => {
         return `${first} ${last}`.trim();
     };
 
-    const stepThree = infoStep?.reportReviewStepFour?.juryAppointmentStepThree;
-
     const dash = '—';
-    const presidente = (stepThree?.president && formatTeacher(stepThree.president))
+    const presidente = (infoStep?.president && formatTeacher(infoStep.president))
         || infoStep?.presidente || dash;
-    const primerMiembro = (stepThree?.firstMember && formatTeacher(stepThree.firstMember))
+    const primerMiembro = (infoStep?.firstMember && formatTeacher(infoStep.firstMember))
         || infoStep?.primerMiembro || dash;
-    const segundoMiembro = (stepThree?.secondMember && formatTeacher(stepThree.secondMember))
+    const segundoMiembro = (infoStep?.secondMember && formatTeacher(infoStep.secondMember))
         || infoStep?.segundoMiembro || dash;
-    const accesitario = (stepThree?.accessory && formatTeacher(stepThree.accessory))
+    const accesitario = (infoStep?.accessory && formatTeacher(infoStep.accessory))
         || infoStep?.accesitario || dash;
-    const asesor = (stepThree?.projectApprovalStepTwo?.adviser && formatTeacher(stepThree.projectApprovalStepTwo.adviser))
+    const asesor = (infoStep?.adviser && formatTeacher(infoStep.adviser))
         || infoStep?.asesor || dash;
-    const segundoAsesor = (stepThree?.projectApprovalStepTwo?.coadviser && formatTeacher(stepThree.projectApprovalStepTwo.coadviser))
+    const segundoAsesor = (infoStep?.coadviser && formatTeacher(infoStep.coadviser))
         || infoStep?.segundoAsesor || null;
 
     const table = {
