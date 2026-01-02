@@ -17,7 +17,7 @@ const Resolution = () => {
     const [info, setInfo] = useState(null);
     
     useEffect(() => {
-        dispatch(setPageTitle('Resolución'));
+        dispatch(setPageTitle('Filtro de similitud III'));
         fetchResolutions();
         fetchInfo();
     }, [dispatch]);
@@ -49,7 +49,7 @@ const Resolution = () => {
     const handleSave = async (updatedResolutionData, resolutionId) => {
         try {
             await resolutionService.updateResolution(resolutionId, updatedResolutionData);
-            Swal.fire('Éxito', 'Resolución actualizada correctamente.', 'success');
+            Swal.fire('Éxito', 'Filtro de similitud III actualizada correctamente.', 'success');
             await fetchResolutions();
             closeModal();
         } catch (error) {

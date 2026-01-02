@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import IconX from '../../../../components/Icon/IconX';
 
 const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
@@ -14,6 +14,13 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                     ?.studentTwo?.studentCode || '',
             meetRequirements: finalStep?.meetRequirements ? 'yes' : 'no',
             observations: finalStep?.observations || '',
+            cartNumber: finalStep?.cartNumber || '',
+            additionalInputs: finalStep?.additionalInputs?.split(', ') || [''],
+            reg: finalStep?.reg || '',
+            day: finalStep?.day || '',
+            hour: finalStep?.hour || '',
+            school: finalStep?.school || '',
+            articleNumber: finalStep?.articleNumber || '',
         }),
         [finalStep]
     );
@@ -37,11 +44,18 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
+                                            cartNumber: values.cartNumber,
+                                            additionalInputs: values.additionalInputs.join(', '),
+                                            reg: values.reg,
+                                            day: values.day,
+                                            hour: values.hour,
+                                            school: values.school,
+                                            articleNumber: values.articleNumber,
                                         };
                                         if (values.meetRequirements === 'yes' && finalStep?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
                                         }
-                                        onSave(transformedValues, finalStep.id);
+                                        onSave(transformedValues, finalStep?.id);
                                     }}
                                     enableReinitialize
                                 >
@@ -61,7 +75,64 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                 </div>
                                             )}
 
-                                            {!finalStep.meetRequirements && (
+                                            <div className="col-span-1">
+                                                <label htmlFor="cartNumber">Número de Carta</label>
+                                                <Field name="cartNumber" type="number" id="cartNumber" className="form-input" />
+                                                <ErrorMessage name="cartNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="reg">Reg. N°</label>
+                                                <Field name="reg" type="number" id="reg" className="form-input" />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="day">Día</label>
+                                                <Field name="day" type="date" id="day" className="form-input" />
+                                                <ErrorMessage name="day" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="hour">Hora</label>
+                                                <Field name="hour" type="time" id="hour" className="form-input" />
+                                                <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="school">Escuela</label>
+                                                <Field name="school" type="text" id="school" className="form-input" />
+                                                <ErrorMessage name="school" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="articleNumber">Número de Artículo</label>
+                                                <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <FieldArray name="additionalInputs">
+                                                {({ push, remove }) =>
+                                                    values.additionalInputs.map((_, index) => (
+                                                        <div key={index} className="col-span-1">
+                                                            <label htmlFor="additionalInputs">Ref {index + 1}</label>
+                                                            <div className="flex gap-2">
+                                                                <Field name={`additionalInputs.${index}`} type="text" placeholder={`Campo ${index + 1}`} className="form-input" />
+                                                                <button type="button" className="btn btn-sm btn-danger" onClick={() => remove(index)}>
+                                                                    ×
+                                                                </button>
+                                                                {index === values.additionalInputs.length - 1 && values.additionalInputs.length < 5 && (
+                                                                    <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => push('')}>
+                                                                        +
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </FieldArray>
+
+                                            {!finalStep?.meetRequirements && (
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>
                                                     <div className="flex gap-4">
@@ -102,7 +173,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                     id="observations"
                                                     placeholder="Ingrese observaciones"
                                                     className="form-input"
-                                                    disable={values.meetRequirements === 'yes'}
+                                                    disabled={values.meetRequirements === 'yes'}
                                                     style={{
                                                         cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
                                                         opacity: values.meetRequirements === 'yes' ? 0.5 : 1,

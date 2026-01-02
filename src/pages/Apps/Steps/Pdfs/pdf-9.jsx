@@ -13,84 +13,53 @@ const PdfNineOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     const {
         combinedNames,
         title,
+        degree,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
     // Campos Editables
-    const resolutionNumero = formatNumberWithZero(infoStep?.resolutionNumber);
-    const destinatario = institutionalInfo?.deanName;
-    const cargo = 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
-    const ubicacion = infoStep?.location;
-    const fechaSustentacion = infoStep?.day;
-    const horaSustentacion = infoStep?.hour;
+    const constanciaNumero = formatNumberWithZero(infoStep?.constancyNumber);
+    const tesista = combinedNames;
+    const porcentajeSimilitud = infoStep?.similarityPercent;
+    const resolucionReglamento = formatNumberWithZero(infoStep?.resolutionNumber);
 
     return (
         <PdfBase 
-            commemorativeText={true} 
-            registrationNumber={incrementFields?.regNumber || infoStep?.reg}
+            commemorativeText={false} 
+            registrationNumber={incrementFields?.regNumber || infoStep?.constancyNumber}
         >
-            {/* Fecha alineada a la derecha */}
-            <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>
-                <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>
-            </View>
-
-            {/* Número de Resolución */}
-            <Text style={[styles.bold, { marginBottom: 5, fontSize: 12, textDecoration: 'underline' }]}>
-                RESOLUCIÓN N° {resolutionNumero}-{anio}-D-UI-FA-UNAMBA
+            {/* Título Principal */}
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 14, marginBottom: 10, marginTop: 20 }]}>
+                CONSTANCIA DE SIMILITUD
             </Text>
 
-            {/* Bloque del Destinatario */}
-            <View style={styles.section}>
-                <Text style={styles.body}>Señor:</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>{destinatario}</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>{cargo}</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</Text>
-                <Text style={[styles.bold, { marginTop: 10, fontSize: 10 }]}>Presente.-</Text>
-            </View>
+            {/* Número de Constancia centrado */}
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 12, marginBottom: 15 }]}>
+                N° {constanciaNumero}-{anio}
+            </Text>
 
-            <View style={[styles.section, { flexDirection: 'row', marginTop: 10, fontSize: 12 }]}>
-                <Text>Asunto             </Text>
-                <Text>              :RESOLUCIÓN DE APROBACIÓN DE TESIS</Text>
-            </View>
-            <Text>******************************************************</Text>
+            {/* Cuerpo del documento */}
             <View style={styles.section}>
-                <Text style={styles.justify}>
-                    Es sumamente grato dirigirme a usted, en atención a los documentos de referencia, mediante su autoridad, 
-                    se comunica la aprobación de la tesis presentada para su sustentación, según detalle siguiente:
+                <Text style={[styles.justify, { lineHeight: 1.5 }]}>
+                    La Universidad Nacional Micaela Bastidas de Apurímac, a través de la Unidad de Investigación de la 
+                    Facultad de Administración, declara que, la tesis intitulada: <Text style={styles.bold}>"{title}"</Text>, 
+                    para optar el título de {degree} en Administración, presentado por {' '}
+                    <Text style={styles.bold}>{tesista}</Text> ha sido sometido a un mecanismo de evaluación de verificación 
+                    de similitud, a través del software TURNITIN, siendo el <Text style={styles.bold}>{porcentajeSimilitud}</Text>{' '}
+                    el índice de similitud; el cual es menor al 25% establecido por el reglamento de investigación aprobado 
+                    por Resolución N° {resolucionReglamento}-{anio}, por lo que cumple con los criterios establecidos por la universidad.
                 </Text>
             </View>
 
-            <View style={styles.section}>
-                <Text style={styles.justify}>
-                    <Text style={styles.bold}>Tesis Titulada:</Text> "{title}", presentado por <Text style={styles.bold}>{combinedNames}</Text>, según el siguiente detalle:
-                </Text>
+            {/* Fecha alineada a la derecha */}
+            <View style={{ alignItems: 'flex-end', marginTop: 30 }}>
+                <Text style={styles.body}>Tamburco, {actualDate}</Text>
             </View>
 
-            <View style={[styles.section, { marginBottom: 5 }]}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ width: 60 }}>Ubicación</Text>
-                    <Text>: {ubicacion}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ width: 60 }}>Día</Text>
-                    <Text>: {fechaSustentacion}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ width: 60 }}>Hora</Text>
-                    <Text>: {horaSustentacion}</Text>
-                </View>
+            {/* Espacio para firma */}
+            <View style={{ marginTop: 40, alignItems: 'center' }}>
+                <Text style={[styles.bold, { fontSize: 11, marginBottom: 12 }]}>Atentamente,</Text>
             </View>
-
-            {/* Despedida */}
-            <View style={styles.section}>
-                <Text style={styles.justify}>
-                    Sin otro en particular, aprovecho la ocasión para renovarle las muestras de mi especial consideración.
-                </Text>
-            </View>
-
-            {/* Firma */}
-            <View style={{ marginTop: 20 }}>
-                <Text style={[styles.bold, { textAlign: 'center', fontSize: 12 }]}>Atentamente,</Text>
-            </View>
+            
         </PdfBase>
     );
 };

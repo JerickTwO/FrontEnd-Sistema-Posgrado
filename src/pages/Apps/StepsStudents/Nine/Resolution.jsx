@@ -24,7 +24,7 @@ const Resolution = () => {
     }, [user.username]);
     
     useEffect(() => {
-        dispatch(setPageTitle('Resolución'));
+        dispatch(setPageTitle('Filtro de similitud III'));
         if (user.username) {
             fetchResolution();
         }

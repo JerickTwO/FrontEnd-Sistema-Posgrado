@@ -1,40 +1,73 @@
 import { Text, View } from '@react-pdf/renderer';
 import PdfBase from './pdfBase';
 import styles from './styles/style-10';
-import { getWrittenDate, getYear } from '../utils/Dates';
+import { formatNumberWithZero, getWrittenDate } from '../utils/Dates';
+import { extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfTen = ({ infoStep, institutionalInfo }) => {
-    const anio = getYear();
+const PdfTen = ({ infoStep }) => {
     const actualDate = getWrittenDate();
 
-    // Placeholder para datos del paso 10
-    // Se completará posteriormente según los requisitos
+    const FIRST_STEP_INFO = infoStep?.resolutionStepNine?.pastingApprovalStepEight?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
+
+    const { firstStudent, secondStudent, title } = extractStudentsInfo(FIRST_STEP_INFO);
+
+    const formatName = (student) => {
+        if (!student) return '';
+        const { firstNames = '', lastName = '', middleName = '' } = student;
+        return `${firstNames} ${lastName} ${middleName}`.trim().toUpperCase();
+    };
+
+    const regNumber = formatNumberWithZero(infoStep?.reg);
+    const studentNames = [formatName(firstStudent), formatName(secondStudent)].filter(Boolean).join(' - ');
+    const thesisTitle = title || '';
 
     return (
         <PdfBase 
-            commemorativeText={true} 
-            registrationNumber={''}
+            commemorativeText={false} 
+            registrationNumber={regNumber}
         >
-            {/* Fecha alineada a la derecha */}
-            <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>
-                <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>
+            {/* Identificador de registro de investigación */}
+            <View style={{ alignItems: 'flex-start', marginTop: 6 }}>
+                <Text style={[styles.bold, { fontSize: 10 }]}>U.INV. REG. N° {formatNumberWithZero(regNumber)}</Text>
             </View>
-
-            {/* Título del documento */}
-            <Text style={[styles.bold, { marginBottom: 5, fontSize: 12, textDecoration: 'underline' }]}>
-                ENTREGA DE TÍTULO - PASO 10
+            {/* Encabezado de Constancia */}
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 18, marginTop: 10, marginBottom: 12 }]}>
+                CONSTANCIA
             </Text>
 
-            {/* Contenido placeholder */}
+            {/* Cuerpo del documento */}
             <View style={styles.section}>
-                <Text style={styles.justify}>
-                    Documento en construcción. Este espacio será completado con la información correspondiente a la entrega de título.
+                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                    La Unidad de Investigación de la Facultad de Administración de la Universidad Nacional Micaela Bastidas de Apurímac, hace constar que:
                 </Text>
             </View>
 
-            {/* Firma */}
-            <View style={{ marginTop: 20 }}>
-                <Text style={[styles.bold, { textAlign: 'center', fontSize: 12 }]}>Atentamente,</Text>
+            {/* Nombre del bachiller */}
+            <View style={{ marginVertical: 10 }}>
+                <Text style={[styles.bold, { textAlign: 'center', fontSize: 16 }]}>
+                    {studentNames || 'NOMBRE DEL BACHILLER'}
+                </Text>
+            </View>
+
+            {/* Detalle de entrega */}
+            <View style={styles.section}>
+                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                    Ha entregado 02 empastados y un 01 CD, conteniendo la tesis de investigación titulada: <Text style={styles.bold}>"{thesisTitle}"</Text>, presentando los requerimientos.
+                </Text>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                    Se expide la presente constancia para los fines que estime conveniente.
+                </Text>
+            </View>
+
+            {/* Fecha alineada a la derecha */}
+            <View style={{ alignItems: 'flex-end', marginTop: 30 }}>
+                <Text style={styles.body}>Tamburco, {actualDate}</Text>
+            </View>
+            <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <Text style={[styles.bold, { fontSize: 11, marginBottom: 12 }]}>Atentamente,</Text>
             </View>
         </PdfBase>
     );

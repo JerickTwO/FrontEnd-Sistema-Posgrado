@@ -13,6 +13,7 @@ const TitleDeliveryModal = ({ isOpen, onClose, onSave, titleDelivery }) => {
                 titleDelivery?.resolutionStepNine?.pastingApprovalStepEight?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne
                     ?.studentTwo?.studentCode || '',
             meetRequirements: titleDelivery?.meetRequirements ? 'yes' : 'no',
+            reg: titleDelivery?.reg || '',
             observations: titleDelivery?.observations || '',
         }),
         [titleDelivery]
@@ -37,6 +38,7 @@ const TitleDeliveryModal = ({ isOpen, onClose, onSave, titleDelivery }) => {
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
+                                            reg: values.reg ? String(values.reg) : '',
                                         };
                                         if (values.meetRequirements === 'yes' && titleDelivery?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
@@ -51,6 +53,12 @@ const TitleDeliveryModal = ({ isOpen, onClose, onSave, titleDelivery }) => {
                                                 <label htmlFor="studentCode">Primer Estudiante</label>
                                                 <Field name="studentCode" type="text" id="studentCode" readOnly className="form-input" />
                                                 <ErrorMessage name="studentCode" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className={submitCount && errors.reg ? 'has-error' : ''}>
+                                                <label htmlFor="reg">Reg. N°</label>
+                                                <Field name="reg" type="number" id="reg" className="form-input" />
+                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
 
                                             {titleDelivery?.resolutionStepNine?.pastingApprovalStepEight?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo && (
