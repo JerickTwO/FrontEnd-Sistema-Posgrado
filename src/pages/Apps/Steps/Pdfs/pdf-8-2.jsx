@@ -54,10 +54,11 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                 .map((s) => s.trim())
                 .filter(Boolean)
             : null;
-
+    const commemorativeText = institutionalInfo?.commemorativeText ;
     return (
         <PdfBase 
-            commemorativeText={true} 
+            showCommemorativeText={true} 
+            commemorativeText={commemorativeText} 
             registrationNumber={regNumber}
         >
             {/* Fecha alineada a la derecha */}

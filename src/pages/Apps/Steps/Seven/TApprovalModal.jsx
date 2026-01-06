@@ -144,7 +144,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 <label htmlFor="futDate">Fecha de Fut</label>
                                                 <Field
                                                     name="futDate"
-                                                    type="text"
+                                                    type="date"
                                                     id="futDate"
                                                     placeholder="Ingrese fecha de Fut"
                                                     className="form-input"

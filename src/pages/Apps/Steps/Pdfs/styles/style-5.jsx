@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Times-Bold',
         textDecoration: 'underline',
     },
+    h11: {
+        textAlign: 'start',
+        fontSize: 14,
+        marginVertical: 10,
+        fontFamily: 'Times-Bold',
+        textDecoration: 'underline',
+    },
     tamburco: {
         textAlign: 'right',
         fontSize: 11,

@@ -6,7 +6,7 @@ import { formatDate, formatNumberWithZero } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 import ConstancyView from './ConstancyView';
 
-const ThesisTable = ({ thesis, onEdit }) => {
+const ThesisTable = ({ thesis, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(thesis.length / itemsPerPage);
@@ -22,6 +22,7 @@ const ThesisTable = ({ thesis, onEdit }) => {
                 <DownloadDocs
                     infoStepTable={thesisItem}
                     PdfDocument={PdfFiveOne}
+                    institutionalInfo={info}
                     fileName={fileNameStep}
                 />
                 <DownloadDocs

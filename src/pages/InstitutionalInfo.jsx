@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../store/themeConfigSlice";
 import InfoService from "../api/institucionalInfoService";
@@ -10,24 +10,16 @@ const InstitucionalInfo = () => {
     const dispatch = useDispatch();
     const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
+    
     const fetchInfo = useCallback(async () => {
         try {
             setLoading(true);
             const response = await InfoService.getInfo();
-
             if (!response || Object.keys(response).length === 0) {
-                // No hay datos aún
                 setInfo({
                     id: null,
                     deanName: '',
-                    commemorativeText: '',
-                    directorIngenieriaAgroecologica: '',
-                    directorIngenieriaMinas: '',
-                    directorIngenieriaCivil: '',
-                    directorIngenieriaInformaticaSistemas: '',
-                    secretariaUIIngenieria: '',
+                    commemorativeText: ''
                 });
             } else {
                 setInfo(response);
@@ -39,9 +31,6 @@ const InstitucionalInfo = () => {
             setLoading(false);
         }
     }, []);
-
-
-    // Manejar cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
         setInfo((prevInfo) => ({
@@ -49,19 +38,12 @@ const InstitucionalInfo = () => {
             [name]: value,
         }));
     };
-
-    // Actualizar la información
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const payload = {
                 deanName: info.deanName.trim(),
                 commemorativeText: info.commemorativeText.trim(),
-                directorIngenieriaAgroecologica: info.directorIngenieriaAgroecologica.trim(),
-                directorIngenieriaMinas: info.directorIngenieriaMinas.trim(),
-                directorIngenieriaCivil: info.directorIngenieriaCivil.trim(),
-                directorIngenieriaInformaticaSistemas: info.directorIngenieriaInformaticaSistemas.trim(),
-                secretariaUIIngenieria: info.secretariaUIIngenieria.trim(),
             };
 
             const updatedInfo = info.id
@@ -142,77 +124,6 @@ const InstitucionalInfo = () => {
                                         className="form-input ltr:rounded-l-none rtl:rounded-r-none"
                                     />
                                 </div>
-                            </div>
-
-                            {/* Columna 2 */}
-                            <div className="mb-5">
-                                <label htmlFor="directorIngenieriaAgroecologica">
-                                    Director de Ingeniería Agroecológica
-                                </label>
-                                <input
-                                    type="text"
-                                    name="directorIngenieriaAgroecologica"
-                                    value={info.directorIngenieriaAgroecologica}
-                                    onChange={handleChange}
-                                    placeholder="Director de Ingeniería Agroecológica"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="directorIngenieriaMinas">
-                                    Director de Ingeniería de Minas
-                                </label>
-                                <input
-                                    type="text"
-                                    name="directorIngenieriaMinas"
-                                    value={info.directorIngenieriaMinas}
-                                    onChange={handleChange}
-                                    placeholder="Director de Ingeniería de Minas"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="directorIngenieriaCivil">
-                                    Director de Ingeniería Civil
-                                </label>
-                                <input
-                                    type="text"
-                                    name="directorIngenieriaCivil"
-                                    value={info.directorIngenieriaCivil}
-                                    onChange={handleChange}
-                                    placeholder="Director de Ingeniería Civil"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="directorIngenieriaInformaticaSistemas">
-                                    Director de Ingeniería Informática y Sistemas
-                                </label>
-                                <input
-                                    type="text"
-                                    name="directorIngenieriaInformaticaSistemas"
-                                    value={info.directorIngenieriaInformaticaSistemas}
-                                    onChange={handleChange}
-                                    placeholder="Director de Ingeniería Informática y Sistemas"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="secretariaUIIngenieria">
-                                    Secretaría de la UI de Ingeniería
-                                </label>
-                                <input
-                                    type="text"
-                                    name="secretariaUIIngenieria"
-                                    value={info.secretariaUIIngenieria}
-                                    onChange={handleChange}
-                                    placeholder="Secretaría de la UI de Ingeniería"
-                                    className="form-input"
-                                />
                             </div>
                         </div>
 

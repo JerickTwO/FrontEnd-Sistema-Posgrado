@@ -1,7 +1,7 @@
 import { Text, View } from '@react-pdf/renderer';
 import PdfBase from './pdfBase';
 import styles from './styles/style-8';
-import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
+import { formatDateSpanish, formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
 const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
@@ -21,12 +21,12 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     const cargo = 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';
     const aulaSustentacion = infoStep?.location;
     const fechaSustentacion = infoStep?.day;
-    console.log('fechaSustentacion:', fechaSustentacion);
     const horaSustentacion = infoStep?.hour;
-
+    const commemorativeText = institutionalInfo?.commemorativeText ;
     return (
-        <PdfBase 
-            commemorativeText={true} 
+        <PdfBase
+            showCommemorativeText={true}
+            commemorativeText={commemorativeText} 
             registrationNumber={incrementFields?.regNumber || infoStep?.reg}
         >
             {/* Fecha alineada a la derecha */}
@@ -70,7 +70,7 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
             <View style={[styles.section, { marginBottom: 5 }]}>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ width: 40 }}>Día</Text>
-                    <Text>: {fechaSustentacion}</Text>
+                    <Text>: {formatDateSpanish(fechaSustentacion)}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ width: 40 }}>Hora</Text>

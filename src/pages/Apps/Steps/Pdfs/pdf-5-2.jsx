@@ -6,13 +6,13 @@ import { getYear } from '../utils/Dates.jsx';
 const PdfFiveTwo = ({ infoStep }) => {
     const anio = getYear();
     const actaCode = `${infoStep?.cartNumber}-${anio}`;
-    const horaInicio = infoStep?.horaInicio || '10:00 am';
-    const horaFin = infoStep?.horaFin || '10:15 am';
-    const fechaActa = infoStep?.fechaActa || 'viernes 08 de agosto de 2025';
-    const cartaMultiple = infoStep?.cartaMultiple || 'CARTA MÚLTIPLE Nº 023-2025-D-UI-FA-UNAMBA';
-    const cartaFecha = infoStep?.cartaFecha || '07 de agosto de 2025';
-    const tituloTesis = infoStep?.tituloTesis || '“Marketing en redes sociales y su relación con la experiencia del cliente en empresas formales del sector pastelerías de la ciudad de Abancay, 2025”';
-    const presentados = infoStep?.presentados || 'SHABELY SALDIVAR ORTIZ, ESTEFANY INDIRA BRICEÑO SALAS';
+    const horaInicio = infoStep?.horaInicio;
+    const horaFin = infoStep?.horaFin;
+    const fechaActa = infoStep?.fechaActa;
+    const cartaMultiple = infoStep?.cartaMultiple;
+    const cartaFecha = infoStep?.cartaFecha;
+    const tituloTesis = infoStep?.tituloTesis;
+    const presentados = infoStep?.presentados;
 
     const formatTeacher = (t) => {
         if (!t) return null;

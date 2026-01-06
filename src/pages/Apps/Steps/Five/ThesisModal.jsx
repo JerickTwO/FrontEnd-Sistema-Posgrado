@@ -178,7 +178,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         <label htmlFor="horaSorteo">Hora de Sorteo</label>
                                                         <Field
                                                             name="horaSorteo"
-                                                            type="text"
+                                                            type="time"
                                                             id="horaSorteo"
                                                             placeholder="Ingrese la hora"
                                                             className="form-input"

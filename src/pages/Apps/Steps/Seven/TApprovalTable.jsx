@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PdfSevenC from '../Pdfs/pdf-6';
+// import PdfSevenC from '../Pdfs/pdf-6';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
@@ -14,16 +14,18 @@ const TApprovalTable = ({ tapprovals, onEdit, info }) => {
     const currentTApproval = tapprovals?.slice(indexOfFirstItem, indexOfFirstItem + itemsPerPage);
 
 
-    const getDownloadButton = (tapproval) => {
-        const fileName = `tapproval_${tapproval.id}.pdf`;
-        return (
-            <DownloadDocs
-                infoStepTable={tapproval}
-                PdfDocument={PdfSevenC}
-                institutionalInfo={info}
-                fileName={fileName}
-            />
-        );
+    const getDownloadButton = (
+        // tapproval
+    ) => {
+        // const fileName = `tapproval_${tapproval.id}.pdf`;
+        // return (
+        //     <DownloadDocs
+        //         infoStepTable={tapproval}
+        //         PdfDocument={PdfSevenC}
+        //         institutionalInfo={info}
+        //         fileName={fileName}
+        //     />
+        // );
     };
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">

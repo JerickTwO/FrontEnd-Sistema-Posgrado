@@ -15,7 +15,6 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
             ?.titleReservationStepOne;
 
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO || {});
-    const bachillerNombre = combinedNamesOnly || 'NOMBRE DE LA BACHILLER';
     const tituloTesis = title || 'TÍTULO DE LA TESIS';
 
     const cartaNumero = formatNumberWithZero(infoStep?.cartNumber || infoStep?.id);
@@ -35,7 +34,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
     const articleNumber = infoStep?.articleNumber || 'S/N';
 
     return (
-        <PdfBase commemorativeText={commemorativeText} registrationNumber={regNumber}>
+        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={regNumber}>
             <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>
                 <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>
             </View>
@@ -56,7 +55,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
             <View style={[styles.section, { marginTop: 8 }]}>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.body}>Asunto</Text>
-                    <Text style={styles.body}> : Solicito emitir resolución de aprobación de sustentación de tesis de {bachillerNombre}</Text>
+                    <Text style={styles.body}> : Solicito emitir resolución de aprobación de sustentación de tesis de {combinedNamesOnly}</Text>
                 </View>
             </View>
 
@@ -92,7 +91,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <Text style={styles.justify}>
                     Es grato dirigirme a usted para saludarlo cordialmente y a la vez solicitar la aprobación mediante acta resolutivo la sustentación de Tesis titulada:{' '}
-                    <Text style={styles.bold}>“{tituloTesis}”</Text>, de la Bachiller <Text style={styles.bold}>{bachillerNombre}</Text>, llevado a cabo de forma presencial el día{' '}
+                    <Text style={styles.bold}>“{tituloTesis}”</Text>, de <Text style={styles.bold}>{combinedNamesOnly}</Text>, llevado a cabo de forma presencial el día{' '}
                     <Text style={styles.bold}>{fechaSustentacion}</Text>, a horas <Text style={styles.bold}>{horaSustentacion}</Text>, en las instalaciones del{' '}
                     <Text style={styles.bold}>{lugarSustentacion}</Text>.
                 </Text>

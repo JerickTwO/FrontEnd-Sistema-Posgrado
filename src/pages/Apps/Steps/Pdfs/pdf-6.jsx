@@ -17,12 +17,10 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
     const articleNumber = infoStep?.articleNumber;
     const contactEmail = infoStep?.secondDeanResolution;
-    const anioInstitutional = institutionalInfo?.commemorativeText ;
+    const commemorativeText = institutionalInfo?.commemorativeText ;
     return (
-        <PdfBase showCommemorativeText={false} registrationNumber={infoStep?.reg}>
-            <Text style={styles.institutionalYearHeader}>
-                “{anioInstitutional}”
-            </Text>
+        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={infoStep?.reg}>
+            
             <Text style={{ textAlign: 'right', fontSize: 12, }}>
                 Abancay, {getWrittenDate()}
             </Text>

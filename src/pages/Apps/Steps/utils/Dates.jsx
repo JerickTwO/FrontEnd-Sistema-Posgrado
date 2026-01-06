@@ -203,5 +203,5 @@ export const formatDateSpanish = (dateStr) => {
     const month = months[date.getMonth()];
     const year = date.getFullYear();
 
-    return `${dayName} ${day} de ${month} del ${year}`;
+    return `${dayName}, ${day} de ${month} del ${year}`;
 }

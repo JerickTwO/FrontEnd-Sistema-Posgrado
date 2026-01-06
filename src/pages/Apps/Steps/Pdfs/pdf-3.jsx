@@ -16,6 +16,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
 
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
     const deanName = institutionalInfo?.deanName;
+    const commemorativeText = institutionalInfo?.commemorativeText;
     const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${anio}`;
     const articleNumber = infoStep?.articleNumber;
     const additionalInputsList =
@@ -27,7 +28,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
             : null;
 
     return (
-        <PdfBase commemorativeText={false} registrationNumber={infoStep?.reg}>
+        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={infoStep?.reg}>
             <View style={styles.section}>
                 <Text style={styles.right}>Tamburco, {actualDate}</Text>
             </View>

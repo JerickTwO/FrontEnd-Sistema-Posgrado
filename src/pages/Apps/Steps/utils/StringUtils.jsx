@@ -2,7 +2,7 @@ function formatFullNameUpper(student) {
     const fn = student && student.firstNames ? student.firstNames : 'Desconocido';
     const ln = student && student.lastName ? student.lastName : 'Desconocido';
     const mn = student && student.middleName ? student.middleName : '';
-    return `${fn} ${ln} ${mn}`?.toUpperCase().trim();
+    return `${fn} ${ln} ${mn}`?.trim();
 }
 
 function getGenderedPrefix(student) {
@@ -33,7 +33,7 @@ export function extractStudentsInfo(FIRST_STEP_INFO) {
     const partsWithId = buildStudentParts(FIRST_STEP_INFO, true);
     const partsWithoutId = buildStudentParts(FIRST_STEP_INFO, false);
     const first = FIRST_STEP_INFO?.student;
-    const titleThesis = FIRST_STEP_INFO?.title?.toUpperCase();
+    const titleThesis = FIRST_STEP_INFO?.title;
 
     return {
         firstStudent: first,

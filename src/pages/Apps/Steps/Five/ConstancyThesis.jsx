@@ -7,6 +7,7 @@ import ThesisModal from './ThesisModal';
 import ThesisSearch from './ThesisSearch';
 import careerService from '../../../../api/careerService';
 import constancyThesisService from '../../../../api/constancyThesisService';
+import InfoService from '../../../../api/institucionalInfoService';
 
 const ConstancyThesis = () => {
     const dispatch = useDispatch();
@@ -17,12 +18,24 @@ const ConstancyThesis = () => {
     const [search, setSearch] = useState('');
     const [careerOptions, setCareerOptions] = useState([]);
     const [apiError, setApiError] = useState(null);
+    const [info, setInfo] = useState(null);
 
     useEffect(() => {
         dispatch(setPageTitle('Comprobación de Proyecto'));
         fetchCareers();
         fetchThesis();
+        fetchInfo();
     }, [dispatch]);
+
+    const fetchInfo = useCallback(async () => {
+        try {
+            const response = await InfoService.getInfo();
+            setInfo(response);
+        } catch (error) {
+            console.log('Información institucional:', error);
+            setApiError('Error al cargar la información institucional.');
+        }
+    }, []);
 
     const fetchCareers = useCallback(async () => {
         try {
@@ -72,27 +85,13 @@ const ConstancyThesis = () => {
 
     return (
         <>
-            <ThesisSearch
-                search={search}
-                setSearch={setSearch}
-                careerOptions={careerOptions}
-                selectedCareer={selectedCareer}
-                setSelectedCareer={setSelectedCareer}
-            />
+            <ThesisSearch search={search} setSearch={setSearch} careerOptions={careerOptions} selectedCareer={selectedCareer} setSelectedCareer={setSelectedCareer} />
 
             {apiError && <div className="text-danger">{apiError}</div>}
 
-            <ThesisTable
-                thesis={thesis}
-                onEdit={handleEdit}
-            />
+            <ThesisTable thesis={thesis} info={info} onEdit={handleEdit} />
 
-            <ThesisModal
-                isOpen={isModalOpen}
-                thesis={selectedThesis}
-                onClose={closeModal}
-                onSave={handleSave}
-            />
+            <ThesisModal isOpen={isModalOpen} thesis={selectedThesis} onClose={closeModal} onSave={handleSave} />
         </>
     );
 };
