@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../store/themeConfigSlice";
 import InfoService from "../api/institucionalInfoService";
@@ -10,16 +10,24 @@ const InstitucionalInfo = () => {
     const dispatch = useDispatch();
     const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
-    
+    const [error, setError] = useState(null);
+
     const fetchInfo = useCallback(async () => {
         try {
             setLoading(true);
             const response = await InfoService.getInfo();
+
             if (!response || Object.keys(response).length === 0) {
+                // No hay datos aún
                 setInfo({
                     id: null,
                     deanName: '',
-                    commemorativeText: ''
+                    commemorativeText: '',
+                    directorIngenieriaAgroecologica: '',
+                    directorIngenieriaMinas: '',
+                    directorIngenieriaCivil: '',
+                    directorIngenieriaInformaticaSistemas: '',
+                    secretariaUIIngenieria: '',
                 });
             } else {
                 setInfo(response);
@@ -31,6 +39,9 @@ const InstitucionalInfo = () => {
             setLoading(false);
         }
     }, []);
+
+
+    // Manejar cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
         setInfo((prevInfo) => ({
@@ -38,12 +49,19 @@ const InstitucionalInfo = () => {
             [name]: value,
         }));
     };
+
+    // Actualizar la información
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const payload = {
                 deanName: info.deanName.trim(),
                 commemorativeText: info.commemorativeText.trim(),
+                directorIngenieriaAgroecologica: info.directorIngenieriaAgroecologica.trim(),
+                directorIngenieriaMinas: info.directorIngenieriaMinas.trim(),
+                directorIngenieriaCivil: info.directorIngenieriaCivil.trim(),
+                directorIngenieriaInformaticaSistemas: info.directorIngenieriaInformaticaSistemas.trim(),
+                secretariaUIIngenieria: info.secretariaUIIngenieria.trim(),
             };
 
             const updatedInfo = info.id
@@ -90,7 +108,7 @@ const InstitucionalInfo = () => {
                             {/* Columna 1 */}
                             <div className="mb-5">
                                 <label htmlFor="deanName">
-                                    Nombre del Decano de la Facultad de Ingeniería
+                                    Nombre del Decano de la Facultad de Administración
                                 </label>
                                 <div className="flex">
                                     <div className="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-white-light dark:border-[#17263c] dark:bg-[#1b2e4b]">
@@ -124,6 +142,34 @@ const InstitucionalInfo = () => {
                                         className="form-input ltr:rounded-l-none rtl:rounded-r-none"
                                     />
                                 </div>
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="directorIngenieriaCivil">
+                                    Director de la UI de la facultad de Administración
+                                </label>
+                                <input
+                                    type="text"
+                                    name="directorIngenieriaCivil"
+                                    value={info.directorIngenieriaCivil}
+                                    onChange={handleChange}
+                                    placeholder="Director de administración"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            <div className="mb-5">
+                                <label htmlFor="secretariaUIIngenieria">
+                                    Secretaría de la UI de Administración
+                                </label>
+                                <input
+                                    type="text"
+                                    name="secretariaUIIngenieria"
+                                    value={info.secretariaUIIngenieria}
+                                    onChange={handleChange}
+                                    placeholder="Secretaría de la UI de Administración"
+                                    className="form-input"
+                                />
                             </div>
                         </div>
 
