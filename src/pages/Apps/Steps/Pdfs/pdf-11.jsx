@@ -29,7 +29,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                   .filter(Boolean)
             : null;
     const lugarSustentacion = infoStep?.school || stepNine?.location;
-    const fechaSustentacion = infoStep?.day || stepNine?.day || '____';
+    const fechaSustentacion = formatDateSpanish(infoStep?.day);
     const horaSustentacion = infoStep?.hour || stepNine?.hour || '__:__';
     const articleNumber = infoStep?.articleNumber || 'S/N';
 
@@ -80,9 +80,6 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                 </View>
             </View>
 
-            {/* Línea de separación */}
-            <Text style={{ marginTop: -5, marginBottom: 10 }}>______________________________________________________</Text>
-
             <View style={styles.section}>
                 <Text style={styles.body}>De mi mayor consideración:</Text>
             </View>
@@ -93,7 +90,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                     Es grato dirigirme a usted para saludarlo cordialmente y a la vez solicitar la aprobación mediante acta resolutivo la sustentación de Tesis titulada:{' '}
                     <Text style={styles.bold}>“{tituloTesis}”</Text>, de <Text style={styles.bold}>{combinedNamesOnly}</Text>, llevado a cabo de forma presencial el día{' '}
                     <Text style={styles.bold}>{fechaSustentacion}</Text>, a horas <Text style={styles.bold}>{horaSustentacion}</Text>, en las instalaciones del{' '}
-                    <Text style={styles.bold}>{lugarSustentacion}</Text>.
+                    <Text style={styles.bold}>{lugarSustentacion} - UNAMBA</Text>.
                 </Text>
             </View>
 

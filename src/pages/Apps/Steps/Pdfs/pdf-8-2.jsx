@@ -43,7 +43,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     // Campos Editables
     const memorandoNumero = formatNumberWithZero(infoStep?.memorandumNumber);
     const aulaSustentacion = infoStep?.location2;
-    const fechaSustentacion = infoStep?.day2;
+    const fechaSustentacion = formatDateSpanish(infoStep?.day2);
     const horaSustentacion = infoStep?.hour2;
     const articleNumber = infoStep?.articleNumber;
     const regNumber = infoStep?.reg;

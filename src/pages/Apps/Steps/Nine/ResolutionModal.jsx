@@ -104,7 +104,7 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
                                             </div>
 
                                             <div className="col-span-1">
-                                                <label htmlFor="resolutionNumber">Número similitud</label>
+                                                <label htmlFor="resolutionNumber">Número de Resolución</label>
                                                 <Field name="resolutionNumber" type="number" id="resolutionNumber" className="form-input" />
                                                 <ErrorMessage name="resolutionNumber" component="div" className="text-danger mt-1" />
                                             </div>

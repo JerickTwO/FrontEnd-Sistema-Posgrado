@@ -2,8 +2,13 @@ import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/style-5.jsx';
 import { getYear } from '../utils/Dates.jsx';
+import { extractStudentsInfo } from '../utils/StringUtils.jsx';
 
 const PdfFiveTwo = ({ infoStep }) => {
+    const THREE_STEP_INFO = infoStep?.reportReviewStepFour?.juryAppointmentStepThree;
+    const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
+    const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
+
     const anio = getYear();
     const actaCode = `${infoStep?.cartNumber}-${anio}`;
     const horaInicio = infoStep?.horaInicio;
@@ -11,8 +16,8 @@ const PdfFiveTwo = ({ infoStep }) => {
     const fechaActa = infoStep?.fechaActa;
     const cartaMultiple = infoStep?.cartaMultiple;
     const cartaFecha = infoStep?.cartaFecha;
-    const tituloTesis = infoStep?.tituloTesis;
-    const presentados = infoStep?.presentados;
+
+    const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
 
     const formatTeacher = (t) => {
         if (!t) return null;
@@ -49,7 +54,7 @@ const PdfFiveTwo = ({ infoStep }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la {cartaMultiple}, de fecha {cartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {tituloTesis}, presentado por las Bachilleres: {presentados}.
+                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la {cartaMultiple}, de fecha {cartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {title}, presentado por {combinedNamesOnly}.
                 </Text>
             </View>
 

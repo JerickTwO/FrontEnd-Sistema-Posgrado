@@ -11,14 +11,14 @@ const PdfNineOne = ({ infoStep }) => {
     const FIRST_STEP_INFO = infoStep?.pastingApprovalStepEight?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
 
     const {
-        combinedNames,
+        combinedNamesOnly,
         title,
         degree,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
     // Campos Editables
     const constanciaNumero = formatNumberWithZero(infoStep?.constancyNumber);
-    const tesista = combinedNames;
+    const tesista = combinedNamesOnly;
     const porcentajeSimilitud = infoStep?.similarityPercent;
     const resolucionReglamento = formatNumberWithZero(infoStep?.resolutionNumber);
 
@@ -40,12 +40,12 @@ const PdfNineOne = ({ infoStep }) => {
             <View style={styles.section}>
                 <Text style={[styles.justify, { lineHeight: 1.5 }]}>
                     La Universidad Nacional Micaela Bastidas de Apurímac, a través de la Unidad de Investigación de la 
-                    Facultad de Administración, declara que, la tesis intitulada: <Text style={styles.bold}>"{title}"</Text>, 
-                    para optar el título de {degree} en Administración, presentado por {' '}
+                    Facultad de Administración, declara que, la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, 
+                    para optar el título de licenciado en {degree} en Administración, presentado por {' '}
                     <Text style={styles.bold}>{tesista}</Text> ha sido sometido a un mecanismo de evaluación de verificación 
                     de similitud, a través del software TURNITIN, siendo el <Text style={styles.bold}>{porcentajeSimilitud}</Text>{' '}
                     el índice de similitud; el cual es menor al 25% establecido por el reglamento de investigación aprobado 
-                    por Resolución N° {resolucionReglamento}-{anio}, por lo que cumple con los criterios establecidos por la universidad.
+                    por Resolución N° {resolucionReglamento}-CU-UNAMBA, por lo que cumple con los criterios establecidos por la universidad.
                 </Text>
             </View>
 
