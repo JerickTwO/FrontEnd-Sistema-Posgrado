@@ -5,7 +5,7 @@ import TeacherService from '../../../../api/teacherService.jsx';
 import styles from './styles/style-5.jsx';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates.jsx';
 
-const PdfFiveOne = ({ infoStep, incrementFields, institutionalInfo }) => {
+const PdfFiveOne = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
@@ -34,7 +34,7 @@ const PdfFiveOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     const commemorativeText = institutionalInfo?.commemorativeText ;
 
     return (
-        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={incrementFields?.regNumber}>
+        <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText}>
             <Text style={styles.h11}>CARTA MÚLTIPLE N°{formatNumberWithZero(infoStep.cartNumber)}-{anio}-D-UI-FA-UNAMBA</Text>
             <View style={styles.section}>
                 <Text style={styles.tamburco}>Tamburco, {actualDate}</Text>

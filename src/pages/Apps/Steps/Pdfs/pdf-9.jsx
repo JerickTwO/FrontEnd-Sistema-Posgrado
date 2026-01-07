@@ -4,7 +4,7 @@ import styles from './styles/style-9';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfNineOne = ({ infoStep, incrementFields, institutionalInfo }) => {
+const PdfNineOne = ({ infoStep }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
@@ -25,7 +25,6 @@ const PdfNineOne = ({ infoStep, incrementFields, institutionalInfo }) => {
     return (
         <PdfBase 
             commemorativeText={false} 
-            registrationNumber={incrementFields?.regNumber || infoStep?.constancyNumber}
         >
             {/* Título Principal */}
             <Text style={[styles.bold, { textAlign: 'center', fontSize: 14, marginBottom: 10, marginTop: 20 }]}>

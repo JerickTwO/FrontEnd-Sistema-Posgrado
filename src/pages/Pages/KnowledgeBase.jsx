@@ -628,6 +628,26 @@ const KnowledgeBase = () => {
                                             </button>
                                         </div>
                                         <iframe title="youtube-video" src="https://www.youtube.com/embed/tgbNymZ7vqY" className="h-[250px] w-full md:h-[550px]"></iframe>
+                                        <form
+                                            onSubmit={(e) => {
+                                                e.preventDefault();
+                                                const inputs = e.target.querySelectorAll('input[required]');
+                                                for (const input of inputs) {
+                                                    if (!input.value.trim()) {
+                                                        alert('Por favor, complete todos los campos obligatorios.');
+                                                        return;
+                                                    }
+                                                }
+                                                // Cerrar modal si todo está validado
+                                                setModal(false);
+                                            }}
+                                            className="p-4"
+                                        >
+                                            <input type="text" required placeholder="Campo obligatorio" className="mb-4 w-full rounded-md border border-white-light bg-white p-2 text-black dark:border-dark dark:bg-black dark:text-white" />
+                                            <button type="submit" className="btn btn-primary w-full">
+                                                Guardar
+                                            </button>
+                                        </form>
                                     </Dialog.Panel>
                                 </Transition.Child>
                             </div>

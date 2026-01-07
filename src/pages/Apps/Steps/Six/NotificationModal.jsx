@@ -1,9 +1,24 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
+    const validationSchema = Yup.object({
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        secondDeanResolution: Yup.string().email('Ingrese un correo electrónico válido').required('El correo es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        reg: Yup.string().required('El registro es obligatorio'),
+        memorandoMult: Yup.string().required('El memorando es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode: notification?.student?.studentCode || 'N/A',
@@ -13,14 +28,8 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
             studentTwoFirstName: notification?.studentTwo?.firstNames || 'N/A',
             studentTwoLastName: notification?.studentTwo?.lastName || '',
             meetRequirements: notification?.meetRequirements ? 'yes' : 'no',
-            thesisDate: notification?.thesisDate || 'N/A',
             observations: notification?.observations || '',
-            futDate: notification?.futDate || '',
-            deanResolution: notification?.deanResolution || '',
             secondDeanResolution: notification?.secondDeanResolution || '',
-            day: notification?.day || '',
-            hour: notification?.hour || '',
-            location: notification?.location || '',
             articleNumber: notification?.articleNumber || '',
             reg: notification?.reg || '',
             memorandoMult: notification?.memorandoMult || '',
@@ -49,25 +58,11 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
-                                    validate={values => {
-                                        const errors = {};
-                                        if (values.secondDeanResolution) {
-                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                                            if (!emailRegex.test(values.secondDeanResolution)) {
-                                                errors.secondDeanResolution = 'Ingrese un correo electrónico válido';
-                                            }
-                                        }
-                                        return errors;
-                                    }}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
-                                            futDate: values.futDate,
-                                            deanResolution: values.deanResolution,
                                             secondDeanResolution: values.secondDeanResolution,
-                                            day: values.day,
-                                            hour: values.hour,
-                                            location: values.location,
                                             articleNumber: values.articleNumber,
                                             reg: values.reg || '',
                                             memorandoMult: values.memorandoMult || '',

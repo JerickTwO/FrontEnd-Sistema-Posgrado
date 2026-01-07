@@ -1,9 +1,27 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
+    const validationSchema = Yup.object({
+        studentCode: Yup.string().required('El primer estudiante es obligatorio'),
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        reportNumber: Yup.string().required('El número de informe es obligatorio'),
+        multipleMemorandumNumber: Yup.string().required('El número de memorando múltiple es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        secondArticleNumber: Yup.string().required('El segundo artículo es obligatorio'),
+        thirdArticleNumber: Yup.string().required('El tercer artículo es obligatorio'),
+        cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -25,7 +43,6 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                 '',
             meetRequirements: tapproval?.meetRequirements ? 'yes' : 'no',
             observations: tapproval?.observations || '',
-            registrationNumber: tapproval?.registrationNumber || '',
             reportNumber: tapproval?.reportNumber || '',
             multipleMemorandumNumber: tapproval?.multipleMemorandumNumber || '',
             articleNumber: tapproval?.articleNumber || '',
@@ -33,8 +50,6 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
             thirdArticleNumber: tapproval?.thirdArticleNumber || '',
             futDate: tapproval?.futDate || '',
             cartNumber: tapproval?.cartNumber || '',
-            carta: tapproval?.carta || '',
-            reg: tapproval?.reg || '',
             additionalInputs: tapproval?.additionalInputs?.split(', ') || [''],
         }),
         [tapproval]
@@ -56,6 +71,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
@@ -66,8 +82,6 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                             thirdArticleNumber: values.thirdArticleNumber,
                                             futDate: values.futDate,
                                             cartNumber: values.cartNumber,
-                                            carta: values.carta || '',
-                                            reg: values.reg || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                         };
                                         if (values.meetRequirements === 'yes' && tapproval?.meetRequirements !== true) {
@@ -173,28 +187,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 />
                                                 <ErrorMessage name="multipleMemorandumNumber" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="reg">Reg</label>
-                                                <Field
-                                                    name="reg"
-                                                    type="number"
-                                                    id="reg"
-                                                    placeholder="Ingrese el reg"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="carta">Carta</label>
-                                                <Field
-                                                    name="carta"
-                                                    type="number"
-                                                    id="carta"
-                                                    placeholder="Ingrese el número de carta"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="carta" component="div" className="text-danger mt-1" />
-                                            </div>
+                                            
                                             {!tapproval.meetRequirements &&
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>

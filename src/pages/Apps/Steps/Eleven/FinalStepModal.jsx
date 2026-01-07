@@ -1,9 +1,26 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
+    const validationSchema = Yup.object({
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        reg: Yup.string().required('El registro es obligatorio'),
+        day: Yup.string().required('El día es obligatorio'),
+        hour: Yup.string().required('La hora es obligatoria'),
+        school: Yup.string().required('La escuela es obligatoria'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -41,6 +58,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,

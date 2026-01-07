@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
 import IconX from '../../../../components/Icon/IconX';
@@ -8,6 +9,28 @@ import IconX from '../../../../components/Icon/IconX';
 const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
+
+    const validationSchema = Yup.object({
+        studentCode: Yup.string().required('El primer estudiante es obligatorio'),
+        studentTwoCode: Yup.string().test(
+            'required-if-student-two',
+            'El segundo estudiante es obligatorio',
+            function (value) {
+                const { studentTwoFirstNames } = this.parent;
+                if (!studentTwoFirstNames) return true;
+                return !!value;
+            }
+        ),
+        reg: Yup.string().required('El número de constancia es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        secondArticleNumber: Yup.string().required('El porcentaje de similitud es obligatorio'),
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        observation: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
 
     const initialValues = React.useMemo(
         () => ({
@@ -52,6 +75,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     enableReinitialize
                                     onSubmit={(values) => {
                                         let ref = ''

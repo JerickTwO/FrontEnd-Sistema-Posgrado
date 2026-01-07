@@ -1,9 +1,32 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
+
+    const validationSchema = Yup.object({
+        studentCode: Yup.string().required('El primer estudiante es obligatorio'),
+        studentTwoCode: Yup.string().test(
+            'required-if-student-two',
+            'El segundo estudiante es obligatorio',
+            function (value) {
+                const { studentTwoFirstNames } = this.parent;
+                if (!studentTwoFirstNames) return true;
+                return !!value;
+            }
+        ),
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        deanResolution: Yup.string().required('El número de constancia es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        secondArticleNumber: Yup.string().required('El porcentaje de similitud es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
 
     const initialValues = React.useMemo(
         () => ({
@@ -36,6 +59,7 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             documentDate: values.documentDate,
@@ -93,26 +117,35 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
 
                                                 )
                                             }
-                                            < div className="col-span-1" >
+                                            <div className={`col-span-1 ${submitCount && errors.deanResolution ? 'has-error' : ''}`}>
                                                 <label htmlFor="deanResolution">Número de Constancia </label>
                                                 <Field name="deanResolution" id="deanResolution" placeholder="000" className="form-input" />
+                                                <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
                                             </div>
-                                            < div className="col-span-1" >
+                                            <div className={`col-span-1 ${submitCount && errors.articleNumber ? 'has-error' : ''}`}>
                                                 <label htmlFor="articleNumber"> Número de Artículo </label>
                                                 <Field name="articleNumber" id="articleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
+                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
-                                            < div className="col-span-1" >
+                                            <div className={`col-span-1 ${submitCount && errors.secondArticleNumber ? 'has-error' : ''}`}>
                                                 <label htmlFor="secondArticleNumber">Porcentaje de Similitud  </label>
                                                 <Field name="secondArticleNumber" id="secondArticleNumber" placeholder="Ingrese el porcentaje de similitud" className="form-input" />
+                                                <ErrorMessage name="secondArticleNumber" component="div" className="text-danger mt-1" />
                                             </div>
-                                            < div className="col-span-1" >
+                                            <div className={`col-span-1 ${submitCount && errors.observations ? 'has-error' : ''}`}>
                                                 <label htmlFor="observations" > Observaciones </label>
-                                                < Field name="observations" id="observations" placeholder="Ingrese observaciones" className="form-input" disabled={values.meetRequirements === 'yes'}
+                                                <Field
+                                                    name="observations"
+                                                    id="observations"
+                                                    placeholder="Ingrese observaciones"
+                                                    className="form-input"
+                                                    disabled={values.meetRequirements === 'yes'}
                                                     style={{
                                                         cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
                                                         opacity: values.meetRequirements === 'yes' ? 0.5 : 1,
-                                                    }} />
-                                                < ErrorMessage name="observations" component="div" className="text-danger mt-1" />
+                                                    }}
+                                                />
+                                                <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                             </div>
 
                                             < div className="flex justify-end items-center mt-8 col-span-2" >

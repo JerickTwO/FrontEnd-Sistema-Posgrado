@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
@@ -29,6 +30,25 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         return `${hours}:${minutes} ${suffix}`;
     };
 
+    const validationSchema = Yup.object({
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        location: Yup.string().required('La ubicación es obligatoria'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        memorandumNumber: Yup.string().required('El número de memorando es obligatorio'),
+        day: Yup.string().required('El día es obligatorio'),
+        day2: Yup.string().required('El segundo día es obligatorio'),
+        hour: Yup.string().required('La hora es obligatoria'),
+        hour2: Yup.string().required('La segunda hora es obligatoria'),
+        location2: Yup.string().required('La segunda ubicación es obligatoria'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -52,8 +72,6 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             meetRequirements: pasting?.meetRequirements ? 'yes' : 'no',
             location: pasting?.location || '',
             observations: pasting?.observations || '',
-            deanResolution: pasting?.deanResolution || '',
-            registrationNumber: pasting?.registrationNumber || '',
             articleNumber: pasting?.articleNumber || '',
             reg: from12To24(pasting?.reg),
             additionalInputs: pasting?.additionalInputs?.split(', ') || [''],
@@ -83,12 +101,11 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             location: values.location,
                                             observations: values.observations,
-                                            deanResolution: values.deanResolution,
-                                            registrationNumber: values.registrationNumber,
                                             articleNumber: values.articleNumber,
                                             reg: to12WithSuffix(values.reg) || '',
                                             additionalInputs: values.additionalInputs.join(', '),

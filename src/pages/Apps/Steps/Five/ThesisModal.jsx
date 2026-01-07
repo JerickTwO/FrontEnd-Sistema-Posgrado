@@ -5,28 +5,35 @@ import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 import Select from 'react-select';
 import teacherService from '../../../../api/teacherService.jsx';
+import constancyThesisService from '../../../../api/constancyThesisService.jsx';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
+    const [pdfAvailable, setPdfAvailable] = React.useState(null);
 
     const validationSchema = Yup.object({
         studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
         meetsRequirements: Yup.string().required('Selecciona una opción'),
-        observations: Yup.string(),
-        cartNumber: Yup.string(),
-        url: Yup.string(),
-        fechaSorteo: Yup.string(),
-        horaSorteo: Yup.string(),
-        lugarPresencial: Yup.string(),
-        president: Yup.object().nullable(),
-        firstMember: Yup.object().nullable(),
-        secondMember: Yup.object().nullable(),
-        accessory: Yup.object().nullable(),
-        adviser: Yup.object().nullable(),
+        cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        url: Yup.string().required('La URL es obligatoria'),
+        fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
+        horaSorteo: Yup.string().required('La hora de sorteo es obligatoria'),
+        lugarPresencial: Yup.string().required('El lugar presencial es obligatorio'),
+        president: Yup.object().nullable().required('El presidente es obligatorio'),
+        firstMember: Yup.object().nullable().required('El primer miembro es obligatorio'),
+        secondMember: Yup.object().nullable().required('El segundo miembro es obligatorio'),
+        accessory: Yup.object().nullable().required('El accesitario es obligatorio'),
+        adviser: Yup.object().nullable().required('El asesor es obligatorio'),
         coadviser: Yup.object().nullable(),
+        observations: Yup.string().when('meetsRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
     });
 
     const mapTeacherToOption = (t) => t ? ({ value: t.id, label: `${t.firstNames} ${t.lastName}` }) : null;
@@ -70,6 +77,22 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         if (isOpen) loadTeachers();
     }, [isOpen]);
 
+    React.useEffect(() => {
+        const checkPdfAvailability = async () => {
+            if (!thesis?.id) {
+                setPdfAvailable(false);
+                return;
+            }
+            try {
+                const pdfData = await constancyThesisService.viewPdfDocument(thesis.id);
+                setPdfAvailable(!!pdfData);
+            } catch {
+                setPdfAvailable(false);
+            }
+        };
+        if (isOpen) checkPdfAvailability();
+    }, [isOpen, thesis?.id]);
+
     const filterOptions = (selectedValues, currentFieldValue) => {
         const selectedIds = selectedValues.filter((val) => val && val.value !== currentFieldValue?.value).map((val) => val.value);
         return jurorOptions.filter((opt) => !selectedIds.includes(opt.value));
@@ -112,6 +135,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                 {thesis ? 'Editar Presentación' : 'Crear Presentación'}
                             </div>
                             <div className="p-5">
+                              
                                 <Formik
                                     initialValues={initialValues}
                                     validationSchema={validationSchema}
@@ -291,7 +315,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
 
                                                     {
-                                                        !thesis.meetsRequirements && (
+                                                        !thesis?.meetsRequirements && (
                                                             <div className="col-span-2">
                                                                 <label htmlFor="meetsRequirements">Cumple Requisitos</label>
                                                                 <div className="flex gap-4">
@@ -301,11 +325,17 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                                             name="meetsRequirements"
                                                                             value="yes"
                                                                             className="form-radio"
-                                                                            // Importante: Si quieres que solo se pueda marcar "Sí" una vez y no volver atrás, 
-                                                                            // puedes dejar el disabled, pero si quieres libertad de cambio, quítalo.
                                                                             onChange={(e) => {
+                                                                                if (!pdfAvailable) {
+                                                                                    Swal.fire({
+                                                                                        icon: 'warning',
+                                                                                        title: 'PDF no disponible',
+                                                                                        text: 'Debe generar el PDF antes de marcar como cumple requisitos',
+                                                                                    });
+                                                                                    return;
+                                                                                }
                                                                                 setFieldValue('meetsRequirements', 'yes');
-                                                                                setFieldValue('observations', ''); // Limpia observaciones si dice que sí
+                                                                                setFieldValue('observations', '');
                                                                             }}
                                                                         />
                                                                         <span className="ml-2">Sí</span>

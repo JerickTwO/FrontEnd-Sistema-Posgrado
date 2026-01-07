@@ -2,10 +2,21 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FieldArray } from 'formik';
+import * as Yup from 'yup';
 import IconLoader from '../../../../components/Icon/IconLoader';
 import IconX from '../../../../components/Icon/IconX';
 
-const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, isLoading }) => {
+const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
+    const validationSchema = Yup.object({
+        deanResolution: Yup.string().required('El número de carta es obligatorio'),
+        reg: Yup.string().required('El número de registro es obligatorio'),
+        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        additionalInputs: Yup.array()
+            .of(Yup.string().required('Este campo es obligatorio'))
+            .min(1, 'Al menos un campo es obligatorio'),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode: juryAppointment?.projectApprovalStepTwo?.titleReservationStepOne?.student?.studentCode || 'N/A',
@@ -48,6 +59,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, adviserOptions, i
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         let fut = ''
                                         if (values.futDate) {

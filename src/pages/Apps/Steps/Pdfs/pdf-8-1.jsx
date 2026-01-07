@@ -4,7 +4,7 @@ import styles from './styles/style-8';
 import { formatDateSpanish, formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
+const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
@@ -27,7 +27,6 @@ const PdfEightOne = ({ infoStep, incrementFields, institutionalInfo }) => {
         <PdfBase
             showCommemorativeText={true}
             commemorativeText={commemorativeText} 
-            registrationNumber={incrementFields?.regNumber || infoStep?.reg}
         >
             {/* Fecha alineada a la derecha */}
             <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>

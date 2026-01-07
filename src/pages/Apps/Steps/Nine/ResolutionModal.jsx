@@ -1,9 +1,22 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
+    const validationSchema = Yup.object({
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        constancyNumber: Yup.string().required('El número de constancia es obligatorio'),
+        similarityPercent: Yup.string().required('El porcentaje de similitud es obligatorio'),
+        resolutionNumber: Yup.string().required('El número de resolución es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -49,6 +62,7 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             constancyNumber: values.constancyNumber,

@@ -1,9 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const TitleDeliveryModal = ({ isOpen, onClose, onSave, titleDelivery }) => {
+    const validationSchema = Yup.object({
+        meetRequirements: Yup.string().required('Selecciona una opción'),
+        reg: Yup.string().required('El registro es obligatorio'),
+        observations: Yup.string().when('meetRequirements', {
+            is: 'no',
+            then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+    });
+
     const initialValues = React.useMemo(
         () => ({
             studentCode:
@@ -30,11 +41,12 @@ const TitleDeliveryModal = ({ isOpen, onClose, onSave, titleDelivery }) => {
                                 <IconX />
                             </button>
                             <div className="text-lg font-medium bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
-                                {titleDelivery ? 'Editar Constancia de Empastados' : 'Crear Constancia de Empastados'}
+                                {titleDelivery ? 'Editar Registro' : 'Crear Registro'}
                             </div>
                             <div className="p-5">
                                 <Formik
                                     initialValues={initialValues}
+                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
                                             observations: values.observations,
