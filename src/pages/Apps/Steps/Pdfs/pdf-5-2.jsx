@@ -11,11 +11,14 @@ const PdfFiveTwo = ({ infoStep }) => {
 
     const anio = getYear();
     const actaCode = `${infoStep?.cartNumber}-${anio}`;
-    const horaInicio = infoStep?.horaInicio;
-    const horaFin = infoStep?.horaFin;
-    const fechaActa = infoStep?.fechaActa;
+    const horaInicio = infoStep?.horaActaSorteo;
+    const fechaActa = infoStep?.fechaActaSorteo;
     const cartaMultiple = infoStep?.cartaMultiple;
-    const cartaFecha = infoStep?.cartaFecha;
+    const cartaFecha = infoStep?.fechaSorteoJurados;
+    const articleNumber = infoStep?.numeroArticulo
+    const numeroResolucion = infoStep?.numeroResolucionDecano;
+    const segundoNumeroResolucion = infoStep?.segundoNumeroResolucion;
+    const horaSorteo = infoStep?.horaSorteoJurados;
 
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
 
@@ -54,13 +57,13 @@ const PdfFiveTwo = ({ infoStep }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la {cartaMultiple}, de fecha {cartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {title}, presentado por {combinedNamesOnly}.
+                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {cartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {title}, presentado por {combinedNamesOnly}.
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    Acto seguido, el Director encargado de la Unidad de Investigación, en cumplimiento de sus funciones, tomando en consideración el artículo 46° del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, y demás resoluciones pertinentes, se procede con el sorteo de jurados evaluadores y, en estricto orden de precedencia, queda conformado de la siguiente manera:
+                    Acto seguido, el Director encargado de la Unidad de Investigación, en cumplimiento de sus funciones, tomando en consideración el artículo {articleNumber}° del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, aprobado con Resolución Nº {numeroResolucion}-CU-UNAMBA, y la Resolución Decanal Nº {segundoNumeroResolucion}-D-FA-UNAMBA, se procede con el sorteo de jurados evaluadores y; en estricto orden de precedencia, queda conformado de la siguiente manera:
                 </Text>
             </View>
 
@@ -98,7 +101,7 @@ const PdfFiveTwo = ({ infoStep }) => {
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.justify}>Se da por concluido el acto académico del sorteo de jurados, siendo las {horaFin} del mismo día.</Text>
+                <Text style={styles.justify}>Se da por concluido el acto académico del sorteo de jurados, siendo las {horaSorteo} del mismo día.</Text>
             </View>
 
             <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: '12px' }]}>Atentamente</Text>

@@ -39,6 +39,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         day: Yup.string().required('El día es obligatorio'),
         day2: Yup.string().required('El segundo día es obligatorio'),
         hour: Yup.string().required('La hora es obligatoria'),
+        horaFin: Yup.string().required('La hora de fin es obligatoria'),
         hour2: Yup.string().required('La segunda hora es obligatoria'),
         location2: Yup.string().required('La segunda ubicación es obligatoria'),
         additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
@@ -80,6 +81,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             day: pasting?.day || '',
             day2: pasting?.day2 || '',
             hour: from12To24(pasting?.hour),
+            horaFin: from12To24(pasting?.horaFin),
             hour2: from12To24(pasting?.hour2),
             location2: pasting?.location2 || '',
         }),
@@ -114,6 +116,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             day: values.day,
                                             day2: values.day2,
                                             hour: to12WithSuffix(values.hour),
+                                            horaFin: to12WithSuffix(values.horaFin),
                                             hour2: to12WithSuffix(values.hour2),
                                             location2: values.location2,
                                         };
@@ -156,11 +159,18 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 <ErrorMessage name="day" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
-                                                <label htmlFor="hour">Hora</label>
+                                                <label htmlFor="hour">Hora Inicio</label>
                                                 <div className="flex items-center gap-2">
                                                     <Field name="hour" type="time" id="hour" className="form-input" />
                                                 </div>
                                                 <ErrorMessage name="hour" component="div" className="text-danger mt-1" />
+                                            </div>
+                                            <div className="col-span-1">
+                                                <label htmlFor="horaFin">Hora Fin</label>
+                                                <div className="flex items-center gap-2">
+                                                    <Field name="horaFin" type="time" id="horaFin" className="form-input" />
+                                                </div>
+                                                <ErrorMessage name="horaFin" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
                                             <div className="col-span-1">

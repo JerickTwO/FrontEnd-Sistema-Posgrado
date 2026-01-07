@@ -5,6 +5,31 @@ import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
+    const from12To24 = (value) => {
+        if (!value) return '';
+        const lower = value.trim().toLowerCase();
+        const match = lower.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
+        if (!match) return value; // assume already HH:mm
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const period = match[3];
+        if (period === 'pm' && hours !== 12) hours += 12;
+        if (period === 'am' && hours === 12) hours = 0;
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+    };
+
+    const to12WithSuffix = (value) => {
+        if (!value) return '';
+        const match = value.match(/^(\d{1,2}):(\d{2})$/);
+        if (!match) return value;
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const suffix = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        return `${hours}:${minutes} ${suffix}`;
+    };
+
     const validationSchema = Yup.object({
         meetRequirements: Yup.string().required('Selecciona una opción'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
@@ -35,7 +60,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
             additionalInputs: finalStep?.additionalInputs?.split(', ') || [''],
             reg: finalStep?.reg || '',
             day: finalStep?.day || '',
-            hour: finalStep?.hour || '',
+            hour: from12To24(finalStep?.hour),
             school: finalStep?.school || '',
             articleNumber: finalStep?.articleNumber || '',
         }),
@@ -66,7 +91,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                             additionalInputs: values.additionalInputs.join(', '),
                                             reg: values.reg,
                                             day: values.day,
-                                            hour: values.hour,
+                                            hour: to12WithSuffix(values.hour),
                                             school: values.school,
                                             articleNumber: values.articleNumber,
                                         };

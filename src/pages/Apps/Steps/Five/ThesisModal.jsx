@@ -15,14 +15,46 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const styles = HandleMode(isDarkMode);
     const [pdfAvailable, setPdfAvailable] = React.useState(null);
 
+    const from12To24 = (value) => {
+        if (!value) return '';
+        const lower = value.trim().toLowerCase();
+        const match = lower.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
+        if (!match) return value; // assume already HH:mm
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const period = match[3];
+        if (period === 'pm' && hours !== 12) hours += 12;
+        if (period === 'am' && hours === 12) hours = 0;
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+    };
+
+    const to12WithSuffix = (value) => {
+        if (!value) return '';
+        const match = value.match(/^(\d{1,2}):(\d{2})$/);
+        if (!match) return value;
+        let hours = parseInt(match[1], 10);
+        const minutes = match[2];
+        const suffix = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        return `${hours}:${minutes} ${suffix}`;
+    };
+
     const validationSchema = Yup.object({
-        studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
         url: Yup.string().required('La URL es obligatoria'),
         fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
         horaSorteo: Yup.string().required('La hora de sorteo es obligatoria'),
         lugarPresencial: Yup.string().required('El lugar presencial es obligatorio'),
+        numeroActa: Yup.string().required('El número de acta es obligatorio'),
+        horaActaSorteo: Yup.string().required('La hora de acta de sorteo es obligatoria'),
+        fechaActaSorteo: Yup.string().required('La fecha de acta de sorteo es obligatoria'),
+        fechaSorteoJurados: Yup.string().required('La fecha de sorteo de jurados es obligatoria'),
+        numeroArticulo: Yup.number().required('El número de artículo es obligatorio'),
+        numeroResolucion: Yup.string().required('El número de resolución es obligatorio'),
+        segundoNumeroResolucion: Yup.string().required('El segundo número de resolución es obligatorio'),
+        horaSorteoJurados: Yup.string().required('La hora de sorteo de jurados es obligatoria'),
         president: Yup.object().nullable().required('El presidente es obligatorio'),
         firstMember: Yup.object().nullable().required('El primer miembro es obligatorio'),
         secondMember: Yup.object().nullable().required('El segundo miembro es obligatorio'),
@@ -51,8 +83,16 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             cartNumber: thesis?.cartNumber || '',
             url: thesis?.url || '',
             fechaSorteo: thesis?.fechaSorteo || '',
-            horaSorteo: thesis?.horaSorteo || '',
+            horaSorteo: from12To24(thesis?.horaSorteo),
             lugarPresencial: thesis?.lugarPresencial || '',
+            numeroActa: thesis?.numeroActa || '',
+            horaActaSorteo: from12To24(thesis?.horaActaSorteo),
+            fechaActaSorteo: thesis?.fechaActaSorteo || '',
+            fechaSorteoJurados: thesis?.fechaSorteoJurados || '',
+            numeroArticulo: thesis?.numeroArticulo || '',
+            numeroResolucion: thesis?.numeroResolucion || '',
+            segundoNumeroResolucion: thesis?.segundoNumeroResolucion || '',
+            horaSorteoJurados: from12To24(thesis?.horaSorteoJurados),
             president: mapTeacherToOption(thesis?.president) || null,
             firstMember: mapTeacherToOption(thesis?.firstMember) || null,
             secondMember: mapTeacherToOption(thesis?.secondMember) || null,
@@ -104,8 +144,16 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             cartNumber: values.cartNumber,
             url: values.url,
             fechaSorteo: values.fechaSorteo,
-            horaSorteo: values.horaSorteo,
+            horaSorteo: to12WithSuffix(values.horaSorteo),
             lugarPresencial: values.lugarPresencial,
+            numeroActa: values.numeroActa,
+            horaActaSorteo: to12WithSuffix(values.horaActaSorteo),
+            fechaActaSorteo: values.fechaActaSorteo,
+            fechaSorteoJurados: values.fechaSorteoJurados,
+            numeroArticulo: values.numeroArticulo,
+            numeroResolucion: values.numeroResolucion,
+            segundoNumeroResolucion: values.segundoNumeroResolucion,
+            horaSorteoJurados: to12WithSuffix(values.horaSorteoJurados),
             president: values.president ? { id: values.president.value } : null,
             firstMember: values.firstMember ? { id: values.firstMember.value } : null,
             secondMember: values.secondMember ? { id: values.secondMember.value } : null,
@@ -235,6 +283,99 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Segundo Documento
                                                     </div>
+                                                    
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="numeroActa">Número de Acta</label>
+                                                        <Field
+                                                            name="numeroActa"
+                                                            type="text"
+                                                            id="numeroActa"
+                                                            placeholder="Ingrese el número de acta"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="numeroActa" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="fechaActaSorteo">Fecha de Acta de Sorteo</label>
+                                                        <Field
+                                                            name="fechaActaSorteo"
+                                                            type="date"
+                                                            id="fechaActaSorteo"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="fechaActaSorteo" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="horaActaSorteo">Hora de Acta de Sorteo</label>
+                                                        <Field
+                                                            name="horaActaSorteo"
+                                                            type="time"
+                                                            id="horaActaSorteo"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="horaActaSorteo" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="fechaSorteoJurados">Fecha de Sorteo de Jurados</label>
+                                                        <Field
+                                                            name="fechaSorteoJurados"
+                                                            type="date"
+                                                            id="fechaSorteoJurados"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="fechaSorteoJurados" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="horaSorteoJurados">Hora de Sorteo de Jurados</label>
+                                                        <Field
+                                                            name="horaSorteoJurados"
+                                                            type="time"
+                                                            id="horaSorteoJurados"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="horaSorteoJurados" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="numeroArticulo">Número de Artículo</label>
+                                                        <Field
+                                                            name="numeroArticulo"
+                                                            type="number"
+                                                            id="numeroArticulo"
+                                                            placeholder="Ingrese el número de artículo"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="numeroArticulo" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="numeroResolucion">Número de Resolución</label>
+                                                        <Field
+                                                            name="numeroResolucion"
+                                                            type="text"
+                                                            id="numeroResolucion"
+                                                            placeholder="Ingrese el número de resolución"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="numeroResolucion" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="segundoNumeroResolucion">Segundo Número de Resolución</label>
+                                                        <Field
+                                                            name="segundoNumeroResolucion"
+                                                            type="text"
+                                                            id="segundoNumeroResolucion"
+                                                            placeholder="Ingrese el segundo número"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="segundoNumeroResolucion" component="div" className="text-danger mt-1" />
+                                                    </div>
+
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Jurados
                                                     </div>

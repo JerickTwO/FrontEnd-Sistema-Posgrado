@@ -22,6 +22,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const aulaSustentacion = infoStep?.location;
     const fechaSustentacion = infoStep?.day;
     const horaSustentacion = infoStep?.hour;
+    const horaFinSustentacion = infoStep?.horaFin;
     const commemorativeText = institutionalInfo?.commemorativeText ;
     return (
         <PdfBase
@@ -73,7 +74,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ width: 40 }}>Hora</Text>
-                    <Text>: {horaSustentacion}</Text>
+                    <Text>: {horaSustentacion} - {horaFinSustentacion}</Text>
                 </View>
             </View>
 
