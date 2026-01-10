@@ -37,8 +37,6 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
 
     // Validación reducida a los campos realmente presentes en el formulario
     const validationSchema = Yup.object({
-        studentCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
-        studentTwoCode: Yup.string().max(6, 'Máximo 6 caracteres').required('Requerido'),
         title: Yup.string().required('El título de tesis es obligatorio'),
         message: Yup.string().required('El título/mensaje es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),

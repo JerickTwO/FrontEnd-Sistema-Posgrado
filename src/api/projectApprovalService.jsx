@@ -135,9 +135,13 @@ const viewPdfBase64 = async (id) => {
                 Authorization: `Bearer ${getAuthToken()}`,
             },
         });
-        return response.data.pdfData;
+        // Devolver tanto el archivo como el tipo
+        return {
+            fileData: response.data.pdfData || response.data.fileData,
+            fileType: response.data.fileType || response.data.contentType || 'application/pdf'
+        };
     } catch (error) {
-        console.error('Error al obtener el PDF (base64):', error);
+        console.error('Error al obtener el archivo (base64):', error);
         throw error;
     }
 };
@@ -156,6 +160,52 @@ const deletePdfBase64 = async (id) => {
     }
 };
 
+// DOC (Base64) para Paso 2
+const uploadDocBase64 = async (id, docData) => {
+    try {
+        const response = await axios.post(`${PROJECTAPPROVAL_API_URL}/${id}/uploadDoc`, { docData }, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al subir el DOC (base64):', error);
+        throw error;
+    }
+};
+
+const viewDocBase64 = async (id) => {
+    try {
+        const response = await axios.get(`${PROJECTAPPROVAL_API_URL}/${id}/viewDoc`, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return {
+            fileData: response.data.docData || response.data.fileData,
+            fileType: response.data.fileType || response.data.contentType || 'application/msword'
+        };
+    } catch (error) {
+        console.error('Error al obtener el DOC (base64):', error);
+        throw error;
+    }
+};
+
+const deleteDocBase64 = async (id) => {
+    try {
+        const response = await axios.delete(`${PROJECTAPPROVAL_API_URL}/${id}/deleteDoc`, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al eliminar el DOC (base64):', error);
+        throw error;
+    }
+};
+
 export default {
     getProjectApproval,
     addProjectApproval,
@@ -166,4 +216,7 @@ export default {
     uploadPdfBase64,
     viewPdfBase64,
     deletePdfBase64,
+    uploadDocBase64,
+    viewDocBase64,
+    deleteDocBase64,
 };

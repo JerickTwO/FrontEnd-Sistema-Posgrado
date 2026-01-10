@@ -1,5 +1,7 @@
 import { showObservations } from "../utils/ShowObservations";
+import ThesisUpload from "./ThesisUpload";
 const ReportTable = ({ approval }) => {
+    console.log(approval.articleNumber);
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">
@@ -10,6 +12,7 @@ const ReportTable = ({ approval }) => {
                             <th>Estudiante(s)</th>
                             <th>Carrera</th>
                             <th>Fecha Actualización</th>
+                            <th className="!text-center">Documento</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -37,6 +40,13 @@ const ReportTable = ({ approval }) => {
                                 <td>{approval?.juryAppointmentStepThree?.projectApprovalStepTwo.titleReservationStepOne?.student?.career?.name || 'N/A'}</td>
 
                                 <td>{new Date(approval.updatedAt).toLocaleString()}</td>
+                                <td>
+                                    <ThesisUpload 
+                                        reviewId={approval.id} 
+                                        meetsRequirements={approval.meetRequirements} 
+                                        observations={approval.observations} 
+                                    />
+                                </td>
                                 <td>
                                     <button className="btn btn-sm btn-outline-success" onClick={() => showObservations(approval.observations)}>
                                         Observaciones

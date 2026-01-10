@@ -62,36 +62,10 @@ const viewPdfDocument = async (id) => {
     }
 };
 
-const uploadPdfDocument = async (id, pdfData) => {
-    if (!id) {
-        console.error('ID is undefined!');
-        return;
-    }
-    try {
-        const response = await axios.post(`${PDF_API_URL}/${id}/upload`, {pdfData}, getAuthHeaders());
-        return response.data;
-    } catch (error) {
-        console.error('Error uploading PDF document', error);
-        throw error;
-    }
-};
-
-const deletePdfDocument = async (id) => {
-    try {
-        const response = await axios.delete(`${PDF_API_URL}/${id}/delete`, getAuthHeaders());
-        return response.data;
-    } catch (error) {
-        console.error('Error deleting PDF document', error);
-        throw error;
-    }
-};
-
 export default {
     getAllConstancyThesis,
     editConstancyThesis,
     getConstancyByStudentCode,
     deleteConstancyThesis,
-    uploadPdfDocument,
-    deletePdfDocument,
     viewPdfDocument,
 };

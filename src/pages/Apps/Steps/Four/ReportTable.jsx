@@ -4,6 +4,7 @@ import Pagination from '../Pagination';
 import { getReportDetails, formatDate } from '../utils/ReportUtils';
 import PdfFourCM from '../Pdfs/pdf-4';
 import DownloadDocs from '../utils/DownloadButton'
+import ReportView from './ReportView';
 
 const ReportTable = ({ reports, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +40,7 @@ const ReportTable = ({ reports, onEdit, info }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
+                            <th className="!text-center">Documentos</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -71,6 +73,11 @@ const ReportTable = ({ reports, onEdit, info }) => {
                                         <td>{student?.career?.name || 'N/A'}</td>
                                         <td>{meetRequirements ? 'Sí' : 'No'}</td>
                                         <td>{formatDate(updatedAt)}</td>
+                                        <td>
+                                            <ReportView 
+                                                reportId={report.id}
+                                            />
+                                        </td>
                                         <td className="flex gap-4 items-center justify-center">
                                             {getDownloadButton(report)}
 
@@ -86,7 +93,7 @@ const ReportTable = ({ reports, onEdit, info }) => {
                             })
                         ) : (
                             <tr>
-                                <td colSpan="11" className="px-4 py-2 text-center">
+                                <td colSpan="8" className="px-4 py-2 text-center">
                                     No hay campos disponibles
                                 </td>
                             </tr>

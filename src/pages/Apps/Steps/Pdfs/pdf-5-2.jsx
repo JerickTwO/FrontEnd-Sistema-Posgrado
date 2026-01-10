@@ -13,7 +13,7 @@ const PdfFiveTwo = ({ infoStep }) => {
     const actaCode = `${infoStep?.cartNumber}-${anio}`;
     const horaInicio = infoStep?.horaActaSorteo;
     const fechaActa = infoStep?.fechaActaSorteo;
-    const cartaMultiple = infoStep?.cartaMultiple;
+    const cartaMultiple = infoStep.cartNumber;
     const cartaFecha = infoStep?.fechaSorteoJurados;
     const articleNumber = infoStep?.numeroArticulo
     const numeroResolucion = infoStep?.numeroResolucionDecano;

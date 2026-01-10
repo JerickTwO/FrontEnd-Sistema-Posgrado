@@ -8,7 +8,6 @@ import ApprovalView from './ApprovalView';
 
 const ApprovalTable = ({ projects, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
 
     const itemsPerPage = 10;
     const totalPages = Math.ceil(projects.length / itemsPerPage);
@@ -40,7 +39,7 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
-                            <th className="!text-center">PDF</th>
+                            <th className="!text-center">Documentos</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>

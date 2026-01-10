@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import PdfFiveOne from '../Pdfs/pdf-5-1';
-import PdfFiveTwo from '../Pdfs/pdf-5-2';
 import Pagination from '../Pagination';
-import { formatDate, formatNumberWithZero } from '../utils/Dates';
-import DownloadDocs from '../utils/DownloadButton';
+import { formatDate } from '../utils/Dates';
 import ConstancyView from './ConstancyView';
 
 const ThesisTable = ({ thesis, onEdit, info }) => {
@@ -15,25 +12,7 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentThesis = thesis.slice(indexOfFirstItem, indexOfLastItem);
 
-    const getDownloadButton = (thesisItem) => {
-        const fileNameStep = `P5 PDF Nº ${formatNumberWithZero(thesisItem.id)}.pdf`;
-        return (
-            <>
-                <DownloadDocs
-                    infoStepTable={thesisItem}
-                    PdfDocument={PdfFiveOne}
-                    institutionalInfo={info}
-                    fileName={fileNameStep}
-                />
-                <DownloadDocs
-                    infoStepTable={thesisItem}
-                    PdfDocument={PdfFiveTwo}
-                    fileName={fileNameStep}
-                    
-                />
-            </>
-        );
-    };
+    // Descarga/Gestión de PDF removida: solo vista y edición
     
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -82,9 +61,6 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
                                         <ConstancyView constancyId={thesisItem.id} />
                                     </td>
                                     <td className="flex gap-4 items-center justify-center">
-                                        {
-                                            getDownloadButton(thesisItem)
-                                        }
                                         <button
                                             onClick={() => onEdit(thesisItem)}
                                             className="btn btn-sm btn-outline-primary"
