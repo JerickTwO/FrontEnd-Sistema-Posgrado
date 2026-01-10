@@ -3,8 +3,13 @@ import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
+import Select from 'react-select';
+import { HandleMode } from '../../styles/selectStyles';
+import { useSelector } from 'react-redux';
 
 const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
+    const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
+    const styles = HandleMode(isDarkMode);
     const from12To24 = (value) => {
         if (!value) return '';
         const lower = value.trim().toLowerCase();
@@ -102,7 +107,15 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                     }}
                                     enableReinitialize
                                 >
-                                    {({ setFieldValue, values, errors, submitCount }) => (
+                                    {({ setFieldValue, values, errors, submitCount }) => {
+                                        const schoolOptions = [
+                                            { value: 'Aula Magna de la UNAMBA', label: 'Aula Magna de la UNAMBA' },
+                                            { value: 'Escuela Profesional de Ingeniería Informática y sistema', label: 'Escuela Profesional de Ingeniería Informática y sistema' },
+                                            { value: 'Facultad de educación y ciencias sociales', label: 'Facultad de educación y ciencias sociales' },
+                                            { value: 'Facultad de administración', label: 'Facultad de administración' },
+                                        ];
+
+                                        return (
                                         <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
                                                 <label htmlFor="studentCode">Primer Estudiante</label>
@@ -144,7 +157,14 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
 
                                             <div className="col-span-1">
                                                 <label htmlFor="school">Escuela</label>
-                                                <Field name="school" type="text" id="school" className="form-input" />
+                                                <Select
+                                                    id="school"
+                                                    styles={styles}
+                                                    options={schoolOptions}
+                                                    value={schoolOptions.find((o) => o.value === values.school) || null}
+                                                    onChange={(option) => setFieldValue('school', option.value)}
+                                                    placeholder="Seleccione una escuela..."
+                                                />
                                                 <ErrorMessage name="school" component="div" className="text-danger mt-1" />
                                             </div>
 
@@ -232,8 +252,9 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                     Guardar
                                                 </button>
                                             </div>
-                                        </Form>
-                                    )}
+                                            </Form>
+                                            );
+                                        }}
                                 </Formik>
                             </div>
                         </Dialog.Panel>
