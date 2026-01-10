@@ -64,7 +64,8 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.body}>Ref.              :</Text>
-                        <View style={{ marginLeft: 5 }}>
+                        <Text style={styles.body}> Solicitud S/N°</Text>
+                        {/* <View style={{ marginLeft: 5 }}>
                             {additionalInputsList ? (
                                 additionalInputsList.map((input, idx) => (
                                     <Text key={idx} style={styles.body}>
@@ -74,7 +75,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                             ) : (
                                 <Text style={styles.body}>Solicitud S/N°</Text>
                             )}
-                        </View>
+                        </View> */}
                     </View>
                     <Text style={styles.body}>Reg. N° {regNumber}</Text>
                 </View>

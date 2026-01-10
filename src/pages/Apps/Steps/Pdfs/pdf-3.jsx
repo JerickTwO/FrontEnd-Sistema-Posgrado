@@ -49,13 +49,13 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Ref.</Text>
-                    <View style={styles.content}>
-                        {additionalInputsList && additionalInputsList.map((input, idx) => (
+                    <Text style={styles.content}>: Solicitud S/N°</Text>
+                        {/* {additionalInputsList && additionalInputsList.map((input, idx) => (
                             <Text key={idx}>
                                 {idx === 0 ? `: ${input}` : ` ${input}`}
                             </Text>
-                        ))}
-                    </View>
+                        ))} */}
+
                 </View>
             </View>
             <View style={styles.section}>

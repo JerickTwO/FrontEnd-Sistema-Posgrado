@@ -47,7 +47,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         horaFin: Yup.string().required('La hora de fin es obligatoria'),
         hour2: Yup.string().required('La segunda hora es obligatoria'),
         location2: Yup.string().required('La segunda ubicación es obligatoria'),
-        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
@@ -234,7 +234,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 </div>
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
-                                                <FieldArray name="additionalInputs">
+                                            {/* <FieldArray name="additionalInputs">
                                                 {({ push, remove }) =>
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -253,7 +253,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                         </div>
                                                     ))
                                                 }
-                                            </FieldArray>
+                                            </FieldArray> */}
 
                                             {!pasting.meetRequirements && (
                                                 <div>

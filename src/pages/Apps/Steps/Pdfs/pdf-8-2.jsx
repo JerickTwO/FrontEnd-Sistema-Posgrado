@@ -47,13 +47,13 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const horaSustentacion = infoStep?.hour2;
     const articleNumber = infoStep?.articleNumber;
     const regNumber = infoStep?.reg;
-    const additionalInputsList =
-        typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
-            ? infoStep.additionalInputs
-                .split(',')
-                .map((s) => s.trim())
-                .filter(Boolean)
-            : null;
+    // const additionalInputsList =
+    //     typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
+    //         ? infoStep.additionalInputs
+    //             .split(',')
+    //             .map((s) => s.trim())
+    //             .filter(Boolean)
+    //         : null;
     const commemorativeText = institutionalInfo?.commemorativeText ;
     return (
         <PdfBase 
@@ -117,8 +117,9 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 10 }}>Ref.              :</Text>
-                        <View style={{ fontSize: 10, marginLeft: 5 }}>
+                        <Text style={{ fontSize: 10 }}>Ref.                :</Text>
+                        <Text style={{ fontSize: 10, marginLeft: 5 }}> Solicitud S/N°</Text>
+                        {/* <View style={{ fontSize: 10, marginLeft: 5 }}>
                             {additionalInputsList ? (
                                 additionalInputsList.map((input, idx) => (
                                     <Text key={idx} style={{ fontSize: 10 }}>
@@ -128,7 +129,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                             ) : (
                                 <Text style={{ fontSize: 10 }}>Solicitud S/N°</Text>
                             )}
-                        </View>
+                        </View> */}
                     </View>
                     <Text style={{ fontSize: 10 }}>Reg. N° {regNumber}</Text>
                 </View>
