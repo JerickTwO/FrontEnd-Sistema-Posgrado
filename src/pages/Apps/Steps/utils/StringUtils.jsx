@@ -103,6 +103,28 @@ export function extractJurysInfo(THREE_STEP_INFO) {
 }
 
 
+export function getInterestedLabel(student, studentTwo) {
+    const hasFirst = !!student;
+    const hasSecond = !!studentTwo;
+
+    const g1 = hasFirst ? student.gender === true : null;
+    const g2 = hasSecond ? studentTwo.gender === true : null;
+
+    if (hasFirst && hasSecond) {
+        if (g1 === true && g2 === true) return 'de los interesados';
+        if (g1 === false && g2 === false) return 'de las interesadas';
+        return 'de los interesados';
+    }
+
+    if (hasFirst && !hasSecond) {
+        return g1 === true ? 'del interesado' : 'de la interesada';
+    }
+
+    // Si no hay estudiantes, devolver vacío por seguridad
+    return '';
+}
+
+
 const normalizeUrl = (value = '') => {
     const trimmed = value.trim();
     if (!trimmed) {

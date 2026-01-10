@@ -2,7 +2,7 @@ import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/style-4';
 import PdfBase from './pdfBase';
 import { formatNumberWithZero, getYear, getWrittenDate } from '../utils/Dates';
-import { extractStudentsInfo } from '../utils/StringUtils';
+import { extractStudentsInfo, getInterestedLabel } from '../utils/StringUtils';
 
 const PdfFourCM = ({ infoStep }) => {
     const anio = getYear();
@@ -42,7 +42,7 @@ const PdfFourCM = ({ infoStep }) => {
                     </Text>
                 </View>
                 <View style={styles?.section}>
-                    <Text style={styles?.justify}>Se expide la presente, a solicitud del interesado, para los fines que estime conveniente.</Text>
+                    <Text style={styles?.justify}>Se expide la presente, a solicitud {getInterestedLabel(FIRST_STEP_INFO?.student, FIRST_STEP_INFO?.studentTwo)}, para los fines que estime conveniente.</Text>
                     <Text style={[{ textAlign: 'right' }, { marginTop: '12px' }]} >Tamburco, {actualDate}</Text>
                 </View>
                 <Text style={[styles.bold, { textAlign: 'center' }, { fontSize: 16 }]}>Atentamente,</Text>
