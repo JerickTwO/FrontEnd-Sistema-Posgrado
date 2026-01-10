@@ -163,6 +163,7 @@ const TitleReservation = () => {
                 message: values.message || '',
                 title: values.title || values.thesisTitle || '',
                 lineOfResearch: values.lineOfResearch ? { id: values.lineOfResearch.value } : null,
+                branch: values.branch || '',
             };
 
             const result = await Swal.fire({

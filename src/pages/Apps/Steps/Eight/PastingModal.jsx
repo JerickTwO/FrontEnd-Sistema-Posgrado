@@ -3,8 +3,13 @@ import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
+import Select from 'react-select';
+import { HandleMode } from '../../styles/selectStyles';
+import { useSelector } from 'react-redux';
 
 const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
+    const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
+    const styles = HandleMode(isDarkMode);
     const from12To24 = (value) => {
         if (!value) return '';
         const lower = value.trim().toLowerCase();
@@ -127,7 +132,15 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                     }}
                                     enableReinitialize
                                 >
-                                    {({ setFieldValue, values, errors, submitCount }) => (
+                                    {({ setFieldValue, values, errors, submitCount }) => {
+                                        const locationOptions = [
+                                            { value: 'Aula Magna de la UNAMBA', label: 'Aula Magna de la UNAMBA' },
+                                            { value: 'Escuela Profesional de Ingeniería Informática y sistema', label: 'Escuela Profesional de Ingeniería Informática y sistema' },
+                                            { value: 'Facultad de educación y ciencias sociales', label: 'Facultad de educación y ciencias sociales' },
+                                            { value: 'Facultad de administración', label: 'Facultad de administración' },
+                                        ];
+
+                                        return (
                                         <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Primer Documento</div>
                                             <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
@@ -150,7 +163,14 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="location">Ubicación</label>
-                                                <Field name="location" type="text" id="location" className="form-input" />
+                                                <Select
+                                                    id="location"
+                                                    styles={styles}
+                                                    options={locationOptions}
+                                                    value={locationOptions.find((o) => o.value === values.location) || null}
+                                                    onChange={(option) => setFieldValue('location', option.value)}
+                                                    placeholder="Seleccione una ubicación..."
+                                                />
                                                 <ErrorMessage name="location" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
@@ -192,7 +212,14 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="location2">Ubicación</label>
-                                                <Field name="location2" type="text" id="location2" className="form-input" />
+                                                <Select
+                                                    id="location2"
+                                                    styles={styles}
+                                                    options={locationOptions}
+                                                    value={locationOptions.find((o) => o.value === values.location2) || null}
+                                                    onChange={(option) => setFieldValue('location2', option.value)}
+                                                    placeholder="Seleccione una ubicación..."
+                                                />
                                                 <ErrorMessage name="location2" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
@@ -286,7 +313,8 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 </button>
                                             </div>
                                         </Form>
-                                    )}
+                                        );
+                                    }}
                                 </Formik>
                             </div>
                         </Dialog.Panel>

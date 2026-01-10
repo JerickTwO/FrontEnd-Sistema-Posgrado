@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Pagination from '../Pagination';
 import { formatDate } from '../utils/Dates';
-import ConstancyView from './ConstancyView';
 
 const ThesisTable = ({ thesis, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +11,6 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentThesis = thesis.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Descarga/Gestión de PDF removida: solo vista y edición
     
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -25,7 +23,6 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
-                            <th className="!text-center">PDF</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -57,9 +54,7 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
                                     <td>{thesisItem.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.name || 'N/A'}</td>
                                     <td>{thesisItem.meetsRequirements ? 'Sí' : 'No'}</td>
                                     <td>{formatDate(thesisItem.updatedAt)}</td>
-                                    <td>
-                                        <ConstancyView constancyId={thesisItem.id} />
-                                    </td>
+                                    
                                     <td className="flex gap-4 items-center justify-center">
                                         <button
                                             onClick={() => onEdit(thesisItem)}

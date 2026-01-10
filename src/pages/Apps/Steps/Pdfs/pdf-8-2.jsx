@@ -1,7 +1,7 @@
 import { Text, View } from '@react-pdf/renderer';
 import PdfBase from './pdfBase';
 import styles from './styles/style-8';
-import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
+import { formatDateSpanish, formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
 const PdfEightOne = ({ infoStep, institutionalInfo }) => {

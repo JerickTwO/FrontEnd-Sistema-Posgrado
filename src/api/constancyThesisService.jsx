@@ -2,7 +2,6 @@ import axios from 'axios';
 import AppEnvironments from '../config/AppEnvironments';
 
 const CONSTANCYTHESIS_API_URL = `${AppEnvironments.baseUrl}api/v1/constancia_tesis`;
-const PDF_API_URL = `${AppEnvironments.baseUrl}api/v1/pdfDocument/StepFive`;
 const getAuthToken = () => {
     return localStorage.getItem('token');
 };
@@ -41,31 +40,9 @@ const editConstancyThesis = async (id, constancyThesis) => {
     }
 };
 
-const deleteConstancyThesis = async (id) => {
-    try {
-        const response = await axios.delete(`${CONSTANCYTHESIS_API_URL}/${id}`, getAuthHeaders());
-        return response.data;
-    } catch (error) {
-        console.error('Error in delete constancy thesis', error);
-        throw error;
-    }
-};
-
-// Ver PDF (base64) Paso 5
-const viewPdfDocument = async (id) => {
-    try {
-        const response = await axios.get(`${PDF_API_URL}/${id}/view`, getAuthHeaders());
-        return response.data.pdfData;
-    } catch (error) {
-        console.error('Error getting PDF document', error);
-        throw error;
-    }
-};
 
 export default {
     getAllConstancyThesis,
     editConstancyThesis,
     getConstancyByStudentCode,
-    deleteConstancyThesis,
-    viewPdfDocument,
 };

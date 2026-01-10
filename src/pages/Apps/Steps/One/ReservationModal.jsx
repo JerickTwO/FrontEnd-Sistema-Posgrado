@@ -35,17 +35,18 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         };
     }, [isOpen, reservation?.id]);
 
-    // Validación reducida a los campos realmente presentes en el formulario
+    // Validación corregida para versiones modernas de Yup
     const validationSchema = Yup.object({
         title: Yup.string().required('El título de tesis es obligatorio'),
         message: Yup.string().required('El título/mensaje es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
-        observation: Yup.string().when('meetRequirements', {
-            is: 'no',
+        observation: Yup.string().when(['meetRequirements'], {
+            is: (val) => val === 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
             otherwise: (schema) => schema.notRequired(),
         }),
         lineOfResearch: Yup.object().nullable(false).required('Seleccione una línea de investigación'),
+        branch: Yup.string().oneOf(['ABANCAY', 'TAMBOBAMBA']).required('Seleccione una sede'),
     });
 
     const initialValues = {
@@ -56,6 +57,7 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         title: reservation?.title || '',
         message: reservation?.message || reservation?.mensaje || '',
         lineOfResearch: lineOptions.find((option) => option.value === reservation?.lineOfResearch?.id) || null,
+        branch: reservation?.branch || '',
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
@@ -80,138 +82,156 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                         onSubmit={handleSubmit}
                                         enableReinitialize
                                     >
-                                        {({ setFieldValue, values, submitCount, errors, isSubmitting }) => (
-                                            <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2 relative">
-                                                <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
-                                                    <label htmlFor="studentCode">Primer Estudiante</label>
-                                                    <Field
-                                                        name="studentCode"
-                                                        type="text"
-                                                        id="studentCode"
-                                                        readOnly
-                                                        placeholder="Ingrese el código del estudiante"
-                                                        maxLength={6}
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="studentCode" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                {reservation?.studentTwo && (
-                                                    <div className={submitCount && errors.studentTwoCode ? 'has-error' : ''}>
-                                                        <label htmlFor="studentTwoCode">Segundo Estudiante</label>
+                                        {({ setFieldValue, values, submitCount, errors, isSubmitting }) => {
+                                            const branchOptions = [
+                                                { value: 'ABANCAY', label: 'ABANCAY' },
+                                                { value: 'TAMBOBAMBA', label: 'TAMBOBAMBA' },
+                                            ];
+
+                                            return (
+                                                <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2 relative">
+                                                    <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
+                                                        <label htmlFor="studentCode">Primer Estudiante</label>
                                                         <Field
-                                                            name="studentTwoCode"
+                                                            name="studentCode"
                                                             type="text"
-                                                            id="studentTwoCode"
-                                                            placeholder="Ingrese el código del segundo estudiante"
-                                                            maxLength={6}
+                                                            id="studentCode"
                                                             readOnly
+                                                            placeholder="Ingrese el código del estudiante"
                                                             className="form-input"
                                                         />
-                                                        <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
+                                                        <ErrorMessage name="studentCode" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                )}
-                                                <div className={submitCount && errors.title ? 'has-error' : ''}>
-                                                    <label htmlFor="title">Título de tesis</label>
-                                                    <Field
-                                                        name="title"
-                                                        type="text"
-                                                        id="title"
-                                                        placeholder="Ingrese el título de la tesis"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="title" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className={submitCount && errors.message ? 'has-error' : ''}>
-                                                    <label htmlFor="message">Mensaje</label>
-                                                    <Field
-                                                        name="message"
-                                                        type="text"
-                                                        id="message"
-                                                        placeholder="Ingrese el mensaje"
-                                                        className="form-input"
-                                                    />
-                                                    <ErrorMessage name="message" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="lineOfResearch">Línea de Investigación</label>
-                                                    <Select
-                                                        id="lineOfResearch"
-                                                        styles={styles}
-                                                        options={lineOptions}
-                                                        value={values.lineOfResearch}
-                                                        onChange={(option) => setFieldValue('lineOfResearch', option)}
-                                                        placeholder="Seleccione una línea..."
-                                                    />
-                                                </div>
-
-                                                {!reservation?.meetsRequirements ? (
-                                                    <div>
-                                                        <label htmlFor="meetRequirements">Cumple Requisitos</label>
-                                                        <div className="flex gap-4">
-                                                            <label htmlFor="meetYes">
-                                                                <Field
-                                                                    id="meetYes"
-                                                                    type="radio"
-                                                                    name="meetRequirements"
-                                                                    value="yes"
-                                                                    className="form-radio"
-                                                                    onChange={() => {
-                                                                        setFieldValue('meetRequirements', 'yes');
-                                                                        setFieldValue('observation', '');
-                                                                    }}
-                                                                />
-                                                                Sí
-                                                            </label>
-                                                            <label htmlFor="meetNo">
-                                                                <Field
-                                                                    id="meetNo"
-                                                                    type="radio"
-                                                                    name="meetRequirements"
-                                                                    value="no"
-                                                                    className="form-radio"
-                                                                    onChange={() => setFieldValue('meetRequirements', 'no')}
-                                                                />
-                                                                No
-                                                            </label>
+                                                    {reservation?.studentTwo && (
+                                                        <div className={submitCount && errors.studentTwoCode ? 'has-error' : ''}>
+                                                            <label htmlFor="studentTwoCode">Segundo Estudiante</label>
+                                                            <Field
+                                                                name="studentTwoCode"
+                                                                type="text"
+                                                                id="studentTwoCode"
+                                                                readOnly
+                                                                placeholder="Ingrese el código del segundo estudiante"
+                                                                className="form-input"
+                                                            />
+                                                            <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                         </div>
-                                                        <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                    )}
+                                                    <div className={submitCount && errors.title ? 'has-error' : ''}>
+                                                        <label htmlFor="title">Título de tesis</label>
+                                                        <Field
+                                                            name="title"
+                                                            type="text"
+                                                            id="title"
+                                                            placeholder="Ingrese el título de la tesis"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="title" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                ) : (
-                                                    <div className="hidden">
-                                                        <Field type="hidden" name="meetRequirements" value="yes" />
+                                                    <div className={submitCount && errors.message ? 'has-error' : ''}>
+                                                        <label htmlFor="message">Mensaje</label>
+                                                        <Field
+                                                            name="message"
+                                                            type="text"
+                                                            id="message"
+                                                            placeholder="Ingrese el mensaje"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="message" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                )}
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="lineOfResearch">Línea de Investigación</label>
+                                                        <Select
+                                                            id="lineOfResearch"
+                                                            styles={styles}
+                                                            options={lineOptions}
+                                                            value={values.lineOfResearch}
+                                                            onChange={(option) => setFieldValue('lineOfResearch', option)}
+                                                            placeholder="Seleccione una línea..."
+                                                        />
+                                                    </div>
 
-                                                <div className="col-span-2">
-                                                    <label htmlFor="observation">Observaciones</label>
-                                                    <Field
-                                                        name="observation"
-                                                        as="textarea"
-                                                        id="observation"
-                                                        placeholder="Ingrese observaciones"
-                                                        className="form-input"
-                                                        disabled={values.meetRequirements === 'yes'}
-                                                        style={{
-                                                            cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
-                                                            opacity: values.meetRequirements === 'yes' ? 0.5 : 1,
-                                                        }}
-                                                    />
-                                                    <ErrorMessage name="observation" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="flex justify-end items-center mt-8 col-span-2">
-                                                    <button type="button" className="btn btn-outline-danger" onClick={onClose}>
-                                                        Cancelar
-                                                    </button>
-                                                    <button
-                                                        type="submit"
-                                                        className="btn btn-primary ltr:ml-4 rtl:mr-4"
-                                                        disabled={isSubmitting}
-                                                    >
-                                                        {'Actualizar'}
-                                                    </button>
-                                                </div>
-                                            </Form>
-                                        )}
+                                                    <div className={submitCount && errors.branch ? 'has-error col-span-1' : 'col-span-1'}>
+                                                        <label htmlFor="branch">Sede</label>
+                                                        <Select
+                                                            id="branch"
+                                                            styles={styles}
+                                                            options={branchOptions}
+                                                            value={branchOptions.find((o) => o.value === values.branch) || null}
+                                                            onChange={(option) => setFieldValue('branch', option.value)}
+                                                            placeholder="Seleccione una sede..."
+                                                        />
+                                                        <ErrorMessage name="branch" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    {!reservation?.meetsRequirements ? (
+                                                        <div>
+                                                            <label htmlFor="meetRequirements">Cumple Requisitos</label>
+                                                            <div className="flex gap-4">
+                                                                <label htmlFor="meetYes">
+                                                                    <Field
+                                                                        id="meetYes"
+                                                                        type="radio"
+                                                                        name="meetRequirements"
+                                                                        value="yes"
+                                                                        className="form-radio"
+                                                                        onChange={() => {
+                                                                            setFieldValue('meetRequirements', 'yes');
+                                                                            setFieldValue('observation', '');
+                                                                        }}
+                                                                    />
+                                                                    Sí
+                                                                </label>
+                                                                <label htmlFor="meetNo">
+                                                                    <Field
+                                                                        id="meetNo"
+                                                                        type="radio"
+                                                                        name="meetRequirements"
+                                                                        value="no"
+                                                                        className="form-radio"
+                                                                        onChange={() => setFieldValue('meetRequirements', 'no')}
+                                                                    />
+                                                                    No
+                                                                </label>
+                                                            </div>
+                                                            <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="hidden">
+                                                            <Field type="hidden" name="meetRequirements" value="yes" />
+                                                        </div>
+                                                    )}
+
+                                                    <div className="col-span-2">
+                                                        <label htmlFor="observation">Observaciones</label>
+                                                        <Field
+                                                            name="observation"
+                                                            as="textarea"
+                                                            id="observation"
+                                                            placeholder="Ingrese observaciones"
+                                                            className="form-input"
+                                                            disabled={values.meetRequirements === 'yes'}
+                                                            style={{
+                                                                cursor: values.meetRequirements === 'yes' ? 'not-allowed' : 'auto',
+                                                                opacity: values.meetRequirements === 'yes' ? 0.5 : 1,
+                                                            }}
+                                                        />
+                                                        <ErrorMessage name="observation" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                    <div className="flex justify-end items-center mt-8 col-span-2">
+                                                        <button type="button" className="btn btn-outline-danger" onClick={onClose}>
+                                                            Cancelar
+                                                        </button>
+                                                        <button
+                                                            type="submit"
+                                                            className="btn btn-primary ltr:ml-4 rtl:mr-4"
+                                                            disabled={isSubmitting}
+                                                        >
+                                                            {'Actualizar'}
+                                                        </button>
+                                                    </div>
+                                                </Form>
+                                            );
+                                        }}
                                     </Formik>
                                 )}
                             </div>
