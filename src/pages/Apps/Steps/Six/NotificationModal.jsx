@@ -102,7 +102,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                 />
                                                 <ErrorMessage name="memorandoMult" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <FieldArray name="additionalInputs">
+                                               {/*<FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -137,7 +137,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                         </div>
                                                     ))
                                                 )}
-                                            </FieldArray>
+                                            </FieldArray>   */}
                                             <div className="col-span-1">
                                                 <label htmlFor="reg">Reg</label>
                                                 <Field

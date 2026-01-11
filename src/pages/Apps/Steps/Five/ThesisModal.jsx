@@ -43,6 +43,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const validationSchema = Yup.object({
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        segundoCartNumber: Yup.string().required('El segundo número de carta es obligatorio'),
+        regNumber: Yup.string().required('El número de registro es obligatorio'),
         url: Yup.string().required('La URL es obligatoria'),
         fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
         horaSorteo: Yup.string().required('La hora de sorteo es obligatoria'),
@@ -51,7 +53,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         horaActaSorteo: Yup.string().required('La hora de acta de sorteo es obligatoria'),
         fechaActaSorteo: Yup.string().required('La fecha de acta de sorteo es obligatoria'),
         fechaSorteoJurados: Yup.string().required('La fecha de sorteo de jurados es obligatoria'),
+        segundaFechaCarta: Yup.string().required('La segunda fecha de carta es obligatoria'),
         numeroArticulo: Yup.number().required('El número de artículo es obligatorio'),
+        segundoNumeroArticulo: Yup.number().required('El segundo número de artículo es obligatorio'),
         numeroResolucion: Yup.string().required('El número de resolución es obligatorio'),
         segundoNumeroResolucion: Yup.string().required('El segundo número de resolución es obligatorio'),
         horaSorteoJurados: Yup.string().required('La hora de sorteo de jurados es obligatoria'),
@@ -81,6 +85,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                 : null,
             projectSimilarity: thesis?.projectSimilarity || '',
             cartNumber: thesis?.cartNumber || '',
+            segundoCartNumber: thesis?.segundoCartNumber || '',
+            regNumber: thesis?.regNumber || '',
             url: thesis?.url || '',
             fechaSorteo: thesis?.fechaSorteo || '',
             horaSorteo: from12To24(thesis?.horaSorteo),
@@ -89,7 +95,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             horaActaSorteo: from12To24(thesis?.horaActaSorteo),
             fechaActaSorteo: thesis?.fechaActaSorteo || '',
             fechaSorteoJurados: thesis?.fechaSorteoJurados || '',
+            segundaFechaCarta: thesis?.segundaFechaCarta || '',
             numeroArticulo: thesis?.numeroArticulo || '',
+            segundoNumeroArticulo: thesis?.segundoNumeroArticulo || '',
             numeroResolucion: thesis?.numeroResolucion || '',
             segundoNumeroResolucion: thesis?.segundoNumeroResolucion || '',
             horaSorteoJurados: from12To24(thesis?.horaSorteoJurados),
@@ -142,6 +150,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             ...values,
             meetsRequirements: values.meetsRequirements === 'yes',
             cartNumber: values.cartNumber,
+            segundoCartNumber: values.segundoCartNumber,
+            regNumber: values.regNumber,
             url: values.url,
             fechaSorteo: values.fechaSorteo,
             horaSorteo: to12WithSuffix(values.horaSorteo),
@@ -150,7 +160,9 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             horaActaSorteo: to12WithSuffix(values.horaActaSorteo),
             fechaActaSorteo: values.fechaActaSorteo,
             fechaSorteoJurados: values.fechaSorteoJurados,
+            segundaFechaCarta: values.segundaFechaCarta,
             numeroArticulo: values.numeroArticulo,
+            segundoNumeroArticulo: values.segundoNumeroArticulo,
             numeroResolucion: values.numeroResolucion,
             segundoNumeroResolucion: values.segundoNumeroResolucion,
             horaSorteoJurados: to12WithSuffix(values.horaSorteoJurados),
@@ -236,7 +248,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
                                                    
                                                     <div className="col-span-1">
-                                                        <label htmlFor="fechaSorteo">Fecha de Sorteo</label>
+                                                        <label htmlFor="segundoCartNumber">Segundo Número de Carta</label>
                                                         <Field
                                                             name="fechaSorteo"
                                                             type="text"
@@ -376,6 +388,55 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         <ErrorMessage name="segundoNumeroResolucion" component="div" className="text-danger mt-1" />
                                                     </div>
 
+                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                        Tercer Documento
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="segundoCartNumber">Número de Carta</label>
+                                                        <Field
+                                                            name="segundoCartNumber"
+                                                            type="text"
+                                                            id="segundoCartNumber"
+                                                            placeholder="Ingrese el segundo número de carta"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="segundoCartNumber" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="segundaFechaCarta">Fecha de Carta</label>
+                                                        <Field
+                                                            name="segundaFechaCarta"
+                                                            type="date"
+                                                            id="segundaFechaCarta"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="segundaFechaCarta" component="div" className="text-danger mt-1" />
+                                                    </div>
+
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="segundoNumeroArticulo">Número de Artículo</label>
+                                                        <Field
+                                                            name="segundoNumeroArticulo"
+                                                            type="number"
+                                                            id="segundoNumeroArticulo"
+                                                            placeholder="Ingrese el segundo número de artículo"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="segundoNumeroArticulo" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                    <div className="col-span-1">
+                                                        <label htmlFor="regNumber">Reg</label>
+                                                        <Field
+                                                            name="regNumber"
+                                                            type="text"
+                                                            id="regNumber"
+                                                            placeholder="Ingrese el número de registro"
+                                                            className="form-input"
+                                                        />
+                                                        <ErrorMessage name="regNumber" component="div" className="text-danger mt-1" />
+                                                    </div>
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Jurados
                                                     </div>

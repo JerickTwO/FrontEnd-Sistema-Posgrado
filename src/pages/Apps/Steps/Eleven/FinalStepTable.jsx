@@ -30,6 +30,8 @@ const FinalStepTable = ({ finalSteps, onEdit, info }) => {
                             <th>Código(s)</th>
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
+                            <th>Informe de Sustanciación</th>
+                            <th>Observaciones Levantadas</th>
                             <th>Última Actualización</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
@@ -80,6 +82,8 @@ const FinalStepTable = ({ finalSteps, onEdit, info }) => {
                                             ?.titleReservationStepOne?.student.career?.name || 'N/A'}
                                     </td>
                                     <td>{finalStep?.meetRequirements ? 'Sí' : 'No'}</td>
+                                    <td>{finalStep?.sustainingReport ? 'Sí' : 'No'}</td>
+                                    <td>{finalStep?.observationsResolved ? 'Sí' : 'No'}</td>
 
                                     <td>{formatDate(finalStep?.updatedAt)}</td>
 
@@ -94,7 +98,7 @@ const FinalStepTable = ({ finalSteps, onEdit, info }) => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" className="px-4 py-2 text-center">
+                                <td colSpan="8" className="px-4 py-2 text-center">
                                     No hay campos disponibles
                                 </td>
                             </tr>

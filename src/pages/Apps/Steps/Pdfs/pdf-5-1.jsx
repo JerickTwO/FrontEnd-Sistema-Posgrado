@@ -3,7 +3,7 @@ import { Text, View, Link } from '@react-pdf/renderer';
 import { useEffect, useState } from 'react';
 import TeacherService from '../../../../api/teacherService.jsx';
 import styles from './styles/style-5.jsx';
-import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates.jsx';
+import { convertTo12HourFormat, formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates.jsx';
 
 const PdfFiveOne = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
@@ -27,7 +27,7 @@ const PdfFiveOne = ({ infoStep, institutionalInfo }) => {
     
     const asunto = 'COMUNICO PROGRAMACIÓN DE SORTEO DE JURADOS DE TESIS, DE MANERA PRESENCIAL Y/O VIRTUAL';
     const fechaSorteo = infoStep?.fechaSorteo || '';
-    const horaSorteo = infoStep?.horaSorteo || '';
+    const horaSorteo = convertTo12HourFormat(infoStep?.horaSorteo || '');
     const lugarPresencial = infoStep?.lugarPresencial || '';
     const url = infoStep?.url || '';
     const linkHref = url ? (url.startsWith('http') ? url : `https://${url}`) : '';

@@ -1,7 +1,7 @@
 import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/style-5.jsx';
-import { getYear } from '../utils/Dates.jsx';
+import { convertTo12HourFormat, getWrittenDateFromInput, getYear } from '../utils/Dates.jsx';
 import { extractStudentsInfo } from '../utils/StringUtils.jsx';
 
 const PdfFiveTwo = ({ infoStep }) => {
@@ -11,14 +11,17 @@ const PdfFiveTwo = ({ infoStep }) => {
 
     const anio = getYear();
     const actaCode = `${infoStep?.cartNumber}-${anio}`;
-    const horaInicio = infoStep?.horaActaSorteo;
-    const fechaActa = infoStep?.fechaActaSorteo;
+    const horaInicio = convertTo12HourFormat(infoStep?.horaActaSorteo);
+    const fechaActa = getWrittenDateFromInput(infoStep?.fechaActaSorteo);
     const cartaMultiple = infoStep.cartNumber;
-    const cartaFecha = infoStep?.fechaSorteoJurados;
-    const articleNumber = infoStep?.numeroArticulo
-    const numeroResolucion = infoStep?.numeroResolucionDecano;
+    const segundoCartaMultiple = infoStep.segundoCartNumber;
+    const cartaFecha = getWrittenDateFromInput(infoStep?.fechaSorteoJurados);
+    const segundaCartaFecha = getWrittenDateFromInput(infoStep?.segundaFechaCarta);
+    const articleNumber = infoStep?.numeroArticulo;
+    const segundoArticleNumber = infoStep?.segundoNumeroArticulo;
+    const numeroResolucion = infoStep?.numeroResolucion;
     const segundoNumeroResolucion = infoStep?.segundoNumeroResolucion;
-    const horaSorteo = infoStep?.horaSorteoJurados;
+    const horaSorteo = convertTo12HourFormat(infoStep?.horaSorteoJurados);
 
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
 
@@ -57,13 +60,13 @@ const PdfFiveTwo = ({ infoStep }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {cartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {title}, presentado por {combinedNamesOnly}.
+                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {cartaFecha} y CARTA MULTIPLE Nº {segundoCartaMultiple}-D-UI-FA-UNAMBA, de fecha {segundaCartaFecha}, se realiza el sorteo de jurados, de la tesis titulada: {title}, presentado por {combinedNamesOnly}.
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    Acto seguido, el Director encargado de la Unidad de Investigación, en cumplimiento de sus funciones, tomando en consideración el artículo {articleNumber}° del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, aprobado con Resolución Nº {numeroResolucion}-CU-UNAMBA, y la Resolución Decanal Nº {segundoNumeroResolucion}-D-FA-UNAMBA, se procede con el sorteo de jurados evaluadores y; en estricto orden de precedencia, queda conformado de la siguiente manera:
+                    Acto seguido, el Director encargado de la Unidad de Investigación, en cumplimiento de sus funciones, tomando en consideración el artículo {articleNumber}° y artículo {segundoArticleNumber}° del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, aprobado con Resolución Nº {numeroResolucion}-CU-UNAMBA, y la Resolución Decanal Nº {segundoNumeroResolucion}-D-FA-UNAMBA, se procede con el sorteo de jurados evaluadores y; en estricto orden de precedencia, queda conformado de la siguiente manera:
                 </Text>
             </View>
 

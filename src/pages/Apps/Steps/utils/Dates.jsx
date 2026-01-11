@@ -205,3 +205,28 @@ export const formatDateSpanish = (dateStr) => {
 
     return `${dayName}, ${day} de ${month} del ${year}`;
 }
+
+// Convierte hora de formato 24h a 12h con AM/PM
+// Ejemplo: convertTo12HourFormat("21:21") => "9:21 PM"
+// Ejemplo: convertTo12HourFormat("09:30") => "9:30 AM"
+// Ejemplo: convertTo12HourFormat("00:00") => "12:00 AM"
+export const convertTo12HourFormat = (time24) => {
+    if (!time24) return 'Hora no disponible';
+    
+    try {
+        const [hours24, minutes] = time24.split(':');
+        const hours = parseInt(hours24, 10);
+        
+        if (isNaN(hours) || hours < 0 || hours > 23) {
+            return 'Hora inválida';
+        }
+        
+        const period = hours >= 12 ? 'PM' : 'AM';
+        const hours12 = hours % 12 || 12; // 0 se convierte en 12
+        
+        return `${hours12}:${minutes} ${period}`;
+    } catch (error) {
+        console.error('Error al convertir la hora:', error);
+        return 'Hora inválida';
+    }
+}

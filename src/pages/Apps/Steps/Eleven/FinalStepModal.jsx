@@ -68,6 +68,8 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
             hour: from12To24(finalStep?.hour),
             school: finalStep?.school || '',
             articleNumber: finalStep?.articleNumber || '',
+            sustainingReport: finalStep?.sustainingReport || false,
+            observationsResolved: finalStep?.observationsResolved || false,
         }),
         [finalStep]
     );
@@ -99,6 +101,8 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                             hour: to12WithSuffix(values.hour),
                                             school: values.school,
                                             articleNumber: values.articleNumber,
+                                            sustainingReport: values.sustainingReport,
+                                            observationsResolved: values.observationsResolved,
                                         };
                                         if (values.meetRequirements === 'yes' && finalStep?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
@@ -172,6 +176,16 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                 <label htmlFor="articleNumber">Número de Artículo</label>
                                                 <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
                                                 <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1 flex items-center gap-2 mt-6">
+                                                <Field name="sustainingReport" type="checkbox" id="sustainingReport" className="form-checkbox" />
+                                                <label htmlFor="sustainingReport" className="mb-0 cursor-pointer">Informe de Sustanciación</label>
+                                            </div>
+
+                                            <div className="col-span-1 flex items-center gap-2 mt-6">
+                                                <Field name="observationsResolved" type="checkbox" id="observationsResolved" className="form-checkbox" />
+                                                <label htmlFor="observationsResolved" className="mb-0 cursor-pointer">Observaciones Levantadas</label>
                                             </div>
 
                                             {/* <FieldArray name="additionalInputs">

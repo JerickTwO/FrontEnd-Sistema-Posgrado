@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import PdfFiveOne from '../Pdfs/pdf-5-1';
+import PdfFiveTwo from '../Pdfs/pdf-5-2';
+import PdfFiveThree from '../Pdfs/pdf-5-3';
 import Pagination from '../Pagination';
-import { formatDate } from '../utils/Dates';
+import { formatDate, formatNumberWithZero } from '../utils/Dates';
+import DownloadDocs from '../utils/DownloadButton';
 
 const ThesisTable = ({ thesis, onEdit, info }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -11,6 +15,31 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentThesis = thesis.slice(indexOfFirstItem, indexOfLastItem);
 
+    const getDownloadButton = (thesisItem) => {
+        const fileNameStep = `P5 PDF Nº ${formatNumberWithZero(thesisItem.id)}.pdf`;
+        return (
+            <>
+                <DownloadDocs
+                    infoStepTable={thesisItem}
+                    PdfDocument={PdfFiveOne}
+                    institutionalInfo={info}
+                    fileName={fileNameStep}
+                />
+                <DownloadDocs
+                    infoStepTable={thesisItem}
+                    PdfDocument={PdfFiveTwo}
+                    fileName={fileNameStep}
+                    
+                />
+                <DownloadDocs
+                    infoStepTable={thesisItem}
+                    PdfDocument={PdfFiveThree}
+                    institutionalInfo={info}
+                    fileName={fileNameStep}
+                />
+            </>
+        );
+    };
     
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
@@ -54,8 +83,11 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
                                     <td>{thesisItem.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.career.name || 'N/A'}</td>
                                     <td>{thesisItem.meetsRequirements ? 'Sí' : 'No'}</td>
                                     <td>{formatDate(thesisItem.updatedAt)}</td>
-                                    
+
                                     <td className="flex gap-4 items-center justify-center">
+                                        {
+                                            getDownloadButton(thesisItem)
+                                        }
                                         <button
                                             onClick={() => onEdit(thesisItem)}
                                             className="btn btn-sm btn-outline-primary"
