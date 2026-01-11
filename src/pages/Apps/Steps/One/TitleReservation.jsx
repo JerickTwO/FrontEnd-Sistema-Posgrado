@@ -310,6 +310,7 @@ const TitleReservation = () => {
                 reservation={editingReservation}
                 onSave={handleSaveReservation}
                 lineOptions={lineOptions}
+                allTitleReservations={titleReservations}
                 enableReinitialize
             />
 

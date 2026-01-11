@@ -2,44 +2,30 @@ import { Text, View } from '@react-pdf/renderer';
 import PdfBase from './pdfBase';
 import styles from './styles/style-8';
 import { formatDateSpanish, formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
-import { extractStudentsInfo } from '../utils/StringUtils';
+import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
 const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
-    const FIRST_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
-
     const THESIS_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive;
+    const THREE_STEP_INFO = THESIS_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
+    const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
+    const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
     const {
         combinedNames,
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    // Función para formatear docente
-    const formatTeacher = (t) => {
-        if (!t) return null;
-        const first = t.firstNames || t.nombres || '';
-        const last = t.lastName || t.apellidos || '';
-        return `${first} ${last}`.trim();
-    };
-;
-    // Jurados y asesor
-    const dash = '—';
-    const presidente = (THESIS_INFO?.president && formatTeacher(THESIS_INFO.president))
-        || THESIS_INFO?.presidente || dash;
-    const primerMiembro = (THESIS_INFO?.firstMember && formatTeacher(THESIS_INFO.firstMember))
-        || THESIS_INFO?.primerMiembro || dash;
-    const segundoMiembro = (THESIS_INFO?.secondMember && formatTeacher(THESIS_INFO.secondMember))
-        || THESIS_INFO?.segundoMiembro || dash;
-    const accesitario = (THESIS_INFO?.accessory && formatTeacher(THESIS_INFO.accessory))
-        || THESIS_INFO?.accesitario || dash;
-    const asesor = (THESIS_INFO?.adviser && formatTeacher(THESIS_INFO.adviser))
-        || THESIS_INFO?.asesor || dash;
-    const segundoAsesor = (THESIS_INFO?.coadviser && formatTeacher(THESIS_INFO.coadviser))
-        || THESIS_INFO?.segundoAsesor || null;
+    const { presidentNames,
+        firstMemberNames,
+        secondMemberNames,
+        accessoryNames
+    } = extractJurysInfo(THREE_STEP_INFO);
 
+    const { adviserNames, coadviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
+    
     // Campos Editables
     const memorandoNumero = formatNumberWithZero(infoStep?.memorandumNumber);
     const aulaSustentacion = infoStep?.location2;
@@ -54,15 +40,15 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     //             .map((s) => s.trim())
     //             .filter(Boolean)
     //         : null;
-    const commemorativeText = institutionalInfo?.commemorativeText ;
+    const commemorativeText = institutionalInfo?.commemorativeText;
     return (
-        <PdfBase 
-            showCommemorativeText={true} 
-            commemorativeText={commemorativeText} 
+        <PdfBase
+            showCommemorativeText={true}
+            commemorativeText={commemorativeText}
             registrationNumber={regNumber}
         >
             {/* Fecha alineada a la derecha */}
-            <View style={{ alignItems: 'flex-end'}}>
+            <View style={{ alignItems: 'flex-end' }}>
                 <Text style={styles.tamburco}>Abancay, {actualDate}</Text>
             </View>
 
@@ -77,28 +63,28 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                 <Text style={[styles.bold, { fontSize: 10, marginBottom: 5 }]}>MIEMBROS DE JURADO Y ASESOR</Text>
                 <View style={{ marginLeft: 20 }}>
                     <View style={{ flexDirection: 'row', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 9, width: 200 }}>{presidente}</Text>
+                        <Text style={{ fontSize: 9, width: 200 }}>{presidentNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Presidente</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 9, width: 200 }}>{primerMiembro}</Text>
+                        <Text style={{ fontSize: 9, width: 200 }}>{firstMemberNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Primer miembro</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 9, width: 200 }}>{segundoMiembro}</Text>
+                        <Text style={{ fontSize: 9, width: 200 }}>{secondMemberNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Segundo miembro</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 9, width: 200 }}>{accesitario}</Text>
+                        <Text style={{ fontSize: 9, width: 200 }}>{accessoryNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Accesitario</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 9, width: 200 }}>{asesor}</Text>
+                        <Text style={{ fontSize: 9, width: 200 }}>{adviserNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Asesor</Text>
                     </View>
-                    {segundoAsesor && (
+                    {coadviserNames && (
                         <View style={{ flexDirection: 'row', marginTop: 2 }}>
-                            <Text style={{ fontSize: 9, width: 200 }}>{segundoAsesor}</Text>
+                            <Text style={{ fontSize: 9, width: 200 }}>{coadviserNames}</Text>
                             <Text style={[styles.bold, { fontSize: 9 }]}>: Segundo asesor</Text>
                         </View>
                     )}
@@ -140,7 +126,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
             {/* Cuerpo del documento */}
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    Por el presente me dirijo a Ustedes, con la finalidad de poner en su conocimiento que en mérito al Artículo({articleNumber}°) del Reglamento de Investigación, 
+                    Por el presente me dirijo a Ustedes, con la finalidad de poner en su conocimiento que en mérito al Artículo({articleNumber}°) del Reglamento de Investigación,
                     se programa fecha y hora de sustentación <Text style={styles.bold}>PRESENCIAL</Text> de la Tesis Titulada:
                     <Text style={styles.bold}>"{title}"</Text>, presentado por <Text style={styles.bold}>{combinedNames}</Text>, según el siguiente detalle:
                 </Text>

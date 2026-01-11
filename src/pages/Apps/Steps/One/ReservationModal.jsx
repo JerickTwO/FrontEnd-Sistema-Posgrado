@@ -5,9 +5,13 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
+import Fuse from 'fuse.js';
 
-const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions }) => {
+const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions, allTitleReservations }) => {
     const [readyToInit, setReadyToInit] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
 
@@ -35,9 +39,49 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
         };
     }, [isOpen, reservation?.id]);
 
+    // Configuración de Fuse.js para búsqueda difusa
+    const fuse = new Fuse(allTitleReservations || [], {
+        keys: ['title'],
+        threshold: 0.3, // Sensibilidad de la búsqueda (0 = exacto, 1 = muy flexible)
+        includeScore: true,
+        ignoreLocation: true,
+        minMatchCharLength: 3,
+    });
+
+    // Función de búsqueda difusa
+    const handleTitleSearch = (value) => {
+        setSearchTerm(value);
+        if (value.length >= 3) {
+            const results = fuse.search(value);
+            setSearchResults(results);
+            setShowSuggestions(true);
+        } else {
+            setSearchResults([]);
+            setShowSuggestions(false);
+        }
+    };
+
+    // Validación personalizada para títulos similares
+    const checkTitleSimilarity = (value) => {
+        if (!value || value.length < 3) return true;
+        
+        const results = fuse.search(value);
+        // Filtrar el título actual si estamos editando
+        const similarTitles = results.filter(result => {
+            const isSameReservation = reservation?.id && result.item.id === reservation.id;
+            return !isSameReservation && result.score < 0.3; // Score bajo = muy similar
+        });
+        
+        return similarTitles.length === 0;
+    };
+
     // Validación corregida para versiones modernas de Yup
     const validationSchema = Yup.object({
-        title: Yup.string().required('El título de tesis es obligatorio'),
+        title: Yup.string()
+            .required('El título de tesis es obligatorio')
+            .test('title-similarity', 'Ya existe un título muy similar a este. Por favor, verifique los títulos sugeridos.', function(value) {
+                return checkTitleSimilarity(value);
+            }),
         message: Yup.string().required('El título/mensaje es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         observation: Yup.string().when(['meetRequirements'], {
@@ -116,15 +160,61 @@ const ReservationModal = ({ isOpen, onClose, onSave, reservation, lineOptions })
                                                             <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                         </div>
                                                     )}
-                                                    <div className={submitCount && errors.title ? 'has-error' : ''}>
+                                                    <div className={`col-span-2 relative ${submitCount && errors.title ? 'has-error' : ''}`}>
                                                         <label htmlFor="title">Título de tesis</label>
-                                                        <Field
-                                                            name="title"
-                                                            type="text"
-                                                            id="title"
-                                                            placeholder="Ingrese el título de la tesis"
-                                                            className="form-input"
-                                                        />
+                                                        <Field name="title">
+                                                            {({ field, form }) => (
+                                                                <div className="relative">
+                                                                    <input
+                                                                        {...field}
+                                                                        type="text"
+                                                                        id="title"
+                                                                        placeholder="Ingrese el título de la tesis (mínimo 3 caracteres para buscar)"
+                                                                        className="form-input"
+                                                                        onChange={(e) => {
+                                                                            form.setFieldValue('title', e.target.value);
+                                                                            handleTitleSearch(e.target.value);
+                                                                        }}
+                                                                        onFocus={() => {
+                                                                            if (searchTerm.length >= 3) setShowSuggestions(true);
+                                                                        }}
+                                                                    />
+                                                                    {showSuggestions && searchResults.length > 0 && (
+                                                                        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                                                                            <div className="p-2 bg-yellow-100 dark:bg-yellow-900 border-b border-gray-300 dark:border-gray-600">
+                                                                                <p className="text-sm font-semibold text-yellow-800 dark:text-yellow-200">⚠️ Títulos similares encontrados:</p>
+                                                                            </div>
+                                                                            {searchResults.slice(0, 5).map((result, index) => (
+                                                                                <div
+                                                                                    key={index}
+                                                                                    className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-200 dark:border-gray-600 last:border-b-0 cursor-pointer"
+                                                                                    onClick={() => {
+                                                                                        setShowSuggestions(false);
+                                                                                    }}
+                                                                                >
+                                                                                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{result.item.title}</p>
+                                                                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                                                        Estudiante: {result.item.student?.firstNames} {result.item.student?.lastName}
+                                                                                    </p>
+                                                                                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                                                                                        Similaridad: {Math.round((1 - result.score) * 100)}%
+                                                                                    </p>
+                                                                                </div>
+                                                                            ))}
+                                                                            <div className="p-2 text-center">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    className="text-xs text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                                                                                    onClick={() => setShowSuggestions(false)}
+                                                                                >
+                                                                                    Cerrar
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                        </Field>
                                                         <ErrorMessage name="title" component="div" className="text-danger mt-1" />
                                                     </div>
                                                     <div className={submitCount && errors.message ? 'has-error' : ''}>

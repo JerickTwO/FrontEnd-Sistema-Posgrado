@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Pagination from '../Pagination';
 import PdfStepEight from '../Pdfs/pdf-8-1';
 import TwOPdfStepEight from '../Pdfs/pdf-8-2';
+import ThreePdfStepEight from '../Pdfs/pdf-8-3';
+import FourPdfStepEight from '../Pdfs/pdf-8-4';
 import { formatDate } from '../utils/Dates';
 import DownloadDocs from '../utils/DownloadButton';
 const PastingTable = ({ pastings, onEdit, info }) => {
@@ -16,12 +18,16 @@ const PastingTable = ({ pastings, onEdit, info }) => {
     const getDownloadButton = (pasting) => {
         const firstFileName = `pasting_${pasting.id}.pdf`;
         const secondFileName = `2_pasting_${pasting.id}.pdf`;
+        const thirdFileName = `3_pasting_${pasting.id}.pdf`;
+        const fourthFileName = `4_pasting_${pasting.id}.pdf`;
         return (
             <>
                 <DownloadDocs infoStepTable={pasting} PdfDocument={PdfStepEight} institutionalInfo={info} fileName={firstFileName} />
                 <DownloadDocs infoStepTable={pasting} PdfDocument={TwOPdfStepEight} institutionalInfo={info} fileName={secondFileName} />
+                <DownloadDocs infoStepTable={pasting} PdfDocument={ThreePdfStepEight} institutionalInfo={info} fileName={thirdFileName} />
+                <DownloadDocs infoStepTable={pasting} PdfDocument={FourPdfStepEight} institutionalInfo={info} fileName={fourthFileName} />
             </>
-        );infoStepTable
+        );
     };
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">

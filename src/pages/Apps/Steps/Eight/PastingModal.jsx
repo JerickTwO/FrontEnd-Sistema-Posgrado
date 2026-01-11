@@ -47,6 +47,13 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         horaFin: Yup.string().required('La hora de fin es obligatoria'),
         hour2: Yup.string().required('La segunda hora es obligatoria'),
         location2: Yup.string().required('La segunda ubicación es obligatoria'),
+        day3: Yup.string().required('El tercer día es obligatorio'),
+        hour3: Yup.string().required('La tercera hora es obligatoria'),
+        location3: Yup.string().required('La tercera ubicación es obligatoria'),
+        day4: Yup.string().required('El cuarto día es obligatorio'),
+        hour5: Yup.string().required('La quinta hora es obligatoria'),
+        hour4: Yup.string().required('La cuarta hora es obligatoria'),
+        location4: Yup.string().required('La cuarta ubicación es obligatoria'),
         // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
@@ -89,6 +96,13 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             horaFin: from12To24(pasting?.horaFin),
             hour2: from12To24(pasting?.hour2),
             location2: pasting?.location2 || '',
+            day3: pasting?.day3 || '',
+            hour3: from12To24(pasting?.hour3),
+            location3: pasting?.location3 || '',
+            day4: pasting?.day4 || '',
+            hour5: from12To24(pasting?.hour5),
+            hour4: from12To24(pasting?.hour4),
+            location4: pasting?.location4 || '',
         }),
         [pasting]
     );
@@ -98,7 +112,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                 <div className="fixed inset-0 bg-[black]/60" />
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center px-4 py-8">
-                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-lg text-black dark:text-white-dark">
+                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-[800px] text-black dark:text-white-dark">
                             <button type="button" onClick={onClose} className="absolute top-4 ltr:right-4 rtl:left-4 text-gray-400 hover:text-gray-800 dark:hover:text-gray-600 outline-none">
                                 <IconX />
                             </button>
@@ -123,7 +137,14 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             hour: to12WithSuffix(values.hour),
                                             horaFin: to12WithSuffix(values.horaFin),
                                             hour2: to12WithSuffix(values.hour2),
+                                            day4: values.day4,
+                                            hour5: to12WithSuffix(values.hour5),
+                                            hour4: to12WithSuffix(values.hour4),
+                                            location4: values.location4,
                                             location2: values.location2,
+                                            day3: values.day3,
+                                            hour3: to12WithSuffix(values.hour3),
+                                            location3: values.location3,
                                         };
                                         if (values.meetRequirements === 'yes' && pasting?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
@@ -141,8 +162,8 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                         ];
 
                                         return (
-                                        <Form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Primer Documento</div>
+                                        <Form className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Primer Documento</div>
                                             <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
                                                 <label htmlFor="studentCode">Primer Estudiante</label>
                                                 <Field name="studentCode" type="text" id="studentCode" readOnly className="form-input" />
@@ -192,7 +213,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 </div>
                                                 <ErrorMessage name="horaFin" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div className="col-span-2 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
                                             <div className="col-span-1">
                                                 <label htmlFor="memorandumNumber">Número de Memorando</label>
                                                 <Field name="memorandumNumber" type="text" id="memorandumNumber" className="form-input" />
@@ -233,6 +254,68 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                     <Field name="reg" type="text" id="reg" className="form-input" />
                                                 </div>
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Tercer Documento</div>
+                                            
+                                            <div className="col-span-1">
+                                                <label htmlFor="day3">Día</label>
+                                                <Field name="day3" type="date" id="day3" className="form-input" />
+                                                <ErrorMessage name="day3" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="hour3">Hora</label>
+                                                <div className="flex items-center gap-2">
+                                                    <Field name="hour3" type="time" id="hour3" className="form-input" />
+                                                </div>
+                                                <ErrorMessage name="hour3" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-1">
+                                                <label htmlFor="location3">Ubicación</label>
+                                                <Select
+                                                    id="location3"
+                                                    styles={styles}
+                                                    options={locationOptions}
+                                                    value={locationOptions.find((o) => o.value === values.location3) || null}
+                                                    onChange={(option) => setFieldValue('location3', option.value)}
+                                                    placeholder="Seleccione una ubicación..."
+                                                />
+                                                <ErrorMessage name="location3" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Cuarto Documento</div>
+
+                                            <div>
+                                                <label htmlFor="day4">Día 4</label>
+                                                <Field name="day4" type="date" id="day4" className="form-input" />
+                                                <ErrorMessage name="day4" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="hour5">Hora 5</label>
+                                                <Field name="hour5" type="time" id="hour5" placeholder="Ejemplo: 09:00" className="form-input" />
+                                                <ErrorMessage name="hour5" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="hour4">Hora 4</label>
+                                                <Field name="hour4" type="time" id="hour4" placeholder="Ejemplo: 09:00" className="form-input" />
+                                                <ErrorMessage name="hour4" component="div" className="text-danger mt-1" />
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="location4">Ubicación 4</label>
+                                                <Select
+                                                    name="location4"
+                                                    styles={styles}
+                                                    options={locationOptions}
+                                                    value={locationOptions.find((o) => o.value === values.location4) || null}
+                                                    onChange={(option) => setFieldValue('location4', option.value)}
+                                                    placeholder="Seleccione una ubicación..."
+                                                />
+                                                <ErrorMessage name="location4" component="div" className="text-danger mt-1" />
                                             </div>
                                             {/* <FieldArray name="additionalInputs">
                                                 {({ push, remove }) =>
@@ -288,7 +371,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                     <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
-                                            <div className="col-span-2">
+                                            <div className="col-span-4">
                                                 <label htmlFor="observations">Observaciones</label>
                                                 <Field
                                                     name="observations"
@@ -304,7 +387,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 />
                                                 <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div className="flex justify-end items-center mt-8 col-span-2">
+                                            <div className="flex justify-end items-center mt-8 col-span-4">
                                                 <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                     Cancelar
                                                 </button>
