@@ -21,13 +21,13 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
     const regNumber = infoStep?.reg;
     const deanName = institutionalInfo?.deanName;
     const commemorativeText = institutionalInfo?.commemorativeText;
-    // const additionalInputsList =
-    //     typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
-    //         ? infoStep.additionalInputs
-    //               .split(',')
-    //               .map((s) => s.trim())
-    //               .filter(Boolean)
-    //         : null;
+    const additionalInputsList =
+        typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
+            ? infoStep.additionalInputs
+                  .split(',')
+                  .map((s) => s.trim())
+                  .filter(Boolean)
+            : null;
     const lugarSustentacion = infoStep?.school || stepNine?.location;
     const fechaSustentacion = formatDateSpanish(infoStep?.day);
     const horaSustentacion = infoStep?.hour || stepNine?.hour || '__:__';
