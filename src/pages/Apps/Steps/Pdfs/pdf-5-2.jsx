@@ -1,7 +1,7 @@
 import PdfBase from './pdfBase';
 import { Text, View } from '@react-pdf/renderer';
 import styles from './styles/style-5.jsx';
-import { convertTo12HourFormat, getWrittenDateFromInput, getYear } from '../utils/Dates.jsx';
+import { getWrittenDateFromInput, getYear } from '../utils/Dates.jsx';
 import { extractStudentsInfo } from '../utils/StringUtils.jsx';
 
 const PdfFiveTwo = ({ infoStep }) => {
@@ -11,7 +11,7 @@ const PdfFiveTwo = ({ infoStep }) => {
 
     const anio = getYear();
     const actaCode = `${infoStep?.numeroActa}-${anio}`;
-    const horaInicio = convertTo12HourFormat(infoStep?.horaActaSorteo);
+    const horaInicio = infoStep?.horaActaSorteo;
     const fechaActa = getWrittenDateFromInput(infoStep?.fechaActaSorteo);
     const cartaMultiple = infoStep.cartNumber;
     const segundoCartaMultiple = infoStep.segundoCartNumber;
@@ -21,7 +21,7 @@ const PdfFiveTwo = ({ infoStep }) => {
     const segundoArticleNumber = infoStep?.segundoNumeroArticulo;
     const numeroResolucion = infoStep?.numeroResolucion;
     const segundoNumeroResolucion = infoStep?.segundoNumeroResolucion;
-    const horaSorteo = convertTo12HourFormat(infoStep?.horaSorteoJurados);
+    const horaSorteo = infoStep?.horaSorteoJurados;
 
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
 
