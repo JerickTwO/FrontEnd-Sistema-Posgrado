@@ -12,9 +12,9 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
         reg: Yup.string().required('El número de registro es obligatorio'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
-        // additionalInputs: Yup.array()
-        //     .of(Yup.string().required('Este campo es obligatorio'))
-        //     .min(1, 'Al menos un campo es obligatorio'),
+        additionalInputs: Yup.array()
+            .of(Yup.string().required('Este campo es obligatorio'))
+            .min(1, 'Al menos un campo es obligatorio'),
     });
 
     const initialValues = React.useMemo(
@@ -152,7 +152,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                     </div>
                                                 )}
                                                  
-                                                {/* <FieldArray name="additionalInputs">
+                                                <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
                                                         values.additionalInputs.map((_, index) => (
                                                             <div key={index} className="col-span-1">
@@ -186,7 +186,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                             </div>
                                                         ))
                                                     )}
-                                                </FieldArray> */}
+                                                </FieldArray>
                                                 <div className="flex justify-end items-center mt-8 col-span-2">
                                                     <button type="button" className="btn btn-outline-danger" onClick={onClose}>
                                                         Cancelar

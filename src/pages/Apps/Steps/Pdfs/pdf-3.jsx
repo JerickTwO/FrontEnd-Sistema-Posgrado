@@ -50,11 +50,11 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                 <View style={styles.row}>
                     <Text style={styles.label}>Ref.</Text>
                     <Text style={styles.content}>: Solicitud S/N°</Text>
-                        {/* {additionalInputsList && additionalInputsList.map((input, idx) => (
+                        {additionalInputsList && additionalInputsList.map((input, idx) => (
                             <Text key={idx}>
                                 {idx === 0 ? `: ${input}` : ` ${input}`}
                             </Text>
-                        ))} */}
+                        ))}
 
                 </View>
             </View>
