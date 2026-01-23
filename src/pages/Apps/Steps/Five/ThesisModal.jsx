@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
     const styles = HandleMode(isDarkMode);
-    const [pdfAvailable, setPdfAvailable] = React.useState(null);
 
     const from12To24 = (value) => {
         if (!value) return '';
@@ -511,14 +510,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                                             value="yes"
                                                                             className="form-radio"
                                                                             onChange={(e) => {
-                                                                                if (!pdfAvailable) {
-                                                                                    Swal.fire({
-                                                                                        icon: 'warning',
-                                                                                        title: 'PDF no disponible',
-                                                                                        text: 'Debe generar el PDF antes de marcar como cumple requisitos',
-                                                                                    });
-                                                                                    return;
-                                                                                }
                                                                                 setFieldValue('meetsRequirements', 'yes');
                                                                                 setFieldValue('observations', '');
                                                                             }}
