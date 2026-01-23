@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 import Select from 'react-select';
 import teacherService from '../../../../api/teacherService.jsx';
-import constancyThesisService from '../../../../api/constancyThesisService.jsx';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -125,27 +124,11 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         if (isOpen) loadTeachers();
     }, [isOpen]);
 
-    React.useEffect(() => {
-        const checkPdfAvailability = async () => {
-            if (!thesis?.id) {
-                setPdfAvailable(false);
-                return;
-            }
-            try {
-                const pdfData = await constancyThesisService.viewPdfDocument(thesis.id);
-                setPdfAvailable(!!pdfData);
-            } catch {
-                setPdfAvailable(false);
-            }
-        };
-        if (isOpen) checkPdfAvailability();
-    }, [isOpen, thesis?.id]);
-
     const filterOptions = (selectedValues, currentFieldValue) => {
         const selectedIds = selectedValues.filter((val) => val && val.value !== currentFieldValue?.value).map((val) => val.value);
         return jurorOptions.filter((opt) => !selectedIds.includes(opt.value));
     };
-    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    const handleSubmit = async (values, { setSubmitting }) => {
         const normalizedValues = {
             ...values,
             meetsRequirements: values.meetsRequirements === 'yes',
