@@ -11,7 +11,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         reg: Yup.string().required('El registro es obligatorio'),
         memorandoMult: Yup.string().required('El memorando es obligatorio'),
-        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
@@ -102,7 +102,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                 />
                                                 <ErrorMessage name="memorandoMult" component="div" className="text-danger mt-1" />
                                             </div>
-                                               {/*<FieldArray name="additionalInputs">
+                                               <FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -137,7 +137,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                         </div>
                                                     ))
                                                 )}
-                                            </FieldArray>   */}
+                                            </FieldArray>  
                                             <div className="col-span-1">
                                                 <label htmlFor="reg">Reg</label>
                                                 <Field

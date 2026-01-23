@@ -43,7 +43,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
         hour: Yup.string().required('La hora es obligatoria'),
         school: Yup.string().required('La escuela es obligatoria'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
-        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
@@ -188,7 +188,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                 <label htmlFor="observationsResolved" className="mb-0 cursor-pointer">Observaciones Levantadas</label>
                                             </div>
 
-                                            {/* <FieldArray name="additionalInputs">
+                                            <FieldArray name="additionalInputs">
                                                 {({ push, remove }) =>
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -207,7 +207,7 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                         </div>
                                                     ))
                                                 }
-                                            </FieldArray> */}
+                                            </FieldArray>
 
                                             {!finalStep?.meetRequirements && (
                                                 <div>

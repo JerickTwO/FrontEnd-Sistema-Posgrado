@@ -105,7 +105,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ fontSize: 10 }}>Ref.                :</Text>
                         <Text style={{ fontSize: 10, marginLeft: 5 }}> Solicitud S/N°</Text>
-                        {/* <View style={{ fontSize: 10, marginLeft: 5 }}>
+                        <View style={{ fontSize: 10, marginLeft: 5 }}>
                             {additionalInputsList ? (
                                 additionalInputsList.map((input, idx) => (
                                     <Text key={idx} style={{ fontSize: 10 }}>
@@ -115,7 +115,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                             ) : (
                                 <Text style={{ fontSize: 10 }}>Solicitud S/N°</Text>
                             )}
-                        </View> */}
+                        </View>
                     </View>
                     <Text style={{ fontSize: 10 }}>Reg. N° {regNumber}</Text>
                 </View>

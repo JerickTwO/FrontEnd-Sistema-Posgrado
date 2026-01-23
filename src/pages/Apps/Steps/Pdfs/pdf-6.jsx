@@ -106,7 +106,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                         <Text>Solicitud S/N°</Text>
                     </View>
                     
-                    {/* <View style={styles.semiTableCol}>
+                    <View style={styles.semiTableCol}>
                         {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 ? (
                             (() => {
                                 const inputs = infoStep.additionalInputs.split(',');
@@ -125,7 +125,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                                     {input.trim()}
                                 </Text>
                             ))}
-                    </View> */}
+                    </View>
                 </View>
                
             </View>

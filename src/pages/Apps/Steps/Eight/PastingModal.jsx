@@ -54,7 +54,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         hour5: Yup.string().required('La quinta hora es obligatoria'),
         hour4: Yup.string().required('La cuarta hora es obligatoria'),
         location4: Yup.string().required('La cuarta ubicación es obligatoria'),
-        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
@@ -317,7 +317,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 />
                                                 <ErrorMessage name="location4" component="div" className="text-danger mt-1" />
                                             </div>
-                                            {/* <FieldArray name="additionalInputs">
+                                            <FieldArray name="additionalInputs">
                                                 {({ push, remove }) =>
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -336,7 +336,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                         </div>
                                                     ))
                                                 }
-                                            </FieldArray> */}
+                                            </FieldArray>
 
                                             {!pasting.meetRequirements && (
                                                 <div>
