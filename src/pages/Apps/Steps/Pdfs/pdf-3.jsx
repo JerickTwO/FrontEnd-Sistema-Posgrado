@@ -52,7 +52,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                     <View style={{flex: 1}}>
                         <Text style={styles.content}>: Solicitud S/N°</Text>
                         {additionalInputsList && additionalInputsList.map((input, idx) => (
-                            <Text key={idx} style={{marginLeft: 10, marginTop: 2}}>
+                            <Text key={idx} style={{marginLeft: 10, marginTop: 6}}>
                                 - {input}
                             </Text>
                         ))}
