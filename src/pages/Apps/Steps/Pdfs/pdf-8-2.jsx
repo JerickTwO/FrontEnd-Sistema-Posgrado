@@ -24,7 +24,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
         accessoryNames
     } = extractJurysInfo(FIVE_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
+    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
     
     // Campos Editables
     const memorandoNumero = formatNumberWithZero(infoStep?.memorandumNumber);

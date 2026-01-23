@@ -70,9 +70,9 @@ export function buildFormattedStudentLine(FIRST_STEP_INFO) {
     return `${firstLine}, junto con ${secondLine}`.trim();
 }
 
-export function extractAdvisersInfo(TWO_STEP_INFO) {
-    const adviser = TWO_STEP_INFO?.adviser || {};
-    const coadviser = TWO_STEP_INFO?.coadviser || {};
+export function extractAdvisersInfo(FIVE_STEP_INFO) {
+    const adviser = FIVE_STEP_INFO?.adviser || {};
+    const coadviser = FIVE_STEP_INFO?.coadviser || {};
 
     const adviserNames = `${adviser?.degree} ${adviser?.firstNames} ${adviser?.lastName} ${adviser?.middleName}`?.toUpperCase().trim();
     const coAdviserNames = `${coadviser?.degree} ${coadviser?.firstNames} ${coadviser?.lastName} ${coadviser?.middleName || ''}`?.toUpperCase().trim();

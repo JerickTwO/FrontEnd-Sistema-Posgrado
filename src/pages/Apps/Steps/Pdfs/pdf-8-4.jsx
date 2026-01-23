@@ -22,7 +22,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
         accessoryNames
     } = extractJurysInfo(FIVE_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
+    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
 
 
     // Campos del cuarto documento
