@@ -39,7 +39,7 @@ const ApprovalTable = ({ projects, onEdit, info }) => {
                             <th>Carrera</th>
                             <th>Cumple Requisitos</th>
                             <th>Última Actualización</th>
-                            <th className="!text-center">Documentos</th>
+                            <th className="!text-center" style={{minWidth: '120px'}}>Documentos</th>
                             <th className="!text-center">Acciones</th>
                         </tr>
                     </thead>

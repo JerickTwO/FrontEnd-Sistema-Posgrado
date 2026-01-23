@@ -117,28 +117,28 @@ const ApprovalView = ({ approvalId }) => {
     };
 
     return (
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-2 items-center justify-center">
             <button
                 onClick={viewPDF}
-                className="btn btn-sm btn-outline-secondary m-0 w-[6rem]"
+                className={`btn btn-sm m-0 w-[7rem] ${pdfAvailable ? 'btn-outline-primary' : 'btn-outline-secondary'}`}
                 disabled={!pdfAvailable}
             >
                 {pdfAvailable === null
                     ? 'Cargando...'
                     : pdfAvailable
-                        ? 'Ver PDF'
-                        : 'No PDF'}
+                        ? '📄 Ver PDF'
+                        : 'Sin PDF'}
             </button>
             <button
                 onClick={viewDOC}
-                className="btn btn-sm btn-outline-secondary m-0 w-[6rem]"
+                className={`btn btn-sm m-0 w-[7rem] ${docAvailable ? 'btn-outline-info' : 'btn-outline-secondary'}`}
                 disabled={!docAvailable}
             >
                 {docAvailable === null
                     ? 'Cargando...'
                     : docAvailable
-                        ? 'Ver DOC'
-                        : 'No DOC'}
+                        ? '📥 Ver DOC'
+                        : 'Sin DOC'}
             </button>
         </div>
     );
