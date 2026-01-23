@@ -6,7 +6,7 @@ function formatFullNameUpper(student) {
 }
 
 function getGenderedPrefix(student) {
-    return student && student.gender === true ? 'el Bach.' : 'la Bach.';
+    return student && student.gender === true ? 'el Bachiller.' : 'la Bachiller.';
 }
 
 function getGenderedIdentification(student) {

@@ -117,7 +117,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
             {/* Para optar */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 15 }]}>
-                    Para optar        : <Text style={styles.bold}>TÍTULO PROFESIONAL DE LICENCIADO EN ADMINISTRACIÓN DE EMPRESAS</Text>
+                    Para optar        : <Text style={styles.bold}>TÍTULO PROFESIONAL DE LICENCIADO EN ADMINISTRACIÓN</Text>
                 </Text>
             </View>
 

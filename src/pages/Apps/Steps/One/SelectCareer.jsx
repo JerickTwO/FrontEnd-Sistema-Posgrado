@@ -9,7 +9,7 @@ import React from 'react';
 const SelectCareer = ({ setFieldValue, filterStudentsByCareer, errors, submitCount, onChange }) => {
     const isDarkMode = useDarkMode();
     const styles = HandleMode(isDarkMode);
-    const adminCareer = { value: 1, label: 'Administración de Empresas' };
+    const adminCareer = { value: 1, label: 'Administración' };
 
     React.useEffect(() => {
         setFieldValue('career', adminCareer);
@@ -28,7 +28,7 @@ const SelectCareer = ({ setFieldValue, filterStudentsByCareer, errors, submitCou
                 value={adminCareer}
                 styles={styles}
                 isDisabled={true}
-                placeholder="Administración de Empresas"
+                placeholder="Administración"
                 className={submitCount && errors.career ? 'error' : ''}
             />
             <ErrorMessage name="career" component="div" className="text-danger mt-1" />
