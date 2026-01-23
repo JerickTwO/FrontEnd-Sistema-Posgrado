@@ -7,8 +7,8 @@ import { extractAdvisersInfo, extractStudentsInfo } from '../utils/StringUtils';
 const PdfEightThree = ({ infoStep, institutionalInfo }) => {
     const actualDate = getWrittenDate();
 
-    const THESIS_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive;
-    const THREE_STEP_INFO = THESIS_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
+    const FIVE_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive;
+    const THREE_STEP_INFO = FIVE_STEP_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
@@ -17,7 +17,7 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(TWO_STEP_INFO);
+    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
 
     // Campos del tercer documento
     const aulaSustentacion = infoStep?.location3;
