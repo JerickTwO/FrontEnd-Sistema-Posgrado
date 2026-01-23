@@ -33,13 +33,13 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const horaSustentacion = infoStep?.hour2;
     const articleNumber = infoStep?.articleNumber;
     const regNumber = infoStep?.reg;
-    // const additionalInputsList =
-    //     typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
-    //         ? infoStep.additionalInputs
-    //             .split(',')
-    //             .map((s) => s.trim())
-    //             .filter(Boolean)
-    //         : null;
+    const additionalInputsList =
+        typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
+            ? infoStep.additionalInputs
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean)
+            : null;
     const commemorativeText = institutionalInfo?.commemorativeText;
     return (
         <PdfBase

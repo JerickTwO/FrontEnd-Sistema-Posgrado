@@ -41,7 +41,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const validationSchema = Yup.object({
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
-        segundoCartNumber: Yup.string().required('El segundo número de carta es obligatorio'),
+        segundoCartNumber: Yup.string().required('La fecha de sorteo es obligatoria'),
         regNumber: Yup.string().required('El número de registro es obligatorio'),
         url: Yup.string().required('La URL es obligatoria'),
         fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
@@ -230,10 +230,10 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
                                                    
                                                     <div className="col-span-1">
-                                                        <label htmlFor="segundoCartNumber">Segundo Número de Carta</label>
+                                                        <label htmlFor="segundoCartNumber">Fecha de Sorteo de Jurados</label>
                                                         <Field
                                                             name="fechaSorteo"
-                                                            type="text"
+                                                            type="date"
                                                             id="fechaSorteo"
                                                             placeholder="Ingrese la fecha"
                                                             className="form-input"
