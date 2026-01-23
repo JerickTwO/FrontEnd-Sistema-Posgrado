@@ -163,7 +163,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
 
                                         return (
                                         <Form className="grid grid-cols-1 gap-4 sm:grid-cols-4">
-                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Primer Documento</div>
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Primer Documento - Carta</div>
                                             <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
                                                 <label htmlFor="studentCode">Primer Estudiante</label>
                                                 <Field name="studentCode" type="text" id="studentCode" readOnly className="form-input" />
@@ -213,7 +213,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 </div>
                                                 <ErrorMessage name="horaFin" component="div" className="text-danger mt-1" />
                                             </div>
-                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento</div>
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Segundo Documento - Memorando Multiple</div>
                                             <div className="col-span-1">
                                                 <label htmlFor="memorandumNumber">Número de Memorando</label>
                                                 <Field name="memorandumNumber" type="text" id="memorandumNumber" className="form-input" />
@@ -256,7 +256,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
                                             </div>
 
-                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Tercer Documento</div>
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Tercer Documento - Individual de Sustentación</div>
                                             
                                             <div className="col-span-1">
                                                 <label htmlFor="day3">Día</label>
@@ -285,7 +285,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                 <ErrorMessage name="location3" component="div" className="text-danger mt-1" />
                                             </div>
 
-                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Cuarto Documento</div>
+                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">Cuarto Documento - Acta de Sustentación</div>
 
                                             <div>
                                                 <label htmlFor="day4">Día 4</label>
