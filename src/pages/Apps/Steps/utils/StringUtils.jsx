@@ -83,11 +83,11 @@ export function extractAdvisersInfo(TWO_STEP_INFO) {
     };
 }
 
-export function extractJurysInfo(THREE_STEP_INFO) {
-    const president = THREE_STEP_INFO?.president || {};
-    const firstMember = THREE_STEP_INFO?.firstMember || {};
-    const secondMember = THREE_STEP_INFO?.secondMember || {};
-    const accessory = THREE_STEP_INFO?.accessory || {};
+export function extractJurysInfo(FIVE_STEP_INFO) {
+    const president = FIVE_STEP_INFO?.president || {};
+    const firstMember = FIVE_STEP_INFO?.firstMember || {};
+    const secondMember = FIVE_STEP_INFO?.secondMember || {};
+    const accessory = FIVE_STEP_INFO?.accessory || {};
 
     const presidentNames = `${president?.degree} ${president?.firstNames} ${president?.lastName} ${president?.middleName || ''}`?.toUpperCase().trim();
     const firstMemberNames = `${firstMember?.degree} ${firstMember?.firstNames} ${firstMember?.lastName} ${firstMember?.middleName || ''}`?.toUpperCase().trim();
