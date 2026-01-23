@@ -50,9 +50,9 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                 <View style={styles.row}>
                     <Text style={styles.label}>Ref.</Text>
                     <View style={{flex: 1}}>
-                        <Text style={styles.content}>: Solicitud S/N°</Text>
+                        <Text style={{...styles.content, marginBottom: 4}}>: Solicitud S/N°</Text>
                         {additionalInputsList && additionalInputsList.map((input, idx) => (
-                            <Text key={idx} style={{marginLeft: 10, marginTop: 6}}>
+                            <Text key={idx} style={{marginLeft: 10, marginTop: 4}}>
                                 - {input}
                             </Text>
                         ))}
