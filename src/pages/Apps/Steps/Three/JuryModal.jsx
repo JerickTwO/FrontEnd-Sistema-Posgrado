@@ -136,6 +136,21 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                     </div>
                                                 </div>
                                                 )}
+
+                                                {values.meetRequirements === 'no' && (
+                                                    <div className="col-span-2">
+                                                        <label htmlFor="observations">Observaciones</label>
+                                                        <Field 
+                                                            as="textarea" 
+                                                            name="observations" 
+                                                            id="observations" 
+                                                            rows="4"
+                                                            placeholder="Ingrese las observaciones" 
+                                                            className="form-textarea" 
+                                                        />
+                                                        <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
+                                                    </div>
+                                                )}
                                                  
                                                 {/* <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
