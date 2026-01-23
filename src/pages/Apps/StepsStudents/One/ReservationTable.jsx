@@ -40,7 +40,10 @@ const ReservationTable = ({ reservation, apiError }) => {
 
                                 <td>{new Date(reservation.updatedAt).toLocaleString()}</td>
                                 <td>
-                                    <TitleUpload observations={reservation.observations} reservaId={reservation.id} meetsRequirements={reservation.meetsRequirements} />
+                                    <TitleUpload 
+                                        message={reservation.message} 
+                                        observations={reservation.observations} 
+                                    />
                                 </td>
                             </tr>
                         ) : (
