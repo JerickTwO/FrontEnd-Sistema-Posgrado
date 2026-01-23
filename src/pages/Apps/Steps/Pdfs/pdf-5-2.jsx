@@ -10,7 +10,7 @@ const PdfFiveTwo = ({ infoStep }) => {
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
     const anio = getYear();
-    const actaCode = `${infoStep?.cartNumber}-${anio}`;
+    const actaCode = `${infoStep?.numeroActa}-${anio}`;
     const horaInicio = convertTo12HourFormat(infoStep?.horaActaSorteo);
     const fechaActa = getWrittenDateFromInput(infoStep?.fechaActaSorteo);
     const cartaMultiple = infoStep.cartNumber;
