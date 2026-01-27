@@ -28,11 +28,6 @@ const InstitucionalInfo = () => {
                     directorIngenieriaCivil: '',
                     directorIngenieriaInformaticaSistemas: '',
                     secretariaUIIngenieria: '',
-                    presidenteComisionInvestigacionAgroecologica: '',
-                    presidenteComisionInvestigacionMinas: '',
-                    presidenteComisionInvestigacionCivil: '',
-                    presidenteComisionInvestigacionInformaticaSistemas: '',
-                    presidenteComisionInvestigacionAgroindustrial: '',
                 });
             } else {
                 setInfo(response);
@@ -67,11 +62,6 @@ const InstitucionalInfo = () => {
                 directorIngenieriaCivil: info.directorIngenieriaCivil.trim(),
                 directorIngenieriaInformaticaSistemas: info.directorIngenieriaInformaticaSistemas.trim(),
                 secretariaUIIngenieria: info.secretariaUIIngenieria.trim(),
-                presidenteComisionInvestigacionAgroecologica: info.presidenteComisionInvestigacionAgroecologica?.trim() || '',
-                presidenteComisionInvestigacionMinas: info.presidenteComisionInvestigacionMinas?.trim() || '',
-                presidenteComisionInvestigacionCivil: info.presidenteComisionInvestigacionCivil?.trim() || '',
-                presidenteComisionInvestigacionInformaticaSistemas: info.presidenteComisionInvestigacionInformaticaSistemas?.trim() || '',
-                presidenteComisionInvestigacionAgroindustrial: info.presidenteComisionInvestigacionAgroindustrial?.trim() || '',
             };
 
             const updatedInfo = info.id
@@ -183,93 +173,13 @@ const InstitucionalInfo = () => {
                             </div>
                         </div>
 
-                        {/* Sección de Presidentes de Comisión de Investigación */}
-                        <div className="mb-5 mt-8">
-                            <h5 className="font-semibold text-lg dark:text-white-light mb-4">
-                                Presidentes de Comisión de Investigación
-                            </h5>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="mb-5">
-                                <label htmlFor="presidenteComisionInvestigacionAgroecologica">
-                                    Presidente Comisión - Ingeniería Agroecológica
-                                </label>
-                                <input
-                                    type="text"
-                                    name="presidenteComisionInvestigacionAgroecologica"
-                                    value={info.presidenteComisionInvestigacionAgroecologica || ''}
-                                    onChange={handleChange}
-                                    placeholder="Presidente de Comisión de Investigación"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="presidenteComisionInvestigacionMinas">
-                                    Presidente Comisión - Ingeniería de Minas
-                                </label>
-                                <input
-                                    type="text"
-                                    name="presidenteComisionInvestigacionMinas"
-                                    value={info.presidenteComisionInvestigacionMinas || ''}
-                                    onChange={handleChange}
-                                    placeholder="Presidente de Comisión de Investigación"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="presidenteComisionInvestigacionCivil">
-                                    Presidente Comisión - Ingeniería Civil
-                                </label>
-                                <input
-                                    type="text"
-                                    name="presidenteComisionInvestigacionCivil"
-                                    value={info.presidenteComisionInvestigacionCivil || ''}
-                                    onChange={handleChange}
-                                    placeholder="Presidente de Comisión de Investigación"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="presidenteComisionInvestigacionInformaticaSistemas">
-                                    Presidente Comisión - Ingeniería Informática y Sistemas
-                                </label>
-                                <input
-                                    type="text"
-                                    name="presidenteComisionInvestigacionInformaticaSistemas"
-                                    value={info.presidenteComisionInvestigacionInformaticaSistemas || ''}
-                                    onChange={handleChange}
-                                    placeholder="Presidente de Comisión de Investigación"
-                                    className="form-input"
-                                />
-                            </div>
-
-                            <div className="mb-5">
-                                <label htmlFor="presidenteComisionInvestigacionAgroindustrial">
-                                    Presidente Comisión - Ingeniería Agroindustrial
-                                </label>
-                                <input
-                                    type="text"
-                                    name="presidenteComisionInvestigacionAgroindustrial"
-                                    value={info.presidenteComisionInvestigacionAgroindustrial || ''}
-                                    onChange={handleChange}
-                                    placeholder="Presidente de Comisión de Investigación"
-                                    className="form-input"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Botón de Actualizar */
-                            <button
-                                type="submit"
-                                className="btn btn-primary py-[6px] px-[10px]"
-                            >
-                                Actualizar
-                            </button>
-                        }
+                        {/* Botón de Actualizar */}
+                        <button
+                            type="submit"
+                            className="btn btn-primary py-[6px] px-[10px]"
+                        >
+                            Actualizar
+                        </button>
                     </form>
                 </div>
             </div>
