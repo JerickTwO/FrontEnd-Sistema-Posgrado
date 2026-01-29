@@ -7,7 +7,7 @@ import { extractStudentsInfo, getInterestedLabel } from '../utils/StringUtils';
 const PdfTwo = ({ infoStep }) => {
     const anio = getYear();
     const FIRST_STEP_INFO = infoStep?.titleReservationStepOne;
-    const { combinedNamesOnly, title, career, firstGender, secondGender } = extractStudentsInfo(FIRST_STEP_INFO);
+    const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
     const actualDate = getWrittenDate();
     return (
         <PdfBase commemorativeText={false} registrationNumber={infoStep?.reg}>

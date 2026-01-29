@@ -35,11 +35,17 @@ export function extractStudentsInfo(FIRST_STEP_INFO) {
     const first = FIRST_STEP_INFO?.student;
     const titleThesis = FIRST_STEP_INFO?.title;
 
+    const studentsNames = [FIRST_STEP_INFO?.student, FIRST_STEP_INFO?.studentTwo]
+        .filter(Boolean)
+        .map(student => formatFullNameUpper(student))
+        .join(' Y ');
+
     return {
         firstStudent: first,
         secondStudent: FIRST_STEP_INFO?.studentTwo,
         combinedNames: partsWithId.join(' Y '),
         combinedNamesOnly: partsWithoutId.join(' Y '),
+        studentsNames: studentsNames,
         code: first?.studentCode || '',
         dni: first?.dni || '',
         career: first?.career?.name || '',
@@ -121,6 +127,26 @@ export function getInterestedLabel(student, studentTwo) {
     }
 
     // Si no hay estudiantes, devolver vacío por seguridad
+    return '';
+}
+
+export function getBachillersLabel(student, studentTwo) {
+    const hasFirst = !!student;
+    const hasSecond = !!studentTwo;
+
+    const g1 = hasFirst ? student.gender === true : null;
+    const g2 = hasSecond ? studentTwo.gender === true : null;
+
+    if (hasFirst && hasSecond) {
+        if (g1 === true && g2 === true) return 'los bachilleres';
+        if (g1 === false && g2 === false) return 'las bachilleres';
+        return 'los bachilleres';
+    }
+
+    if (hasFirst && !hasSecond) {
+        return g1 === true ? 'el bachiller' : 'la bachiller';
+    }
+
     return '';
 }
 
