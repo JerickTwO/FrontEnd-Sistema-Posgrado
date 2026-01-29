@@ -27,8 +27,9 @@ const PdfTen = ({ infoStep }) => {
             registrationNumber={regNumber}
         >
             {/* Identificador de registro de investigación */}
-            <View style={{ alignItems: 'flex-start', marginTop: 6 }}>
-                <Text style={[styles.bold, { fontSize: 10 }]}>U.INV. REG. N° {formatNumberWithZero(regNumber)}</Text>
+            <View style={{ alignSelf: 'flex-start', marginTop: 6, borderWidth: 1, borderColor: '#000', borderRadius: 4, padding: 6 }}>
+                <Text style={[styles.bold, { fontSize: 10, alignSelf: 'center' }]}>U.INV.</Text>
+                <Text style={[styles.bold, { fontSize: 10 }]}>REG. N° {formatNumberWithZero(regNumber)}</Text>
             </View>
             {/* Encabezado de Constancia */}
             <Text style={[styles.bold, { textAlign: 'center', fontSize: 18, marginTop: 10, marginBottom: 12 }]}>
