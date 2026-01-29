@@ -4,7 +4,7 @@ const ADMIN_PREFIX = '/apps/paso';
 const commonSteps = [
     { path: '/reserva-de-titulo', label: '1: Reserva de título' },
     { path: '/filtro-de-similitud', label: '2: Filtro de similitud' },
-    { path: '/revision-de-tesis', label: '3: Revisión de Tesis' },
+    { path: '/revision-de-tesis', label: '3: Revisión y aprobación de Proyecto' },
     { path: '/filtro-de-similitud-dos', label: '4: Filtro de similitud II' },
     { path: '/presentacion-de-informe', label: '5: Presentación de Informe' },
     { path: '/revision-de-informe', label: '6: Revisión de Informe' },

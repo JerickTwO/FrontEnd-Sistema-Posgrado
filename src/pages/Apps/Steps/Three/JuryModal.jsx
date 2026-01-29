@@ -12,9 +12,9 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
         reg: Yup.string().required('El número de registro es obligatorio'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
-        additionalInputs: Yup.array()
-            .of(Yup.string().required('Este campo es obligatorio'))
-            .min(1, 'Al menos un campo es obligatorio'),
+        // additionalInputs: Yup.array()
+        //     .of(Yup.string().required('Este campo es obligatorio'))
+        //     .min(1, 'Al menos un campo es obligatorio'),
     });
 
     const initialValues = React.useMemo(

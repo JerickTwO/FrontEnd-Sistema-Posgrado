@@ -6,7 +6,7 @@ function formatFullNameUpper(student) {
 }
 
 function getGenderedPrefix(student) {
-    return student && student.gender === true ? 'el Bachiller.' : 'la Bachiller.';
+    return student && student.gender === true ? 'el Bachiller' : 'la Bachiller';
 }
 
 function getGenderedIdentification(student) {
@@ -43,7 +43,7 @@ export function extractStudentsInfo(FIRST_STEP_INFO) {
         code: first?.studentCode || '',
         dni: first?.dni || '',
         career: first?.career?.name || '',
-        title: titleThesis,
+        title: titleThesis.toLowerCase(),
     };
 }
 

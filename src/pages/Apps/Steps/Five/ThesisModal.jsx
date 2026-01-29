@@ -190,7 +190,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                             <Form className="grid grid-cols-2 gap-4 sm:grid-cols-3 ">
                                                      
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                        Primer Documento
+                                                        Primer Documento - Carta Multiple
                                                     </div>
                                                     <div className={submitCount && errors.studentCode ? 'has-error' : ''}>
                                                         <label htmlFor="studentCode">Primer Estudiante</label>
@@ -275,7 +275,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
                                                    
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                        Segundo Documento
+                                                        Segundo Documento - Acta de Sorteo de Jurados
                                                     </div>
                                                     
                                                     <div className="col-span-1">
@@ -359,7 +359,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
 
                                                     <div className="col-span-1">
-                                                        <label htmlFor="segundoNumeroResolucion">Segundo Número de Resolución</label>
+                                                        <label htmlFor="segundoNumeroResolucion">Segundo Número de Resolución Decanal</label>
                                                         <Field
                                                             name="segundoNumeroResolucion"
                                                             type="text"
@@ -371,7 +371,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                     </div>
 
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                        Tercer Documento
+                                                        Tercer Documento - Carta
                                                     </div>
 
                                                     <div className="col-span-1">

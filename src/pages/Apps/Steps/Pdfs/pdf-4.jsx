@@ -36,7 +36,7 @@ const PdfFourCM = ({ infoStep }) => {
                 <View style={styles?.section}>
                     <Text style={styles?.justify}>
                         Que, <Text style={[styles?.bold, styles?.justify]}>{combinedNamesOnly}</Text> estudiante de la
-                        Escuela Academica Profesional de <Text style={styles?.bold}> {career}</Text>, ha presentado el informe de tesis titulada: <Text style={styles?.bold}>{title}</Text>.
+                        Escuela Academica Profesional de <Text style={styles?.bold}> {career}</Text>, ha presentado el Informe de tesis titulada: <Text style={styles?.bold}>“{title}”</Text>.
                         Para ser evaluado mediante filtro de similitud de acuerdo al Art. <Text style={styles?.bold}>{infoStep?.articleNumber}</Text> del Reglamento de Investigación vigente,
                         el cual obtuvo un porcentaje del <Text style={styles?.bold}>{infoStep?.secondArticleNumber}%</Text> de similitud, según el reporte proporcionado por el software Turnitin.
                     </Text>
