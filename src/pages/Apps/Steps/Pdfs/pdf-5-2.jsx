@@ -16,7 +16,6 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
     const fechaActa = getWrittenDateFromInput(infoStep?.fechaActaSorteo);
     const cartaMultiple = infoStep.cartNumber;
     const segundoCartaMultiple = infoStep.cartNumber;
-    const cartaFecha = getWrittenDateFromInput(infoStep?.fechaSorteoJurados);
     const segundaCartaFecha = getWrittenDateFromInput(infoStep?.segundaFechaCarta);
     const articleNumber = infoStep?.numeroArticulo;
     // const segundoArticleNumber = infoStep?.segundoNumeroArticulo;
@@ -42,8 +41,8 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    En la Oficina de la Unidad de Investigación, el director {institutionalInfo.directorIngenieriaCivil} siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA
-                    MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {cartaFecha} y CARTA MULTIPLE Nº {segundoCartaMultiple}-D-UI-FA-UNAMBA, de fecha {segundaCartaFecha}, se realiza el sorteo de
+                    En la Oficina de la Unidad de Investigación, el director {institutionalInfo?.directorIngenieriaCivil} siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA
+                    MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {fechaActa} y CARTA MULTIPLE Nº {segundoCartaMultiple}-D-UI-FA-UNAMBA, de fecha {segundaCartaFecha}, se realiza el sorteo de
                     jurados, de la tesis titulada: "{title}", presentado por {getBachillersLabel(FIRST_STEP_INFO?.student, FIRST_STEP_INFO?.studentTwo)}:
                 </Text>
                 <Text style={[styles.bold, { fontSize: 12, marginTop: 6 }]}>{studentsNames || ''}</Text>

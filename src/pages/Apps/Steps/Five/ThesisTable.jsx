@@ -27,6 +27,7 @@ const ThesisTable = ({ thesis, onEdit, info }) => {
                 />
                 <DownloadDocs
                     infoStepTable={thesisItem}
+                    institutionalInfo={info}
                     PdfDocument={PdfFiveTwo}
                     fileName={fileNameStep}
                     
