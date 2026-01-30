@@ -198,6 +198,7 @@ export const formatDateSpanish = (dateStr) => {
         'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
     const date = new Date(dateStr);
+    date.setDate(date.getDate() + 1);
     const dayName = days[date.getDay()];
     const day = date.getDate();
     const month = months[date.getMonth()];
