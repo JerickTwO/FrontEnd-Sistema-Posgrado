@@ -62,20 +62,13 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
             {/* Referencia */}
             <View style={styles.section}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.body}>Ref.              :</Text>
-                        <Text style={styles.body}> Solicitud S/N°</Text>
-                        <View style={{ marginLeft: 5 }}>
-                            {additionalInputsList ? (
-                                additionalInputsList.map((input, idx) => (
-                                    <Text key={idx} style={styles.body}>
-                                        {input}
-                                    </Text>
-                                ))
-                            ) : (
-                                <Text style={styles.body}>Solicitud S/N°</Text>
-                            )}
-                        </View>
+                    <View>
+                        <Text style={styles.body}>Ref.              : Solicitud S/N°</Text>
+                        {additionalInputsList && additionalInputsList.map((input, idx) => (
+                            <Text key={idx} style={[styles.body, { marginTop: 2, marginLeft: 70 }]}>
+                                {input}
+                            </Text>
+                        ))}
                     </View>
                     <Text style={styles.body}>Reg. N° {regNumber}</Text>
                 </View>

@@ -8,7 +8,14 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
     const validationSchema = Yup.object({
         meetRequirements: Yup.string().required('Selecciona una opción'),
         constancyNumber: Yup.string().required('El número de constancia es obligatorio'),
-        similarityPercent: Yup.string().required('El porcentaje de similitud es obligatorio'),
+        similarityPercent: Yup.string()
+            .required('El porcentaje de similitud es obligatorio')
+            .matches(/^\d+(\.\d{1,2})?$/, 'Solo se permiten números y máximo 2 decimales')
+            .test('max-value', 'El porcentaje no puede ser mayor a 24', function(value) {
+                if (!value) return true;
+                const numValue = parseFloat(value);
+                return numValue <= 24;
+            }),
         resolutionNumber: Yup.string().required('El número de resolución es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',

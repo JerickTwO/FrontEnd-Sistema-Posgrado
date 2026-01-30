@@ -102,20 +102,13 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
             {/* Referencia */}
             <View style={styles.section}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 10 }}>Ref.                :</Text>
-                        <Text style={{ fontSize: 10, marginLeft: 5 }}> Solicitud S/N°</Text>
-                        <View style={{ fontSize: 10, marginLeft: 5 }}>
-                            {additionalInputsList ? (
-                                additionalInputsList.map((input, idx) => (
-                                    <Text key={idx} style={{ fontSize: 10 }}>
-                                        {idx === 0 ? `${input}` : ` ${input}`}
-                                    </Text>
-                                ))
-                            ) : (
-                                <Text style={{ fontSize: 10 }}>Solicitud S/N°</Text>
-                            )}
-                        </View>
+                    <View>
+                        <Text style={{ fontSize: 10 }}>Ref.                : Solicitud S/N°</Text>
+                        {additionalInputsList && additionalInputsList.map((input, idx) => (
+                            <Text key={idx} style={{ fontSize: 10, marginTop: 2, marginLeft: 60 }}>
+                                {input}
+                            </Text>
+                        ))}
                     </View>
                     <Text style={{ fontSize: 10 }}>Reg. N° {regNumber}</Text>
                 </View>

@@ -7,7 +7,6 @@ import Select from 'react-select';
 import teacherService from '../../../../api/teacherService.jsx';
 import { HandleMode } from '../../styles/selectStyles';
 import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 
 const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
     const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
@@ -17,7 +16,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         if (!value) return '';
         const lower = value.trim().toLowerCase();
         const match = lower.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
-        if (!match) return value; // assume already HH:mm
+        if (!match) return value;
         let hours = parseInt(match[1], 10);
         const minutes = match[2];
         const period = match[3];
@@ -40,23 +39,70 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
 
     const validationSchema = Yup.object({
         meetsRequirements: Yup.string().required('Selecciona una opción'),
+        includeAdditionalDocs: Yup.boolean(),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
-        segundoCartNumber: Yup.string().required('La fecha de sorteo es obligatoria'),
         regNumber: Yup.string().required('El número de registro es obligatorio'),
         url: Yup.string().required('La URL es obligatoria'),
         fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
         horaSorteo: Yup.string().required('La hora de sorteo es obligatoria'),
         lugarPresencial: Yup.string().required('El lugar presencial es obligatorio'),
-        numeroActa: Yup.string().required('El número de acta es obligatorio'),
-        horaActaSorteo: Yup.string().required('La hora de acta de sorteo es obligatoria'),
-        fechaActaSorteo: Yup.string().required('La fecha de acta de sorteo es obligatoria'),
-        fechaSorteoJurados: Yup.string().required('La fecha de sorteo de jurados es obligatoria'),
-        segundaFechaCarta: Yup.string().required('La segunda fecha de carta es obligatoria'),
-        numeroArticulo: Yup.number().required('El número de artículo es obligatorio'),
-        segundoNumeroArticulo: Yup.number().required('El segundo número de artículo es obligatorio'),
-        numeroResolucion: Yup.string().required('El número de resolución es obligatorio'),
-        segundoNumeroResolucion: Yup.string().required('El segundo número de resolución es obligatorio'),
-        horaSorteoJurados: Yup.string().required('La hora de sorteo de jurados es obligatoria'),
+        // Campos condicionales - Segundo Documento
+        numeroActa: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El número de acta es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        horaActaSorteo: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('La hora de acta de sorteo es obligatoria'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        fechaActaSorteo: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('La fecha de acta de sorteo es obligatoria'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        fechaSorteoJurados: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('La fecha de sorteo de jurados es obligatoria'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        numeroArticulo: Yup.number().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El número de artículo es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        numeroResolucion: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El número de resolución es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        segundoNumeroResolucion: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El segundo número de resolución es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        horaSorteoJurados: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('La hora de sorteo de jurados es obligatoria'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        // Campos condicionales - Tercer Documento
+        segundoCartNumber: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El segundo número de carta es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        segundaFechaCarta: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('La segunda fecha de carta es obligatoria'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        segundoNumeroArticulo: Yup.number().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El segundo número de artículo es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
         president: Yup.object().nullable().required('El presidente es obligatorio'),
         firstMember: Yup.object().nullable().required('El primer miembro es obligatorio'),
         secondMember: Yup.object().nullable().required('El segundo miembro es obligatorio'),
@@ -77,6 +123,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             studentCode: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.student.studentCode || 'N/A',
             studentTwoCode: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.studentTwo?.studentCode || '',
             meetsRequirements: thesis?.meetsRequirements === true ? 'yes' : 'no',
+            includeAdditionalDocs: thesis?.includeAdditionalDocs || false,
             title: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.titleReservationStepOne.title || '',
             lineOfResearch: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch
                 ? { value: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.id, label: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.name }
@@ -131,6 +178,7 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         const normalizedValues = {
             ...values,
             meetsRequirements: values.meetsRequirements === 'yes',
+            includeAdditionalDocs: values.includeAdditionalDocs,
             cartNumber: values.cartNumber,
             segundoCartNumber: values.segundoCartNumber,
             regNumber: values.regNumber,
@@ -273,10 +321,42 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         />
                                                         <ErrorMessage name="lugarPresencial" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                   
-                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                        Segundo Documento - Acta de Sorteo de Jurados
+
+                                                    <div className="col-span-4 flex items-center gap-3 py-3 border-b border-gray-300 dark:border-gray-700">
+                                                        <label className="inline-flex items-center cursor-pointer">
+                                                            <Field
+                                                                type="checkbox"
+                                                                name="includeAdditionalDocs"
+                                                                className="form-checkbox"
+                                                                onChange={(e) => {
+                                                                    setFieldValue('includeAdditionalDocs', e.target.checked);
+                                                                    // Limpiar campos cuando se desmarca
+                                                                    if (!e.target.checked) {
+                                                                        setFieldValue('numeroActa', '');
+                                                                        setFieldValue('horaActaSorteo', '');
+                                                                        setFieldValue('fechaActaSorteo', '');
+                                                                        setFieldValue('fechaSorteoJurados', '');
+                                                                        setFieldValue('numeroArticulo', '');
+                                                                        setFieldValue('numeroResolucion', '');
+                                                                        setFieldValue('segundoNumeroResolucion', '');
+                                                                        setFieldValue('horaSorteoJurados', '');
+                                                                        setFieldValue('segundoCartNumber', '');
+                                                                        setFieldValue('segundaFechaCarta', '');
+                                                                        setFieldValue('segundoNumeroArticulo', '');
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <span className="ml-2 text-sm font-medium">
+                                                                Incluir documentos adicionales (Acta de Sorteo y Carta)
+                                                            </span>
+                                                        </label>
                                                     </div>
+                                                   
+                                                    {values.includeAdditionalDocs && (
+                                                        <>
+                                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                                Segundo Documento - Acta de Sorteo de Jurados
+                                                            </div>
                                                     
                                                     <div className="col-span-1">
                                                         <label htmlFor="numeroActa">Número de Acta</label>
@@ -419,6 +499,8 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         />
                                                         <ErrorMessage name="regNumber" component="div" className="text-danger mt-1" />
                                                     </div>
+                                                        </>
+                                                    )}
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Jurados
                                                     </div>

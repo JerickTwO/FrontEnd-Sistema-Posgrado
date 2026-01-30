@@ -103,28 +103,18 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                 <View style={[styles.semiTableRow, styles.customTable]}>
                     <Text style={styles.semiTableColHeader}>Ref.:</Text>
                     <View style={styles.semiTableCol}>
-                        <Text>Solicitud S/N°</Text>
-                    </View>
-                    
-                    <View style={styles.semiTableCol}>
-                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 ? (
-                            (() => {
-                                const inputs = infoStep.additionalInputs.split(',');
-                                return (
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
-                                        <Text>{inputs[0].trim()}</Text>
-                                        <View style={{ flex: 1 }} />
-                                        <Text style={styles.bold}>REG. Nº {formatNumberWithZero(infoStep?.reg)}</Text>
-                                    </View>
-                                );
-                            })()
-                        ) : null}
-                        {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 &&
-                            infoStep.additionalInputs.split(',').slice(1).map((input, idx) => (
-                                <Text key={idx}>
-                                    {input.trim()}
-                                </Text>
-                            ))}
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <View style={{ flex: 1 }}>
+                                <Text>Solicitud S/N°</Text>
+                                {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 &&
+                                    infoStep.additionalInputs.split(',').map((input, idx) => (
+                                        <Text key={idx}>
+                                            {input.trim()}
+                                        </Text>
+                                    ))}
+                            </View>
+                            <Text style={styles.bold}>REG. Nº {formatNumberWithZero(infoStep?.reg)}</Text>
+                        </View>
                     </View>
                 </View>
                
