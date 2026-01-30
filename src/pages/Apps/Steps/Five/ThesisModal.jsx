@@ -328,35 +328,16 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                                 type="checkbox"
                                                                 name="includeAdditionalDocs"
                                                                 className="form-checkbox"
-                                                                onChange={(e) => {
-                                                                    setFieldValue('includeAdditionalDocs', e.target.checked);
-                                                                    // Limpiar campos cuando se desmarca
-                                                                    if (!e.target.checked) {
-                                                                        setFieldValue('numeroActa', '');
-                                                                        setFieldValue('horaActaSorteo', '');
-                                                                        setFieldValue('fechaActaSorteo', '');
-                                                                        setFieldValue('fechaSorteoJurados', '');
-                                                                        setFieldValue('numeroArticulo', '');
-                                                                        setFieldValue('numeroResolucion', '');
-                                                                        setFieldValue('segundoNumeroResolucion', '');
-                                                                        setFieldValue('horaSorteoJurados', '');
-                                                                        setFieldValue('segundoCartNumber', '');
-                                                                        setFieldValue('segundaFechaCarta', '');
-                                                                        setFieldValue('segundoNumeroArticulo', '');
-                                                                    }
-                                                                }}
                                                             />
                                                             <span className="ml-2 text-sm font-medium">
-                                                                Incluir documentos adicionales (Acta de Sorteo y Carta)
+                                                                Los documentos adicionales son obligatorios
                                                             </span>
                                                         </label>
                                                     </div>
                                                    
-                                                    {values.includeAdditionalDocs && (
-                                                        <>
-                                                            <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
-                                                                Segundo Documento - Acta de Sorteo de Jurados
-                                                            </div>
+                                                    <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
+                                                        Segundo Documento - Acta de Sorteo de Jurados
+                                                    </div>
                                                     
                                                     <div className="col-span-1">
                                                         <label htmlFor="numeroActa">Número de Acta</label>
@@ -499,8 +480,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         />
                                                         <ErrorMessage name="regNumber" component="div" className="text-danger mt-1" />
                                                     </div>
-                                                        </>
-                                                    )}
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Jurados
                                                     </div>
