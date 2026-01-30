@@ -44,17 +44,18 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
             {/* Cuerpo del documento */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, lineHeight: 1.6, marginBottom: 10 }]}>
-                    En las instalaciones del {aulaSustentacion} de la Facultad de Administración y Ciencias Sociales de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} del día {fechaSustentacion}, se realizó la sustentación de:
+                    En las instalaciones del {aulaSustentacion} de la Facultad de Administración y Ciencias Sociales de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} del día {fechaSustentacion}, fue realizada la evaluación 
+                    Individual de la sustentación de:
                 </Text>
             </View>
 
             {/* Tipo de trabajo */}
-            <View style={{ marginLeft: 40, marginBottom: 10 }}>
-                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                    <Text style={{ fontSize: 11, width: 180 }}>Trabajo de Investigación ( )</Text>
+            <View style={{ marginLeft: 5, marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 5, gap: 25}}>
+                    <Text style={{ fontSize: 11 }}>Trabajo de Investigación ( )</Text>
                     <Text style={{ fontSize: 11 }}>Tesis ( X )</Text>
+                    <Text style={{ fontSize: 11 }}>Tesis en formato de Artículo Científico ( )</Text>
                 </View>
-                <Text style={{ fontSize: 11 }}>Tesis en formato de Artículo Científico ( )</Text>
             </View>
 
             {/* Título de la tesis */}
