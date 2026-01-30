@@ -294,17 +294,15 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                             </div>
 
                                             <div>
-                                                <label htmlFor="hour5">Hora 5</label>
-                                                <Field name="hour5" type="time" id="hour5" placeholder="Ejemplo: 09:00" className="form-input" />
-                                                <ErrorMessage name="hour5" component="div" className="text-danger mt-1" />
-                                            </div>
-
-                                            <div>
-                                                <label htmlFor="hour4">Hora 4</label>
+                                                <label htmlFor="hour4">Hora</label>
                                                 <Field name="hour4" type="time" id="hour4" placeholder="Ejemplo: 09:00" className="form-input" />
                                                 <ErrorMessage name="hour4" component="div" className="text-danger mt-1" />
                                             </div>
-
+                                            <div>
+                                                <label htmlFor="hour5">Hora de Acto de Sutentación</label>
+                                                <Field name="hour5" type="time" id="hour5" placeholder="Ejemplo: 09:00" className="form-input" />
+                                                <ErrorMessage name="hour5" component="div" className="text-danger mt-1" />
+                                            </div>
                                             <div>
                                                 <label htmlFor="location4">Ubicación 4</label>
                                                 <Select

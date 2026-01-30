@@ -4,13 +4,12 @@ import styles from './styles/style-8';
 import { formatDateSpanish, } from '../utils/Dates';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfEightFour = ({ infoStep, institutionalInfo }) => {
+const PdfEightFour = ({ infoStep }) => {
 
     const FIVE_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive;
     const THREE_STEP_INFO = FIVE_STEP_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
-
     const {
         combinedNamesOnly,
         title,
@@ -22,7 +21,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
         accessoryNames
     } = extractJurysInfo(FIVE_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
 
 
     // Campos del cuarto documento
@@ -30,14 +29,12 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
     const fechaSustentacion = formatDateSpanish(infoStep?.day4);
     const segundaHora = infoStep?.hour5;
     const horaSustentacion = infoStep?.hour4;
-    const commemorativeText = institutionalInfo?.commemorativeText;
 
     return (
         <PdfBase
-            showCommemorativeText={true}
+            showCommemorativeText={false}
             showFooter={false}
             showHeader={false}
-            commemorativeText={commemorativeText}
         >
             {/* Encabezado centrado */}
             <View style={{ alignItems: 'center', marginBottom: 20 }}>
@@ -48,7 +45,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
             {/* Párrafo de introducción */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, lineHeight: 1.6, marginBottom: 15 }]}>
-                    En las instalaciones del {aulaSustentacion} de la Escuela Profesional de Ingeniería Informática y Sistemas de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} de la mañana del día {fechaSustentacion}, se reúnen los miembros del jurado evaluador:
+                    En las instalaciones del {aulaSustentacion} de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} de la mañana del día {fechaSustentacion}, se reúnen los miembros del jurado evaluador:
                 </Text>
             </View>
 
@@ -92,7 +89,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
             {/* Presentado por */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
-                    Presentado por {combinedNamesOnly}
+                    Presentado por <Text style={styles.bold}> {combinedNamesOnly}</Text>
                 </Text>
             </View>
 
@@ -104,9 +101,9 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
                     Asesor Responsable: <Text style={styles.bold}>{adviserNames}</Text>
                 </Text>
-                {coadviserNames && (
+                {coAdviserNames && (
                     <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
-                        Coasesor: <Text style={styles.bold}>{coadviserNames}</Text>
+                        Coasesor: <Text style={styles.bold}>{coAdviserNames}</Text>
                     </Text>
                 )}
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
