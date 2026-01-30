@@ -27,18 +27,17 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
 
     return (
         <PdfBase
-            showCommemorativeText={true}
+            showCommemorativeText={false}
             showFooter={false}
             showHeader={false}
-            commemorativeText={commemorativeText}
+            // commemorativeText={commemorativeText}
         >
-            {/* Fecha alineada a la derecha */}
-            <View style={{ alignItems: 'flex-end', marginBottom: 15 }}>
-                <Text style={styles.tamburco}>Abancay, {actualDate}</Text>
-            </View>
 
             {/* Título Principal */}
-            <Text style={[styles.bold, { textAlign: 'center', fontSize: 16, marginBottom: 15, textDecoration: 'underline' }]}>
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 14, marginBottom: 5}]}>
+                ANEXO 3
+            </Text>
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 16, marginBottom: 15}]}>
                 INDIVIDUAL DE SUSTENTACIÓN
             </Text>
 
