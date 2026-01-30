@@ -145,17 +145,26 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                     { title: 'Puntaje Total', bold: true },
                 ].map((row, index) => (
                     <View key={index} style={{ flexDirection: 'row', borderWidth: 1, borderTopWidth: 0, borderColor: '#000' }}>
-                        <Text style={[
-                            { width: '40%', borderRightWidth: 1, borderColor: '#000', padding: 5, fontSize: 10 },
-                            row.bold && { fontFamily: 'Times-Bold' }
-                        ]}>
-                            {row.title}
-                        </Text>
-                        <View style={{ width: '60%', flexDirection: 'row' }}>
-                            <Text style={{ width: '33%', borderRightWidth: 1, borderColor: '#000', padding: 5 }}></Text>
-                            <Text style={{ width: '33%', borderRightWidth: 1, borderColor: '#000', padding: 5 }}></Text>
-                            <Text style={{ width: '34%', padding: 5 }}></Text>
-                        </View>
+                        {row.bold ? (
+                            <Text style={[
+                                { width: '100%', padding: 5, fontSize: 10, fontFamily: 'Times-Bold' }
+                            ]}>
+                                {row.title}
+                            </Text>
+                        ) : (
+                            <>
+                                <Text style={[
+                                    { width: '40%', borderRightWidth: 1, borderColor: '#000', padding: 5, fontSize: 10 }
+                                ]}>
+                                    {row.title}
+                                </Text>
+                                <View style={{ width: '60%', flexDirection: 'row' }}>
+                                    <Text style={{ width: '33%', borderRightWidth: 1, borderColor: '#000', padding: 5 }}></Text>
+                                    <Text style={{ width: '33%', borderRightWidth: 1, borderColor: '#000', padding: 5 }}></Text>
+                                    <Text style={{ width: '34%', padding: 5 }}></Text>
+                                </View>
+                            </>
+                        )}
                     </View>
                 ))}
             </View>
