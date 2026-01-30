@@ -11,7 +11,7 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         reg: Yup.string().required('El registro es obligatorio'),
         memorandoMult: Yup.string().required('El memorando es obligatorio'),
-        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),

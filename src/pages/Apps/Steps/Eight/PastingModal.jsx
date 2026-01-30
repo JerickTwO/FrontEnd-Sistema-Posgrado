@@ -54,7 +54,7 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
         hour5: Yup.string().required('La quinta hora es obligatoria'),
         hour4: Yup.string().required('La cuarta hora es obligatoria'),
         location4: Yup.string().required('La cuarta ubicación es obligatoria'),
-        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),

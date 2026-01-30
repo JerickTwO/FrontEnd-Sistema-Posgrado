@@ -14,7 +14,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
         secondArticleNumber: Yup.string().required('El segundo artículo es obligatorio'),
         thirdArticleNumber: Yup.string().required('El tercer artículo es obligatorio'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
-        additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
+        // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),

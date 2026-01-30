@@ -11,7 +11,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const FIRST_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne;
 
     const {
-        combinedNames,
+        combinedNamesOnly,
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
@@ -63,7 +63,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    <Text style={styles.bold}>Tesis Titulada:</Text> “{title}”, presentado por <Text style={styles.bold}>{combinedNames}</Text>, según el siguiente detalle:
+                    Tesis Titulada:<Text style={styles.bold}> “{title}”</Text>, presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text>, según el siguiente detalle:
                 </Text>
             </View>
 
