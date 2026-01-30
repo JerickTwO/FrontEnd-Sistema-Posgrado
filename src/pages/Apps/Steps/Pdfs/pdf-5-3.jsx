@@ -56,13 +56,13 @@ const PdfFiveThree = ({ infoStep, institutionalInfo }) => {
             </View>
 
             {/* Bloque de Asunto y Ref */}
-            <View style={[styles.section, { marginBottom: 15 }]}>
+            <View style={[styles.section, { marginBottom: 15, marginLeft: 80 }]}>
                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                    <Text style={[styles.body, { fontSize: 10, width: 80 }]}>Asunto</Text>
+                    <Text style={[styles.body, { fontSize: 10, width: 45 }]}>Asunto</Text>
                     <Text style={[styles.body, { fontSize: 10, flex: 1 }]}>:Solicito aprobar la conformación de jurados evaluadores para la revisión y sustentación de tesis.</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <Text style={[styles.body, { fontSize: 10, width: 80 }]}>Ref.</Text>
+                    <Text style={[styles.body, { fontSize: 10, width: 45 }]}>Ref.</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={[styles.body, { fontSize: 10 }]}>:Solicitud S/Nº</Text>
                         <Text style={[styles.body, { fontSize: 10 }]}>Reg Nº {regNumber}</Text>
@@ -77,8 +77,7 @@ const PdfFiveThree = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, lineHeight: 1.5 }]}>
                     Es grato dirigirme a usted para saludarlo cordialmente y por medio del presente, en mérito al documento de la referencia, se realizó el sorteo de jurados, en cumplimiento al Art.{' '}
-                    {FIVE_STEP_INFO.segundoNumeroArticulo} del Reglamento de Investigación, por lo que, solicito emitir la resolución correspondiente de la conformación de jurados, para el desempeño
-                    laboral en los servidores de la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text> sorteo que se
+                    {FIVE_STEP_INFO.segundoNumeroArticulo} del Reglamento de Investigación, por lo que, solicito emitir la resolución correspondiente de la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text> sorteo que se
                     realizó el día {fechaSorteo}, quedando conformado de la siguiente manera:
                 </Text>
             </View>
