@@ -4,7 +4,7 @@ import styles from './styles/style-5.jsx';
 import { getWrittenDateFromInput, getYear } from '../utils/Dates.jsx';
 import { extractAdvisersInfo, extractJurysInfo, extractStudentsInfo, getBachillersLabel } from '../utils/StringUtils.jsx';
 
-const PdfFiveTwo = ({ infoStep }) => {
+const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
     const FIVE_STEP_INFO = infoStep;
     const THREE_STEP_INFO = FIVE_STEP_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
@@ -42,7 +42,7 @@ const PdfFiveTwo = ({ infoStep }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA
+                    En la Oficina de la Unidad de Investigación,  {institutionalInfo.directorIngenieriaCivil}  siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, a través de la CARTA
                     MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA, de fecha {cartaFecha} y CARTA MULTIPLE Nº {segundoCartaMultiple}-D-UI-FA-UNAMBA, de fecha {segundaCartaFecha}, se realiza el sorteo de
                     jurados, de la tesis titulada: "{title}", presentado por {getBachillersLabel(FIRST_STEP_INFO?.student, FIRST_STEP_INFO?.studentTwo)}:
                 </Text>
