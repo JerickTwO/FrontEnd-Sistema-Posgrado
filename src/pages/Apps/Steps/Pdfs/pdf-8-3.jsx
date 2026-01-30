@@ -13,7 +13,7 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
     const {
-        combinedNames,
+        combinedNamesOnly,
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
@@ -68,7 +68,7 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
             {/* Información del bachiller */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
-                    Presentado por {combinedNames}
+                    Presentado por {combinedNamesOnly}
                 </Text>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
                     Con asesoría de:
