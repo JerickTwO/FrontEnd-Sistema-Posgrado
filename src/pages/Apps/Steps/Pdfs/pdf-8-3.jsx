@@ -60,8 +60,8 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
 
             {/* Título de la tesis */}
             <View style={styles.section}>
-                <Text style={[styles.bold, { fontSize: 11, marginBottom: 5 }]}>
-                    Titulado: <Text style={{ fontFamily: 'Times-Roman' }}>"{title}"</Text>
+                <Text style={[ { fontSize: 11, marginBottom: 5 }]}>
+                    Titulado: <Text style={{ fontFamily: 'Times-Roman', ...styles.bold }}>"{title}"</Text>
                 </Text>
             </View>
 

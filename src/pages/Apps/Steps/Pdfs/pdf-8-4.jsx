@@ -12,7 +12,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
     const FIRST_STEP_INFO = TWO_STEP_INFO?.titleReservationStepOne;
 
     const {
-        combinedNames,
+        combinedNamesOnly,
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
@@ -92,7 +92,7 @@ const PdfEightFour = ({ infoStep, institutionalInfo }) => {
             {/* Presentado por */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
-                    Presentado por {combinedNames}
+                    Presentado por {combinedNamesOnly}
                 </Text>
             </View>
 
