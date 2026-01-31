@@ -23,7 +23,14 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
         ),
         reg: Yup.string().required('El número de constancia es obligatorio'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
-        secondArticleNumber: Yup.string().required('El porcentaje de similitud es obligatorio'),
+        secondArticleNumber: Yup.string()
+            .required('El porcentaje de similitud es obligatorio')
+            .matches(/^\d+(\.\d{1,2})?$/, 'Solo se permiten números y máximo 2 decimales')
+            .test('max-value', 'El porcentaje no puede ser mayor a 24', function(value) {
+                if (!value) return true;
+                const numValue = parseFloat(value);
+                return numValue <= 24;
+            }),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         observation: Yup.string().when('meetRequirements', {
             is: 'no',
@@ -177,6 +184,30 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                     id="secondArticleNumber"
                                                     placeholder="Ingrese el porcentaje de similitud"
                                                     className="form-input"
+                                                    pattern="^\d+(\.\d{1,2})?$"
+                                                    title="Solo se permiten números y máximo 2 decimales. Valor máximo: 24"
+                                                    onChange={(e) => {
+                                                        let value = e.target.value;
+                                                        // Solo permitir números y un punto
+                                                        value = value.replace(/[^0-9.]/g, '');
+                                                        // Evitar múltiples puntos
+                                                        const parts = value.split('.');
+                                                        if (parts.length > 2) {
+                                                            value = parts[0] + '.' + parts[1];
+                                                        }
+                                                        // Limitar a máximo 2 decimales
+                                                        if (parts[1] && parts[1].length > 2) {
+                                                            value = parts[0] + '.' + parts[1].slice(0, 2);
+                                                        }
+                                                        // Validar que no sea mayor a 24
+                                                        if (value && !isNaN(value)) {
+                                                            const numValue = parseFloat(value);
+                                                            if (numValue > 24) {
+                                                                value = '24';
+                                                            }
+                                                        }
+                                                        setFieldValue('secondArticleNumber', value);
+                                                    }}
                                                 />
                                                 <ErrorMessage
                                                     name="secondArticleNumber"

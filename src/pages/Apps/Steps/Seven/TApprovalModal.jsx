@@ -106,8 +106,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                     <ErrorMessage name="studentTwoCode" component="div" className="text-danger mt-1" />
                                                 </div>
                                             )}
-
-                                            {/* Campo de Número de Informe */}
+                                        {/* 
                                             <div className="col-span-1 ">
                                                 <label htmlFor="reportNumber">Número de Informe</label>
                                                 <Field
@@ -120,7 +119,6 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 <ErrorMessage name="reportNumber" component="div" className="text-danger mt-1" />
                                             </div>
 
-                                            {/* Campo de Número de artículo Múltiple */}
                                             <div className="col-span-1">
                                                 <label htmlFor="articleNumber">Primer Número de artículo</label>
                                                 <Field
@@ -186,7 +184,8 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                     className="form-input"
                                                 />
                                                 <ErrorMessage name="multipleMemorandumNumber" component="div" className="text-danger mt-1" />
-                                            </div>
+                                            </div> 
+                                            */}
                                             
                                             {!tapproval.meetRequirements &&
                                                 <div>
@@ -222,7 +221,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                 </div>
                                             }
 
-                                            <FieldArray name="additionalInputs">
+                                            {/* <FieldArray name="additionalInputs">
                                                 {({ push, remove }) => (
                                                     values.additionalInputs.map((_, index) => (
                                                         <div key={index} className="col-span-1">
@@ -257,7 +256,7 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
                                                         </div>
                                                     ))
                                                 )}
-                                            </FieldArray>
+                                            </FieldArray> */}
                                             {/* Campo de Observaciones */}
                                             <div className="col-span-2">
                                                 <label htmlFor="observations">Observaciones</label>
