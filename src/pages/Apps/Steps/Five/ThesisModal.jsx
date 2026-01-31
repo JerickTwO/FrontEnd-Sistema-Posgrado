@@ -41,12 +41,16 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         meetsRequirements: Yup.string().required('Selecciona una opción'),
         includeAdditionalDocs: Yup.boolean(),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
-        regNumber: Yup.string().required('El número de registro es obligatorio'),
         url: Yup.string().required('La URL es obligatoria'),
         fechaSorteo: Yup.string().required('La fecha de sorteo es obligatoria'),
         horaSorteo: Yup.string().required('La hora de sorteo es obligatoria'),
         lugarPresencial: Yup.string().required('El lugar presencial es obligatorio'),
         // Campos condicionales - Segundo Documento
+        regNumber: Yup.string().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El número de reg es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
         numeroActa: Yup.string().when('includeAdditionalDocs', {
             is: true,
             then: (schema) => schema.required('El número de acta es obligatorio'),
@@ -103,11 +107,31 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             then: (schema) => schema.required('El segundo número de artículo es obligatorio'),
             otherwise: (schema) => schema.notRequired(),
         }),
-        president: Yup.object().nullable().required('El presidente es obligatorio'),
-        firstMember: Yup.object().nullable().required('El primer miembro es obligatorio'),
-        secondMember: Yup.object().nullable().required('El segundo miembro es obligatorio'),
-        accessory: Yup.object().nullable().required('El accesitario es obligatorio'),
-        adviser: Yup.object().nullable().required('El asesor es obligatorio'),
+        president: Yup.object().nullable().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El presidente es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        firstMember: Yup.object().nullable().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El primer miembro es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        secondMember: Yup.object().nullable().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El segundo miembro es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        accessory: Yup.object().nullable().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El accesitario es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
+        adviser: Yup.object().nullable().when('includeAdditionalDocs', {
+            is: true,
+            then: (schema) => schema.required('El asesor es obligatorio'),
+            otherwise: (schema) => schema.notRequired(),
+        }),
         coadviser: Yup.object().nullable(),
         observations: Yup.string().when('meetsRequirements', {
             is: 'no',
