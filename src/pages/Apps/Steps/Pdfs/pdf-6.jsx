@@ -28,7 +28,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                 MEMORANDO MULTIPLE Nº {infoStep?.memorandoMult}-{anio}-D-FI-UNAMBA.
             </Text>
             <View style={styles.section}>
-                <Text style={[styles.bold, styles.textTableHeader]}>
+                <Text style={[styles.bold, styles.textTableHeader, styles.espaciadito]}>
                     Señores
                 </Text>
                 <Text style={[styles.bold, styles.textTableHeader]}>
@@ -98,7 +98,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                     <Text style={styles.semiTableColHeader} wrap={false}>ASUNTO</Text>
                     <View style={styles.semiTableCol}>
                         <Text>
-                            <Text style={styles.bold}>: Revisión y aprobación de informe de tesis.</Text>
+                            <Text>: Revisión y aprobación de informe de tesis.</Text>
                         </Text>
                     </View>
                 </View>

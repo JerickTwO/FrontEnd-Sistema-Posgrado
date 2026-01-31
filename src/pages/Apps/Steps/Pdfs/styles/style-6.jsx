@@ -109,5 +109,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginBottom: 5,
     },
+    espaciadito: {
+        marginBottom: 2,
+    }
 })
 export default styles; 
