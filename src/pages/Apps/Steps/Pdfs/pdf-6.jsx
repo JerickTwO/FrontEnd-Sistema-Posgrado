@@ -24,7 +24,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
             <Text style={{ textAlign: 'right', fontSize: 12, }}>
                 Abancay, {getWrittenDate()}
             </Text>
-            <Text style={styles.h1}>
+            <Text style={[styles.h1, { marginBottom: 10 }]}>
                 MEMORANDO MULTIPLE Nº {infoStep?.memorandoMult}-{anio}-D-FI-UNAMBA.
             </Text>
             <View style={styles.section}>
