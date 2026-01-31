@@ -24,12 +24,12 @@ const PdfFourCM = ({ infoStep }) => {
                     Nº{formatNumberWithZero(infoStep.deanResolution)}-{anio}-D-UIFA-UNAMBA
                 </Text>
                 <View style={styles?.section}>
-                    <Text style={[styles?.justify, { fontSize: 14 }]}>
+                    <Text style={[styles?.justify, styles?.bold, { fontSize: 14 }]}>
                         EL DIRECTOR DE LA UNIDAD DE INVESTIGACIÓN DE LA FACULTAD DE
                         ADMINISTRACIÓN DE LA UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE
                         APURÍMAC
                     </Text>
-                    <Text style={[styles?.justify, { marginTop: '10px' }]}>
+                    <Text style={[styles?.justify,styles?.bold, { marginTop: '10px' }]}>
                         HACE CONSTAR:
                     </Text>
                 </View>
@@ -37,7 +37,7 @@ const PdfFourCM = ({ infoStep }) => {
                     <Text style={styles?.justify}>
                         Que, <Text style={[styles?.bold, styles?.justify]}>{combinedNamesOnly}</Text> estudiante de la
                         Escuela Academica Profesional de <Text style={styles?.bold}> {career}</Text>, ha presentado el Informe de tesis titulada: <Text style={styles?.bold}>“{title}”</Text>.
-                        Para ser evaluado mediante filtro de similitud de acuerdo al Art. <Text style={styles?.bold}>{infoStep?.articleNumber}</Text> del Reglamento de Investigación vigente,
+                        Para ser evaluado mediante filtro de similitud de acuerdo al Art. <Text>{infoStep?.articleNumber}</Text> del Reglamento de Investigación vigente,
                         el cual obtuvo un porcentaje del <Text style={styles?.bold}>{infoStep?.secondArticleNumber}%</Text> de similitud, según el reporte proporcionado por el software Turnitin.
                     </Text>
                 </View>
