@@ -246,7 +246,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/aprobacion-de-informe',
+        path: 'apps/paso-estudiante/revision-de-informe',
         element: (
             <StudentRoute>
                 <JuryNotificationsStudents />
