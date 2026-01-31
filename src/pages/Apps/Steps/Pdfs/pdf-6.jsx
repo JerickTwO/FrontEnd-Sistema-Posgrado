@@ -25,11 +25,14 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
                 Abancay, {getWrittenDate()}
             </Text>
             <Text style={styles.h1}>
-                MEMORANDO MULTIPLE Nº {infoStep?.memorandoMult}-{anio}-D. UI-FI-UNAMBA.
+                MEMORANDO MULTIPLE Nº {infoStep?.memorandoMult}-{anio}-D-FI-UNAMBA.
             </Text>
             <View style={styles.section}>
                 <Text style={[styles.bold, styles.textTableHeader]}>
-                    SEÑORES:
+                    Señores
+                </Text>
+                <Text style={[styles.bold, styles.textTableHeader]}>
+                    MIEMBROS DE JURADO Y ASESOR
                 </Text>
                 <View style={styles.table}>
                     <View style={styles.tableRow}>
@@ -92,20 +95,20 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
             <View style={styles.semiTable}>
                 {/* Row 1 */}
                 <View style={[styles.semiTableRow, { marginVertical: 10 }]}>
-                    <Text style={styles.semiTableColHeader} wrap={false}>ASUNTO:</Text>
+                    <Text style={styles.semiTableColHeader} wrap={false}>ASUNTO</Text>
                     <View style={styles.semiTableCol}>
                         <Text>
-                            <Text style={styles.bold}>Revisión y aprobación de informe de tesis.</Text>
+                            <Text style={styles.bold}>: Revisión y aprobación de informe de tesis.</Text>
                         </Text>
                     </View>
                 </View>
                 {/* Referencias */}
                 <View style={[styles.semiTableRow, styles.customTable]}>
-                    <Text style={styles.semiTableColHeader}>Ref.:</Text>
+                    <Text style={styles.semiTableColHeader}>Ref.</Text>
                     <View style={styles.semiTableCol}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <View style={{ flex: 1 }}>
-                                <Text>Solicitud S/N°</Text>
+                                <Text>: Solicitud S/N°</Text>
                                 {typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0 &&
                                     infoStep.additionalInputs.split(',').map((input, idx) => (
                                         <Text key={idx}>
