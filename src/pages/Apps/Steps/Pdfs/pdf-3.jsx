@@ -53,9 +53,9 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                     <Text style={styles.right}>Reg. N° {regNumber}</Text>
                 </View>
                 {additionalInputsList && (
-                    <View style={{marginLeft: 65}}>
+                    <View style={{ marginLeft: 65 }}>
                         {additionalInputsList.map((input, idx) => (
-                            <Text key={idx} style={{marginTop: 4}}>
+                            <Text key={idx} style={{ marginTop: 4 }}>
                                 {input}
                             </Text>
                         ))}
@@ -68,8 +68,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
                     Es sumamente grato dirigirme a su autoridad, para saludarlo cordialmente y al mismo tiempo remito
                     a su despacho el expediente del proyecto de tesis titulado: <Text style={styles.bold}>“{title}”</Text>
                     , presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text> con la finalidad
-                    de que sea formalizado mediante acto resolutivo según el Artículo {articleNumber}
-                    del Reglamento de Investigación; para lo cual, se adjunta lo siguiente:
+                    de que sea formalizado mediante acto resolutivo según el Artículo {articleNumber} del Reglamento de Investigación; para lo cual, se adjunta lo siguiente:
                 </Text>
             </View>
             <View style={styles.ul}>
