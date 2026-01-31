@@ -64,8 +64,12 @@ const PdfFiveOne = ({ infoStep, institutionalInfo }) => {
             </View>
             <View style={styles.section}>
                 <Text style={styles.justify}>
+                    <Text style={{ marginBottom: 10 }}>
+
                     Previo cordial saludo, comunico programación de fecha y hora de sorteo de jurados para la revisión y aprobación de informe final de tesis.
-                    {'\n'}La misma que está prevista para el día <Text style={styles.bold}>{fechaSorteo}</Text>, a horas <Text style={styles.bold}>{horaSorteo}</Text>, de manera presencial en el <Text style={styles.bold}>{lugarPresencial}</Text>
+                    </Text>
+
+                    {'\n'}La misma que está prevista para el día <Text>{fechaSorteo}</Text>, a horas <Text>{horaSorteo}</Text>, de manera presencial en el <Text>{lugarPresencial}</Text>
                     {url && (
                         <Text>
                             , y virtual Ingresar al siguiente link:
