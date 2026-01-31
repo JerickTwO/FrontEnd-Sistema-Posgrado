@@ -8,12 +8,12 @@ const TApprovalModal = ({ isOpen, onClose, onSave, tapproval }) => {
     const validationSchema = Yup.object({
         studentCode: Yup.string().required('El primer estudiante es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
-        reportNumber: Yup.string().required('El número de informe es obligatorio'),
-        multipleMemorandumNumber: Yup.string().required('El número de memorando múltiple es obligatorio'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
-        secondArticleNumber: Yup.string().required('El segundo artículo es obligatorio'),
-        thirdArticleNumber: Yup.string().required('El tercer artículo es obligatorio'),
-        cartNumber: Yup.string().required('El número de carta es obligatorio'),
+        // reportNumber: Yup.string().required('El número de informe es obligatorio'),
+        // multipleMemorandumNumber: Yup.string().required('El número de memorando múltiple es obligatorio'),
+        // articleNumber: Yup.string().required('El número de artículo es obligatorio'),
+        // secondArticleNumber: Yup.string().required('El segundo artículo es obligatorio'),
+        // thirdArticleNumber: Yup.string().required('El tercer artículo es obligatorio'),
+        // cartNumber: Yup.string().required('El número de carta es obligatorio'),
         // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
