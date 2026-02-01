@@ -83,7 +83,7 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
                     <Text style={table.cellCondicion}>Asesor</Text>
                     <Text style={table.cellDato}>{adviserNames}</Text>
                 </View>
-                {coAdviserNames && (
+                {coAdviserNames && !coAdviserNames.includes('UNDEFINED') && (
                     <View style={table.row}>
                         <Text style={table.cellCondicion}>Segundo Asesor</Text>
                         <Text style={table.cellDato}>{coAdviserNames}</Text>

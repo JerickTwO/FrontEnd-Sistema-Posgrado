@@ -43,7 +43,7 @@ const PdfNineOne = ({ infoStep }) => {
                     Facultad de Administración, declara que, la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, 
                     para optar el título de Licenciado en {degree} en Administración, presentado por {' '}
                     <Text style={styles.bold}>{tesista}</Text> ha sido sometido a un mecanismo de evaluación de verificación 
-                    de similitud, a través del software TURNITIN, siendo el <Text style={styles.bold}>{porcentajeSimilitud}%</Text>{' '}
+                    de similitud, a través del software TURNITIN, siendo el <Text>{porcentajeSimilitud}%</Text>{' '}
                     el índice de similitud; el cual es menor al 25% establecido por el reglamento de investigación aprobado 
                     por Resolución N° {resolucionReglamento}-CU-UNAMBA, por lo que cumple con los criterios establecidos por la universidad.
                 </Text>

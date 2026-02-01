@@ -28,47 +28,47 @@ const PdfTen = ({ infoStep }) => {
         >
             {/* Identificador de registro de investigación */}
             <View style={{ alignSelf: 'flex-start', marginTop: 6, borderWidth: 1, borderColor: '#000', borderRadius: 4, padding: 6 }}>
-                <Text style={[styles.bold, { fontSize: 10, alignSelf: 'center' }]}>U.INV.</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>REG. N° {formatNumberWithZero(regNumber)}</Text>
+                <Text style={[styles.bold, { fontSize: 14, alignSelf: 'center' }]}>U.INV.</Text>
+                <Text style={[styles.bold, { fontSize: 14 }]}>REG. N° {formatNumberWithZero(regNumber)}</Text>
             </View>
             {/* Encabezado de Constancia */}
-            <Text style={[styles.bold, { textAlign: 'center', fontSize: 18, marginTop: 10, marginBottom: 12 }]}>
+            <Text style={[styles.bold, { textAlign: 'center', fontSize: 28, marginTop: 10, marginBottom: 12 }]}>
                 CONSTANCIA
             </Text>
 
             {/* Cuerpo del documento */}
             <View style={styles.section}>
-                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                <Text style={[styles.justify, { lineHeight: 1.6, fontSize: 16 }]}>
                     La Unidad de Investigación de la Facultad de Administración de la Universidad Nacional Micaela Bastidas de Apurímac, hace constar que:
                 </Text>
             </View>
 
             {/* Nombre del bachiller */}
             <View style={{ marginVertical: 10 }}>
-                <Text style={[styles.bold, { textAlign: 'center', fontSize: 16 }]}>
+                <Text style={[styles.bold, { textAlign: 'center', fontSize: 20 }]}>
                     {studentNames || 'NOMBRE DEL BACHILLER'}
                 </Text>
             </View>
 
             {/* Detalle de entrega */}
             <View style={styles.section}>
-                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                <Text style={[styles.justify, { lineHeight: 1.6, fontSize: 16 }]}>
                     Ha entregado 02 empastados y un 01 CD, conteniendo la tesis de investigación titulada: <Text style={styles.bold}>"{thesisTitle}"</Text>, presentando los requerimientos.
                 </Text>
             </View>
 
             <View style={styles.section}>
-                <Text style={[styles.justify, { lineHeight: 1.6 }]}>
+                <Text style={[styles.justify, { lineHeight: 1.6, fontSize: 16 }]}>
                     Se expide la presente constancia para los fines que estime conveniente.
                 </Text>
             </View>
 
             {/* Fecha alineada a la derecha */}
-            <View style={{ alignItems: 'flex-end', marginTop: 30 }}>
-                <Text style={styles.body}>Tamburco, {actualDate}</Text>
+            <View style={{ alignItems: 'flex-end', marginTop: 30,  }}>
+                <Text style={[styles.body, { fontSize: 16 }]}>Tamburco, {actualDate}</Text>
             </View>
             <View style={{ marginTop: 20, alignItems: 'center' }}>
-                <Text style={[styles.bold, { fontSize: 11, marginBottom: 12 }]}>Atentamente,</Text>
+                <Text style={[styles.bold, { fontSize: 16, marginBottom: 12 }]}>Atentamente,</Text>
             </View>
         </PdfBase>
     );

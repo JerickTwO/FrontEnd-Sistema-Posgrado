@@ -23,11 +23,11 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const fechaSustentacion = infoStep?.day;
     const horaSustentacion = infoStep?.hour;
     const horaFinSustentacion = infoStep?.horaFin;
-    const commemorativeText = institutionalInfo?.commemorativeText ;
+    const commemorativeText = institutionalInfo?.commemorativeText;
     return (
         <PdfBase
             showCommemorativeText={true}
-            commemorativeText={commemorativeText} 
+            commemorativeText={commemorativeText}
         >
             {/* Fecha alineada a la derecha */}
             <View style={{ alignItems: 'flex-end', marginBottom: 2 }}>
@@ -42,10 +42,10 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
             {/* Bloque del Destinatario */}
             <View style={styles.section}>
                 <Text style={styles.body}>Señor:</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>{destinatario}</Text>
+                <Text style={[{ fontSize: 10 }]}>{destinatario}</Text>
                 <Text style={[styles.bold, { fontSize: 10 }]}>{cargo}</Text>
                 <Text style={[styles.bold, { fontSize: 10 }]}>UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</Text>
-                <Text style={[styles.bold, { marginTop: 10, fontSize: 10 }]}>Presente.-</Text>
+                <Text style={[styles.bold, { marginTop: 10, fontSize: 10, textDecoration: 'underline' }]}>Presente.-</Text>
             </View>
 
             <View style={[styles.section, { flexDirection: 'row', marginTop: 10, fontSize: 12 }]}>
@@ -55,8 +55,8 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
             <Text>******************************************************</Text>
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                    Es sumamente grato dirigirme a usted, en atención a los documentos de referencia, mediante su autoridad, 
-                    tenga a bien de solicitar el uso del <Text style={styles.bold}>{aulaSustentacion}</Text>; para realizar la 
+                    Es sumamente grato dirigirme a usted, en atención a los documentos de referencia, mediante su autoridad,
+                    tenga a bien de solicitar el uso del <Text>{aulaSustentacion}</Text>; para realizar la
                     sustentación de tesis de manera presencial según detalle siguiente:
                 </Text>
             </View>

@@ -24,7 +24,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
         accessoryNames
     } = extractJurysInfo(FIVE_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
     
     // Campos Editables
     const memorandoNumero = formatNumberWithZero(infoStep?.memorandumNumber);
@@ -82,9 +82,9 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
                         <Text style={{ fontSize: 9, width: 200 }}>{adviserNames}</Text>
                         <Text style={[styles.bold, { fontSize: 9 }]}>: Asesor</Text>
                     </View>
-                    {coadviserNames && (
+                    {coAdviserNames && !coAdviserNames.includes('UNDEFINED') && (
                         <View style={{ flexDirection: 'row', marginTop: 2 }}>
-                            <Text style={{ fontSize: 9, width: 200 }}>{coadviserNames}</Text>
+                            <Text style={{ fontSize: 9, width: 200 }}>{coAdviserNames}</Text>
                             <Text style={[styles.bold, { fontSize: 9 }]}>: Segundo asesor</Text>
                         </View>
                     )}

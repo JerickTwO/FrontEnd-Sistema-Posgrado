@@ -38,7 +38,7 @@ const PdfEightFour = ({ infoStep }) => {
         >
             {/* Encabezado centrado */}
             <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                <Text style={[styles.bold, { fontSize: 12, marginBottom: 5 }]}>Anexo 04</Text>
+                <Text style={[styles.bold, { fontSize: 12, marginBottom: 5, marginTop: 15 }]}>Anexo 04</Text>
                 <Text style={[styles.bold, { fontSize: 14 }]}>ACTA DE SUSTENTACIÓN</Text>
             </View>
 
@@ -52,7 +52,7 @@ const PdfEightFour = ({ infoStep }) => {
             {/* Lista de jurado */}
             <View style={{ marginLeft: 30, marginBottom: 15 }}>
                 <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    -    Presidente                : {presidentNames}
+                    -    Presidente                 : {presidentNames}
                 </Text>
                 <Text style={{ fontSize: 11, marginBottom: 3 }}>
                     -    Primer miembro        : {firstMemberNames}
@@ -61,7 +61,7 @@ const PdfEightFour = ({ infoStep }) => {
                     -    Segundo miembro     : {secondMemberNames}
                 </Text>
                 <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    -    Accesitario               : {accessoryNames}
+                    -    Accesitario                : {accessoryNames}
                 </Text>
             </View>
 
@@ -99,11 +99,11 @@ const PdfEightFour = ({ infoStep }) => {
                     Con asesoría de:
                 </Text>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
-                    Asesor Responsable: <Text style={styles.bold}>{adviserNames}</Text>
+                    Asesor Responsable           <Text style={styles.bold}>:{adviserNames}</Text>
                 </Text>
-                {coAdviserNames && (
+                {coAdviserNames && !coAdviserNames.includes('UNDEFINED') && (
                     <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
-                        Coasesor: <Text style={styles.bold}>{coAdviserNames}</Text>
+                        Segundo Asesor                 <Text style={styles.bold}>:{coAdviserNames}</Text>
                     </Text>
                 )}
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
@@ -140,19 +140,23 @@ const PdfEightFour = ({ infoStep }) => {
             </View>
 
             {/* Lista de calificaciones */}
-            <View style={{ marginLeft: 30, marginBottom: 15 }}>
-                <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    i.    Desaprobado.                                              ........................        [      ]
-                </Text>
-                <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    ii.   Aprobado bueno.                                        ........................        [      ]
-                </Text>
-                <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    iii.  Aprobado muy bueno.                               ........................        [      ]
-                </Text>
-                <Text style={{ fontSize: 11, marginBottom: 3 }}>
-                    iv.  Aprobado excelente con distinción.         ........................        [      ]
-                </Text>
+            <View style={{ marginLeft: 30, marginBottom: 15, marginRight: 90 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 3 }}>
+                    <Text style={{ fontSize: 11, width: '55%' }}>i.    Desaprobado.</Text>
+                    <Text style={{ fontSize: 11, flex: 1, textAlign: 'right' }}>........................        [      ]</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 3 }}>
+                    <Text style={{ fontSize: 11, width: '55%' }}>ii.   Aprobado bueno.</Text>
+                    <Text style={{ fontSize: 11, flex: 1, textAlign: 'right' }}>........................        [      ]</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 3 }}>
+                    <Text style={{ fontSize: 11, width: '55%' }}>iii.  Aprobado muy bueno.</Text>
+                    <Text style={{ fontSize: 11, flex: 1, textAlign: 'right' }}>........................        [      ]</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 3 }}>
+                    <Text style={{ fontSize: 11, width: '55%' }}>iv.  Aprobado excelente con distinción.</Text>
+                    <Text style={{ fontSize: 11, flex: 1, textAlign: 'right' }}>........................        [      ]</Text>
+                </View>
             </View>
 
             {/* Cierre del acta */}

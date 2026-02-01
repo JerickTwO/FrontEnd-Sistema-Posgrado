@@ -4,9 +4,7 @@ import styles from './styles/style-8';
 import { formatDateSpanish, getWrittenDate } from '../utils/Dates';
 import { extractAdvisersInfo, extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfEightThree = ({ infoStep, institutionalInfo }) => {
-    const actualDate = getWrittenDate();
-
+const PdfEightThree = ({ infoStep }) => {
     const FIVE_STEP_INFO = infoStep?.thesisApprovalStepSeven?.juryNotificationsStepSix?.constancyThesisStepFive;
     const THREE_STEP_INFO = FIVE_STEP_INFO?.reportReviewStepFour?.juryAppointmentStepThree;
     const TWO_STEP_INFO = THREE_STEP_INFO?.projectApprovalStepTwo;
@@ -17,39 +15,30 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    const { adviserNames, coadviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
+    const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
 
     // Campos del tercer documento
     const aulaSustentacion = infoStep?.location3;
     const fechaSustentacion = formatDateSpanish(infoStep?.day3);
     const horaSustentacion = infoStep?.hour3;
-    const commemorativeText = institutionalInfo?.commemorativeText;
-
     return (
         <PdfBase
             showCommemorativeText={false}
             showFooter={false}
             showHeader={false}
-            // commemorativeText={commemorativeText}
         >
-
-            {/* Título Principal */}
             <Text style={[styles.bold, { textAlign: 'center', fontSize: 14, marginBottom: 5}]}>
                 ANEXO 3
             </Text>
             <Text style={[styles.bold, { textAlign: 'center', fontSize: 16, marginBottom: 15}]}>
                 INDIVIDUAL DE SUSTENTACIÓN
             </Text>
-
-            {/* Cuerpo del documento */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, lineHeight: 1.6, marginBottom: 10 }]}>
-                    En las instalaciones del {aulaSustentacion} de la Facultad de Administración y Ciencias Sociales de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} del día {fechaSustentacion}, fue realizada la evaluación 
+                    En las instalaciones del {aulaSustentacion} de la Universidad Nacional Micaela Bastidas de Apurímac, siendo horas las {horaSustentacion} del día {fechaSustentacion}, fue realizada la evaluación 
                     Individual de la sustentación de:
                 </Text>
             </View>
-
-            {/* Tipo de trabajo */}
             <View style={{ marginLeft: 5, marginBottom: 10 }}>
                 <View style={{ flexDirection: 'row', marginBottom: 5, gap: 25}}>
                     <Text style={{ fontSize: 11 }}>Trabajo de Investigación ( )</Text>
@@ -57,18 +46,14 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                     <Text style={{ fontSize: 11 }}>Tesis en formato de Artículo Científico ( )</Text>
                 </View>
             </View>
-
-            {/* Título de la tesis */}
             <View style={styles.section}>
                 <Text style={[ { fontSize: 11, marginBottom: 5 }]}>
                     Titulado: <Text style={{ fontFamily: 'Times-Roman', ...styles.bold }}>"{title}"</Text>
                 </Text>
             </View>
-
-            {/* Información del bachiller */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
-                    Presentado por {combinedNamesOnly}
+                    Presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text>
                 </Text>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 5 }]}>
                     Con asesoría de:
@@ -76,14 +61,12 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
                     Asesor Responsable: <Text style={styles.bold}>{adviserNames}</Text>
                 </Text>
-                {coadviserNames && (
+                {coAdviserNames && !coAdviserNames.includes('UNDEFINED') && (
                     <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
-                        Segundo Asesor: <Text style={styles.bold}>{coadviserNames}</Text>
+                        Segundo Asesor: <Text style={styles.bold}>{coAdviserNames}</Text>
                     </Text>
                 )}
             </View>
-
-            {/* Grado a optar */}
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, marginBottom: 10 }]}>
                     Perteneciente a la Escuela Profesional de Administración
@@ -95,15 +78,11 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                     Para optar: <Text style={styles.bold}>TÍTULO PROFESIONAL DE LICENCIADO EN ADMINISTRACIÓN</Text>
                 </Text>
             </View>
-
-            {/* Calificación */}
             <View style={styles.section}>
                 <Text style={[styles.bold, { fontSize: 11, marginBottom: 10 }]}>
                     Otorgándole la siguiente calificación:
                 </Text>
             </View>
-
-            {/* Tabla de evaluación */}
             <View style={{ marginBottom: 20 }}>
                 <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000' }}>
                     <Text style={{ width: '40%', borderRightWidth: 1, borderColor: '#000', padding: 5, fontSize: 10, fontFamily: 'Times-Bold' }}>
@@ -127,8 +106,6 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                         </Text>
                     </View>
                 </View>
-
-                {/* Filas de la tabla */}
                 {[
                     { title: 'Revisión del informe', bold: true },
                     { title: 'a)  Calidad de la redacción' },
@@ -167,6 +144,13 @@ const PdfEightThree = ({ infoStep, institutionalInfo }) => {
                         )}
                     </View>
                 ))}
+            </View>
+
+            <View style={{ marginTop: 30, marginBottom: 10, alignItems: 'center' }}>
+                <View style={{ borderTopWidth: 1, borderColor: '#000', width: '40%', marginBottom: 5 }}></View>
+                <Text style={{ fontSize: 10, fontFamily: 'Times-Roman' }}>
+                    Firma del Presidente del Jurado
+                </Text>
             </View>
         </PdfBase>
     );
