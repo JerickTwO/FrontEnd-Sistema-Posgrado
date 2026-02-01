@@ -45,10 +45,10 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
 
             <View style={styles.section}>
                 <Text style={styles.body}>Señor:</Text>
-                <Text style={[styles.bold, { fontSize: 10 }]}>{deanName}</Text>
+                <Text style={[ { fontSize: 10 }]}>{deanName}</Text>
                 <Text style={[styles.bold, { fontSize: 10 }]}>DECANO DE LA FACULTAD DE ADMINISTRACIÓN</Text>
                 <Text style={[styles.bold, { fontSize: 10 }]}>UNIVERSIDAD NACIONAL MICAELA BASTIDAS DE APURÍMAC</Text>
-                <Text style={[styles.bold, { marginTop: 10, fontSize: 10 }]}>Presente.-</Text>
+                <Text style={[styles.bold, { marginTop: 10, fontSize: 10, textDecoration: 'underline' }]}>Presente.-</Text>
             </View>
 
             {/* Asunto */}
@@ -63,7 +63,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View>
-                        <Text style={styles.body}>Ref.              : Solicitud S/N°</Text>
+                        <Text style={styles.body}>Ref.     : Solicitud S/N°</Text>
                         {additionalInputsList && additionalInputsList.map((input, idx) => (
                             <Text key={idx} style={[styles.body, { marginTop: 2, marginLeft: 70 }]}>
                                 {input}
@@ -83,8 +83,8 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
                 <Text style={styles.justify}>
                     Es grato dirigirme a usted para saludarlo cordialmente y a la vez solicitar la aprobación mediante acta resolutivo la sustentación de Tesis titulada:{' '}
                     <Text style={styles.bold}>“{tituloTesis}”</Text>, de <Text style={styles.bold}>{combinedNamesOnly}</Text>, llevado a cabo de forma presencial el día{' '}
-                    <Text style={styles.bold}>{fechaSustentacion}</Text>, a horas <Text style={styles.bold}>{horaSustentacion}</Text>, en las instalaciones del{' '}
-                    <Text style={styles.bold}>{lugarSustentacion} - UNAMBA</Text>.
+                    <Text>{fechaSustentacion}</Text>, a horas <Text>{horaSustentacion}</Text>, en las instalaciones del{' '}
+                    <Text>{lugarSustentacion} - UNAMBA</Text>.
                 </Text>
             </View>
 
