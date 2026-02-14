@@ -10,7 +10,6 @@ const InstitucionalInfo = () => {
     const dispatch = useDispatch();
     const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const fetchInfo = useCallback(async () => {
         try {
@@ -23,11 +22,8 @@ const InstitucionalInfo = () => {
                     id: null,
                     deanName: '',
                     commemorativeText: '',
-                    directorIngenieriaAgroecologica: '',
-                    directorIngenieriaMinas: '',
-                    directorIngenieriaCivil: '',
-                    directorIngenieriaInformaticaSistemas: '',
-                    secretariaUIIngenieria: '',
+                    directorAdministracion: '',
+                    secretariaAdministracion: '',
                 });
             } else {
                 setInfo(response);
@@ -57,16 +53,13 @@ const InstitucionalInfo = () => {
             const payload = {
                 deanName: info.deanName.trim(),
                 commemorativeText: info.commemorativeText.trim(),
-                directorIngenieriaAgroecologica: info.directorIngenieriaAgroecologica.trim(),
-                directorIngenieriaMinas: info.directorIngenieriaMinas.trim(),
-                directorIngenieriaCivil: info.directorIngenieriaCivil.trim(),
-                directorIngenieriaInformaticaSistemas: info.directorIngenieriaInformaticaSistemas.trim(),
-                secretariaUIIngenieria: info.secretariaUIIngenieria.trim(),
+                directorAdministracion: info.directorAdministracion.trim(),
+                secretariaAdministracion: info.secretariaAdministracion.trim(),
             };
 
             const updatedInfo = info.id
                 ? await InfoService.updateInfo({ id: info.id, ...payload })
-                : await InfoService.createInfo(payload); // 💥 asegúrate de tener este método en tu servicio
+                : await InfoService.createInfo(payload);
 
             setInfo(updatedInfo);
 
@@ -145,13 +138,13 @@ const InstitucionalInfo = () => {
                             </div>
 
                             <div className="mb-5">
-                                <label htmlFor="directorIngenieriaCivil">
+                                <label htmlFor="directorAdministracion">
                                     Director de la UI de la facultad de Administración
                                 </label>
                                 <input
                                     type="text"
-                                    name="directorIngenieriaCivil"
-                                    value={info.directorIngenieriaCivil}
+                                    name="directorAdministracion"
+                                    value={info.directorAdministracion}
                                     onChange={handleChange}
                                     placeholder="Director de administración"
                                     className="form-input"
@@ -159,13 +152,13 @@ const InstitucionalInfo = () => {
                             </div>
 
                             <div className="mb-5">
-                                <label htmlFor="secretariaUIIngenieria">
+                                <label htmlFor="secretariaAdministracion">
                                     Secretaría de la UI de Administración
                                 </label>
                                 <input
                                     type="text"
-                                    name="secretariaUIIngenieria"
-                                    value={info.secretariaUIIngenieria}
+                                    name="secretariaAdministracion"
+                                    value={info.secretariaAdministracion}
                                     onChange={handleChange}
                                     placeholder="Secretaría de la UI de Administración"
                                     className="form-input"

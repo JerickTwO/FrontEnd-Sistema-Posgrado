@@ -41,7 +41,7 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
 
             <View style={styles.section}>
                 <Text style={styles.justify}>
-                        En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, {institutionalInfo?.directorIngenieriaCivil} a través de la <Text style={styles.bold}> CARTA MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA</Text> 
+                        En la Oficina de la Unidad de Investigación, siendo las {horaInicio} del día {fechaActa}, bajo la convocatoria del Director de la Unidad de Investigación, {institutionalInfo?.directorAdministracion} a través de la <Text style={styles.bold}> CARTA MULTIPLE Nº {cartaMultiple}-D-UI-FA-UNAMBA</Text> 
                     , de fecha {fechaActa}, {/* y CARTA MULTIPLE Nº {segundoCartaMultiple}-D-UI-FA-UNAMBA, de fecha {segundaCartaFecha},  */}
                     se realiza el sorteo de jurados, de la tesis titulada: "<Text style={styles.bold}>{title}</Text>", presentado por {getBachillersLabel(FIRST_STEP_INFO?.student, FIRST_STEP_INFO?.studentTwo)}:
                 </Text>
