@@ -10,7 +10,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
     const validationSchema = Yup.object({
         deanResolution: Yup.string().required('El número de carta es obligatorio'),
         reg: Yup.string().required('El número de registro es obligatorio'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
     });
 

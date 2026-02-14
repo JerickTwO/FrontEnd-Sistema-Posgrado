@@ -23,7 +23,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
         ),
         meetRequirements: Yup.string().required('Selecciona una opción'),
         deanResolution: Yup.string().required('El número de constancia es obligatorio'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         secondArticleNumber: Yup.number()
             .typeError('Debe ser un número')
             .required('El porcentaje de similitud es obligatorio')
@@ -45,11 +44,8 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
             studentTwoFirstNames: report?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.firstNames || '',
             observations: report?.observations || '',
             meetRequirements: report?.meetRequirements ? 'yes' : 'no',
-            documentDate: report?.documentDate || '',
-            articleNumber: report?.articleNumber || '',
             secondArticleNumber: report?.secondArticleNumber || '',
             deanResolution: report?.deanResolution || '',
-            additionalInputs: report?.additionalInputs?.split(', ') || [''],
         }),
         [report, adviserOptions]
     );
@@ -70,12 +66,9 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         const transformedValues = {
-                                            documentDate: values.documentDate,
-                                            articleNumber: values.articleNumber,
                                             secondArticleNumber: values.secondArticleNumber,
                                             deanResolution: values.deanResolution,
                                             observations: values.observations,
-                                            additionalInputs: values.additionalInputs.join(', '),
                                         };
                                         if (values.meetRequirements === 'yes' && report?.meetRequirements !== true) {
                                             transformedValues.meetRequirements = true;
@@ -147,11 +140,6 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                 <label htmlFor="deanResolution">Número de Constancia </label>
                                                 <Field name="deanResolution" id="deanResolution" placeholder="000" className="form-input" />
                                                 <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className={`col-span-1 ${submitCount && errors.articleNumber ? 'has-error' : ''}`}>
-                                                <label htmlFor="articleNumber"> Número de Artículo </label>
-                                                <Field name="articleNumber" id="articleNumber" placeholder="Ingrese el número de Artículo" className="form-input" />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className={`col-span-1 ${submitCount && errors.secondArticleNumber ? 'has-error' : ''}`}>
                                                 <label htmlFor="secondArticleNumber">Porcentaje de Similitud  </label>
