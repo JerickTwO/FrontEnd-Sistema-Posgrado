@@ -8,16 +8,21 @@ import { useUserContext } from "../../../../store/userContext";
 const Resolution = () => {
     const user = useUserContext();
     const dispatch = useDispatch();
-    const [resolution, setResolution] = useState([]);
+    const [resolution, setResolution] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const fetchResolution = useCallback(async () => {
         try {
             setLoading(true);
+            setError(null);
             const resolutionResponse = await resolutionService.getResolutionByStudentCode(user.username);
+            console.log('Resolution response:', resolutionResponse);
             setResolution(resolutionResponse);
         } catch (error) {
-            console.error('Error al obtener laFiltro de similitud III:', error);
+            console.error('Error al obtener Filtro de similitud III:', error);
+            setError('No se pudo cargar la información del paso 9');
+            setResolution(null);
         } finally {
             setLoading(false);
         }
@@ -34,9 +39,20 @@ const Resolution = () => {
         return <div>Cargando datos...</div>;
     }
 
+    if (error) {
+        return (
+            <div className="alert alert-danger">
+                <p>{error}</p>
+                <button onClick={fetchResolution} className="btn btn-primary mt-2">
+                    Intentar nuevamente
+                </button>
+            </div>
+        );
+    }
+
     return (
         <>
-            <h1 className="text-2xl font-bold mb-5">Paso 9 -Filtro de similitud III</h1>
+            <h1 className="text-2xl font-bold mb-5">Paso 9 - Filtro de similitud III</h1>
             <ResolutionTable resolution={resolution} />
         </>
     );

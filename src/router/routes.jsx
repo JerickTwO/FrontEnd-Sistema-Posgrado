@@ -125,30 +125,6 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso/extra/cambio-de-asesor',
-        element: (
-            <ProtectedRoute>
-                <ChangeAdvisor />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: 'apps/paso/extra/ampliacion-de-proceso',
-        element: (
-            <ProtectedRoute>
-                <PassageExpansion />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: 'apps/paso/extra/recomposicion-de-jurados',
-        element: (
-            <ProtectedRoute>
-                <JuryRecomposition />
-            </ProtectedRoute>
-        ),
-    },
-    {
         path: 'apps/paso/presentacion-de-informe',
         element: (
             <ProtectedRoute>
@@ -254,7 +230,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/solicitud-de-tesis',
+        path: 'apps/paso-estudiante/aprobacion-de-informe',
         element: (
             <StudentRoute>
                 <ThesisApprovalStudents />
@@ -262,7 +238,7 @@ const routes = [
         ),
     },
     {
-        path: 'apps/paso-estudiante/filtro-de-similitud-tres',
+        path: 'apps/paso-estudiante/solicitud-de-tesis',
         element: (
             <StudentRoute>
                 <PastingApprovalStudents />
@@ -272,9 +248,9 @@ const routes = [
     {
         path: 'apps/paso-estudiante/filtro-de-similitud-tres',
         element: (
-            <ProtectedRoute>
+            <StudentRoute>
                 <ResolutionStudents />
-            </ProtectedRoute>
+            </StudentRoute>
         ),
     },
     {
@@ -312,6 +288,31 @@ const routes = [
     },
 
     ///---FIN----------------------------------------------------------------/////
+    {
+        path: 'apps/paso/extra/cambio-de-asesor',
+        element: (
+            <ProtectedRoute>
+                <ChangeAdvisor />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: 'apps/paso/extra/ampliacion-de-proceso',
+        element: (
+            <ProtectedRoute>
+                <PassageExpansion />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: 'apps/paso/extra/recomposicion-de-jurados',
+        element: (
+            <ProtectedRoute>
+                <JuryRecomposition />
+            </ProtectedRoute>
+        ),
+    },
+    
     {
         path: '/progreso',
         element: <Progress />,
