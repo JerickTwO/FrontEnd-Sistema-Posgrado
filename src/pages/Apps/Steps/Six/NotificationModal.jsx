@@ -8,7 +8,6 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
     const validationSchema = Yup.object({
         meetRequirements: Yup.string().required('Selecciona una opción'),
         secondDeanResolution: Yup.string().email('Ingrese un correo electrónico válido').required('El correo es obligatorio'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         reg: Yup.string().required('El registro es obligatorio'),
         memorandoMult: Yup.string().required('El memorando es obligatorio'),
         // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
@@ -30,7 +29,6 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
             meetRequirements: notification?.meetRequirements ? 'yes' : 'no',
             observations: notification?.observations || '',
             secondDeanResolution: notification?.secondDeanResolution || '',
-            articleNumber: notification?.articleNumber || '',
             reg: notification?.reg || '',
             memorandoMult: notification?.memorandoMult || '',
             additionalInputs: notification?.additionalInputs?.split(', ') || [''],
@@ -63,7 +61,6 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                         const transformedValues = {
                                             observations: values.observations,
                                             secondDeanResolution: values.secondDeanResolution,
-                                            articleNumber: values.articleNumber,
                                             reg: values.reg || '',
                                             memorandoMult: values.memorandoMult || '',
                                             additionalInputs: values.additionalInputs.join(', '),
@@ -159,20 +156,6 @@ const NotificationModal = ({ isOpen, onClose, onSave, notification }) => {
                                                 />
                                                 <ErrorMessage name="secondDeanResolution" component="div" className="text-danger mt-1" />
                                             </div>
-                                            
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo</label>
-                                                <Field
-                                                    name="articleNumber"
-                                                    id="articleNumber"
-                                                    placeholder="Ingrese observaciones"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
-                                            </div>
-                                           
-                                            
-                                            
                                             {!notification.meetRequirements &&
                                                 <div>
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>

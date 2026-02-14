@@ -15,7 +15,7 @@ const PdfSixMM = ({ infoStep, institutionalInfo }) => {
     const { adviserNames, coAdviserNames } = extractAdvisersInfo(FIVE_STEP_INFO);
     const { presidentNames, firstMemberNames, secondMemberNames, accessoryNames } = extractJurysInfo(FIVE_STEP_INFO);
     const { combinedNamesOnly, title } = extractStudentsInfo(FIRST_STEP_INFO);
-    const articleNumber = infoStep?.articleNumber;
+    const articleNumber = institutionalInfo?.paso6NumeroArticulo;
     const contactEmail = infoStep?.secondDeanResolution;
     const commemorativeText = institutionalInfo?.commemorativeText ;
     return (

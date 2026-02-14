@@ -38,7 +38,6 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
     const validationSchema = Yup.object({
         meetRequirements: Yup.string().required('Selecciona una opción'),
         location: Yup.string().required('La ubicación es obligatoria'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         cartNumber: Yup.string().required('El número de carta es obligatorio'),
         memorandumNumber: Yup.string().required('El número de memorando es obligatorio'),
         day: Yup.string().required('El día es obligatorio'),
@@ -85,7 +84,6 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
             meetRequirements: pasting?.meetRequirements ? 'yes' : 'no',
             location: pasting?.location || '',
             observations: pasting?.observations || '',
-            articleNumber: pasting?.articleNumber || '',
             reg: from12To24(pasting?.reg),
             additionalInputs: pasting?.additionalInputs?.split(', ') || [''],
             cartNumber: pasting?.cartNumber || '',
@@ -127,7 +125,6 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                         const transformedValues = {
                                             location: values.location,
                                             observations: values.observations,
-                                            articleNumber: values.articleNumber,
                                             reg: to12WithSuffix(values.reg) || '',
                                             additionalInputs: values.additionalInputs.join(', '),
                                             cartNumber: values.cartNumber,
@@ -242,11 +239,6 @@ const PastingModal = ({ isOpen, onClose, onSave, pasting }) => {
                                                     placeholder="Seleccione una ubicación..."
                                                 />
                                                 <ErrorMessage name="location2" component="div" className="text-danger mt-1" />
-                                            </div>
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo </label>
-                                                <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="reg">Reg</label>
