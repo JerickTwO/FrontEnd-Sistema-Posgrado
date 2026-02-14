@@ -42,7 +42,6 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
         day: Yup.string().required('El día es obligatorio'),
         hour: Yup.string().required('La hora es obligatoria'),
         school: Yup.string().required('La escuela es obligatoria'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         // additionalInputs: Yup.array().of(Yup.string().required('Este campo es obligatorio')).min(1, 'Al menos un campo es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
@@ -67,7 +66,6 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
             day: finalStep?.day || '',
             hour: from12To24(finalStep?.hour),
             school: finalStep?.school || '',
-            articleNumber: finalStep?.articleNumber || '',
             sustainingReport: finalStep?.sustainingReport || false,
             observationsResolved: finalStep?.observationsResolved || false,
         }),
@@ -100,7 +98,6 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                             day: values.day,
                                             hour: to12WithSuffix(values.hour),
                                             school: values.school,
-                                            articleNumber: values.articleNumber,
                                             sustainingReport: values.sustainingReport,
                                             observationsResolved: values.observationsResolved,
                                         };
@@ -170,12 +167,6 @@ const FinalStepModal = ({ isOpen, onClose, onSave, finalStep }) => {
                                                     placeholder="Seleccione una escuela..."
                                                 />
                                                 <ErrorMessage name="school" component="div" className="text-danger mt-1" />
-                                            </div>
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo</label>
-                                                <Field name="articleNumber" type="text" id="articleNumber" className="form-input" />
-                                                <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                             </div>
 
                                             <div className="col-span-1 flex items-center gap-2 mt-6">

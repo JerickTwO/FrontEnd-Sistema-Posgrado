@@ -31,7 +31,7 @@ const PdfEleven = ({ infoStep, institutionalInfo }) => {
     const lugarSustentacion = infoStep?.school || stepNine?.location;
     const fechaSustentacion = formatDateSpanish(infoStep?.day);
     const horaSustentacion = infoStep?.hour || stepNine?.hour || '__:__';
-    const articleNumber = infoStep?.articleNumber || 'S/N';
+    const articleNumber = institutionalInfo?.paso11NumeroArticulo || 'S/N';
 
     return (
         <PdfBase showCommemorativeText={true} commemorativeText={commemorativeText} registrationNumber={regNumber}>
