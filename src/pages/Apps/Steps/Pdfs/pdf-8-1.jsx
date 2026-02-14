@@ -15,7 +15,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
         title,
     } = extractStudentsInfo(FIRST_STEP_INFO);
 
-    // Campos Editables (vienen de infoStep o valores particleNumberor defecto)
+    // Campos Editables (vienen de infoStep o valores por defecto)
     const cartaNumero = formatNumberWithZero(infoStep?.cartNumber);
     const destinatario = institutionalInfo?.deanName;
     const cargo = 'DECANO DE LA FACULTAD DE ADMINISTRACIÓN';

@@ -1,7 +1,6 @@
 import { showObservations } from "../utils/ShowObservations";
 import ThesisUpload from "./ThesisUpload";
 const ReportTable = ({ approval }) => {
-    console.log(approval.articleNumber);
     return (
         <div className="mt-5 panel p-0 border-0 overflow-hidden">
             <div className="table-responsive">

@@ -31,7 +31,7 @@ const PdfEightOne = ({ infoStep, institutionalInfo }) => {
     const aulaSustentacion = infoStep?.location2;
     const fechaSustentacion = formatDateSpanish(infoStep?.day2);
     const horaSustentacion = infoStep?.hour2;
-    const articleNumber = infoStep?.articleNumber;
+    const articleNumber = institutionalInfo?.paso82NumeroArticulo;
     const regNumber = infoStep?.reg;
     const additionalInputsList =
         typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
