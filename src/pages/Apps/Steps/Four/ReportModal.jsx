@@ -1,10 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import IconX from '../../../../components/Icon/IconX';
 
 const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
+
+    const hasPDFs = () => {
+        return report?.pdfDocument || report?.docDocument;
+    };
 
     const validationSchema = Yup.object({
         studentCode: Yup.string().required('El primer estudiante es obligatorio'),
@@ -103,19 +107,37 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                         <label htmlFor="meetRequirements" > Cumple Requisitos </label>
                                                         < div className="flex gap-4" >
                                                             <label>
-                                                                <Field type="radio" name="meetRequirements" value="yes" className="form-radio" onChange={() => {
-                                                                    setFieldValue('meetRequirements', 'yes');
-                                                                    setFieldValue('observations', '');
-                                                                }} />
+                                                                <Field 
+                                                                    type="radio" 
+                                                                    name="meetRequirements" 
+                                                                    value="yes" 
+                                                                    className="form-radio" 
+                                                                    disabled={!hasPDFs()}
+                                                                    onChange={() => {
+                                                                        setFieldValue('meetRequirements', 'yes');
+                                                                        setFieldValue('observations', '');
+                                                                    }} 
+                                                                />
                                                                 Sí
                                                             </label>
                                                             < label >
-                                                                <Field type="radio" name="meetRequirements" value="no" className="form-radio" onChange={() => {
-                                                                    setFieldValue('meetRequirements', 'no');
-                                                                }} />
+                                                                <Field 
+                                                                    type="radio" 
+                                                                    name="meetRequirements" 
+                                                                    value="no" 
+                                                                    className="form-radio" 
+                                                                    onChange={() => {
+                                                                        setFieldValue('meetRequirements', 'no');
+                                                                    }} 
+                                                                />
                                                                 No
                                                             </label>
                                                         </div>
+                                                        {!hasPDFs() && (
+                                                            <p className="text-warning text-sm mt-2">
+                                                                ⚠️ Debe subir y revisar los PDFs primero para marcar como "Sí cumple requisitos"
+                                                            </p>
+                                                        )}
                                                         < ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
                                                     </div>
 
@@ -138,30 +160,7 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
                                                     id="secondArticleNumber" 
                                                     placeholder="Ingrese el porcentaje de similitud" 
                                                     className="form-input"
-                                                    pattern="^\d+(\.\d{1,2})?$"
                                                     title="Solo se permiten números y máximo 2 decimales. Valor máximo: 24"
-                                                    onChange={(e) => {
-                                                        let value = e.target.value;
-                                                        // Solo permitir números y un punto
-                                                        value = value.replace(/[^0-9.]/g, '');
-                                                        // Evitar múltiples puntos
-                                                        const parts = value.split('.');
-                                                        if (parts.length > 2) {
-                                                            value = parts[0] + '.' + parts[1];
-                                                        }
-                                                        // Limitar a máximo 2 decimales
-                                                        if (parts[1] && parts[1].length > 2) {
-                                                            value = parts[0] + '.' + parts[1].slice(0, 2);
-                                                        }
-                                                        // Validar que no sea mayor a 24
-                                                        if (value && !isNaN(value)) {
-                                                            const numValue = parseFloat(value);
-                                                            if (numValue > 24) {
-                                                                value = '24';
-                                                            }
-                                                        }
-                                                        setFieldValue('secondArticleNumber', value);
-                                                    }}
                                                 />
                                                 <ErrorMessage name="secondArticleNumber" component="div" className="text-danger mt-1" />
                                             </div>

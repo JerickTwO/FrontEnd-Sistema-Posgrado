@@ -4,7 +4,7 @@ import styles from './styles/style-2';
 import { getWrittenDate, getYear, formatNumberWithZero } from '../utils/Dates';
 import { extractStudentsInfo, getInterestedLabel } from '../utils/StringUtils';
 
-const PdfTwo = ({ infoStep }) => {
+const PdfTwo = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
     const FIRST_STEP_INFO = infoStep?.titleReservationStepOne;
     const { combinedNamesOnly, title, career } = extractStudentsInfo(FIRST_STEP_INFO);
@@ -32,7 +32,7 @@ const PdfTwo = ({ infoStep }) => {
                     <Text style={styles?.justify}>
                         Que, <Text style={[styles?.bold, styles?.justify]}>{combinedNamesOnly}</Text> estudiante de la
                         Escuela Academica Profesional de <Text style={styles?.bold}> {career}</Text>, ha presentado el Proyecto de tesis titulada: <Text style={styles?.bold}>“{title}”</Text>.
-                        Para ser evaluado mediante filtro de similitud de acuerdo al Art. <Text>{infoStep?.articleNumber}</Text> del Reglamento de Investigación vigente,
+                        Para ser evaluado mediante filtro de similitud de acuerdo al Art. <Text>{institutionalInfo?.paso2NumeroArticulo}</Text> del Reglamento de Investigación vigente,
                         el cual obtuvo un porcentaje del <Text style={styles?.bold}>{infoStep?.secondArticleNumber}%</Text> de similitud, según el reporte proporcionado por el software Turnitin.
                     </Text>
                 </View>

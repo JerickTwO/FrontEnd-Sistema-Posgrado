@@ -6,6 +6,7 @@ import ApprovalTable from './ApprovalTable';
 import ApprovalModal from './ApprovalModal';
 import ApprovalSearch from './ApprovalSearch';
 import projectApprovalService from '../../../../api/projectApprovalService';
+import institucionalInfoService from '../../../../api/institucionalInfoService';
 
 const ProjectApproval = () => {
     const dispatch = useDispatch();
@@ -13,13 +14,24 @@ const ProjectApproval = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [selectedCareer, setSelectedCareer] = useState(null);
+    const [institutionalInfo, setInstitutionalInfo] = useState(null);
     const [search, setSearch] = useState('');
 
     useEffect(() => {
         dispatch(setPageTitle('Comprobación de Proyecto'));
         fetchProjects();
+        fetchInfo();
     }, [dispatch]);
 
+    const fetchInfo = async () => {
+        try {
+            const response = await institucionalInfoService.getInfo();
+            setInstitutionalInfo(response);
+        } catch (error) {
+            console.error('Error al obtener la información institucional:', error);
+            setInstitutionalInfo(null);
+        }
+    };
 
     const fetchProjects = useCallback(async () => {
         try {
@@ -76,7 +88,7 @@ const ProjectApproval = () => {
     return (
         <>
             <ApprovalSearch search={search} setSearch={setSearch} selectedCareer={selectedCareer} setSelectedCareer={setSelectedCareer} />
-            <ApprovalTable projects={filteredProjects} onEdit={handleEdit} />
+            <ApprovalTable projects={filteredProjects} onEdit={handleEdit} info={institutionalInfo} />
             <ApprovalModal isOpen={isModalOpen} onClose={closeModal} project={selectedProject} onSave={handleSave} />
         </>
     );

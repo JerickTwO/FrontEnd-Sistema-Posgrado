@@ -24,6 +24,17 @@ const InstitucionalInfo = () => {
                     commemorativeText: '',
                     directorAdministracion: '',
                     secretariaAdministracion: '',
+                    paso2NumeroArticulo: '',
+                    paso3NumeroArticulo: '',
+                    paso4NumeroArticulo: '',
+                    paso52NumeroArticulo: '',
+                    paso52NumeroResolucion: '',
+                    paso52SegundoNumeroResolucion: '',
+                    paso53NumeroArticulo: '',
+                    paso6NumeroArticulo: '',
+                    paso82NumeroArticulo: '',
+                    paso9NumeroResolucion: '',
+                    paso11NumeroArticulo: '',
                 });
             } else {
                 setInfo(response);
@@ -51,10 +62,21 @@ const InstitucionalInfo = () => {
         e.preventDefault();
         try {
             const payload = {
-                deanName: info.deanName.trim(),
-                commemorativeText: info.commemorativeText.trim(),
-                directorAdministracion: info.directorAdministracion.trim(),
-                secretariaAdministracion: info.secretariaAdministracion.trim(),
+                deanName: info.deanName?.trim() || '',
+                commemorativeText: info.commemorativeText?.trim() || '',
+                directorAdministracion: info.directorAdministracion?.trim() || '',
+                secretariaAdministracion: info.secretariaAdministracion?.trim() || '',
+                paso2NumeroArticulo: info.paso2NumeroArticulo ? parseInt(info.paso2NumeroArticulo) : null,
+                paso3NumeroArticulo: info.paso3NumeroArticulo ? parseInt(info.paso3NumeroArticulo) : null,
+                paso4NumeroArticulo: info.paso4NumeroArticulo ? parseInt(info.paso4NumeroArticulo) : null,
+                paso52NumeroArticulo: info.paso52NumeroArticulo ? parseInt(info.paso52NumeroArticulo) : null,
+                paso52NumeroResolucion: info.paso52NumeroResolucion ? parseInt(info.paso52NumeroResolucion) : null,
+                paso52SegundoNumeroResolucion: info.paso52SegundoNumeroResolucion ? parseInt(info.paso52SegundoNumeroResolucion) : null,
+                paso53NumeroArticulo: info.paso53NumeroArticulo ? parseInt(info.paso53NumeroArticulo) : null,
+                paso6NumeroArticulo: info.paso6NumeroArticulo ? parseInt(info.paso6NumeroArticulo) : null,
+                paso82NumeroArticulo: info.paso82NumeroArticulo ? parseInt(info.paso82NumeroArticulo) : null,
+                paso9NumeroResolucion: info.paso9NumeroResolucion ? parseInt(info.paso9NumeroResolucion) : null,
+                paso11NumeroArticulo: info.paso11NumeroArticulo ? parseInt(info.paso11NumeroArticulo) : null,
             };
 
             const updatedInfo = info.id
@@ -98,7 +120,9 @@ const InstitucionalInfo = () => {
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Columna 1 */}
+                            {/* INFORMACIÓN BÁSICA */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4">Información Básica</h6>
+                            
                             <div className="mb-5">
                                 <label htmlFor="deanName">
                                     Nombre del Decano de la Facultad de Administración
@@ -110,7 +134,7 @@ const InstitucionalInfo = () => {
                                     <input
                                         type="text"
                                         name="deanName"
-                                        value={info.deanName}
+                                        value={info.deanName || ''}
                                         onChange={handleChange}
                                         placeholder="Nombre del Decano"
                                         className="form-input ltr:rounded-l-none rtl:rounded-r-none"
@@ -129,7 +153,7 @@ const InstitucionalInfo = () => {
                                     <input
                                         type="text"
                                         name="commemorativeText"
-                                        value={info.commemorativeText}
+                                        value={info.commemorativeText || ''}
                                         onChange={handleChange}
                                         placeholder="Texto Conmemorativo"
                                         className="form-input ltr:rounded-l-none rtl:rounded-r-none"
@@ -144,7 +168,7 @@ const InstitucionalInfo = () => {
                                 <input
                                     type="text"
                                     name="directorAdministracion"
-                                    value={info.directorAdministracion}
+                                    value={info.directorAdministracion || ''}
                                     onChange={handleChange}
                                     placeholder="Director de administración"
                                     className="form-input"
@@ -158,9 +182,158 @@ const InstitucionalInfo = () => {
                                 <input
                                     type="text"
                                     name="secretariaAdministracion"
-                                    value={info.secretariaAdministracion}
+                                    value={info.secretariaAdministracion || ''}
                                     onChange={handleChange}
                                     placeholder="Secretaría de la UI de Administración"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 2 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 2: Filtro de Similitud</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso2NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso2NumeroArticulo"
+                                    value={info.paso2NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 3 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 3: Revisión y Aprobación de Proyecto</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso3NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso3NumeroArticulo"
+                                    value={info.paso3NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 4 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 4: Filtro de Similitud II</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso4NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso4NumeroArticulo"
+                                    value={info.paso4NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 5 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 5: Presentación de Informe</h6>
+                            
+                            <h6 className="md:col-span-2 font-semibold text-sm mb-3 text-gray-600">PDF 5-2</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso52NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso52NumeroArticulo"
+                                    value={info.paso52NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+                            <div className="mb-5">
+                                <label htmlFor="paso52NumeroResolucion">Número de Resolución</label>
+                                <input
+                                    type="number"
+                                    name="paso52NumeroResolucion"
+                                    value={info.paso52NumeroResolucion || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de resolución"
+                                    className="form-input"
+                                />
+                            </div>
+                            <div className="mb-5">
+                                <label htmlFor="paso52SegundoNumeroResolucion">Segundo Número de Resolución</label>
+                                <input
+                                    type="number"
+                                    name="paso52SegundoNumeroResolucion"
+                                    value={info.paso52SegundoNumeroResolucion || ''}
+                                    onChange={handleChange}
+                                    placeholder="Segundo número de resolución"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            <h6 className="md:col-span-2 font-semibold text-sm mb-3 text-gray-600">PDF 5-3</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso53NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso53NumeroArticulo"
+                                    value={info.paso53NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 6 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 6: Revisión de Informe</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso6NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso6NumeroArticulo"
+                                    value={info.paso6NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+                            {/* PASO 8 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 8: Solicitud de Tesis</h6>
+                            <h6 className="md:col-span-2 font-semibold text-sm mb-3 text-gray-600">PDF 8-2</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso82NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso82NumeroArticulo"
+                                    value={info.paso82NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 9 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 9: Filtro de Similitud III</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso9NumeroResolucion">Número de Resolución</label>
+                                <input
+                                    type="number"
+                                    name="paso9NumeroResolucion"
+                                    value={info.paso9NumeroResolucion || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de resolución"
+                                    className="form-input"
+                                />
+                            </div>
+
+                            {/* PASO 11 */}
+                            <h6 className="md:col-span-2 font-semibold text-base mb-4 mt-6">Paso 11: Entrega de Título</h6>
+                            <div className="mb-5">
+                                <label htmlFor="paso11NumeroArticulo">Número de Artículo</label>
+                                <input
+                                    type="number"
+                                    name="paso11NumeroArticulo"
+                                    value={info.paso11NumeroArticulo || ''}
+                                    onChange={handleChange}
+                                    placeholder="Número de artículo"
                                     className="form-input"
                                 />
                             </div>
@@ -169,7 +342,7 @@ const InstitucionalInfo = () => {
                         {/* Botón de Actualizar */}
                         <button
                             type="submit"
-                            className="btn btn-primary py-[6px] px-[10px]"
+                            className="btn btn-primary py-[6px] px-[10px] mt-6"
                         >
                             Actualizar
                         </button>

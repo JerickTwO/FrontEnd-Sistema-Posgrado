@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -12,9 +12,6 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
         reg: Yup.string().required('El número de registro es obligatorio'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         meetRequirements: Yup.string().required('Selecciona una opción'),
-        // additionalInputs: Yup.array()
-        //     .of(Yup.string().required('Este campo es obligatorio'))
-        //     .min(1, 'Al menos un campo es obligatorio'),
     });
 
     const initialValues = React.useMemo(
@@ -25,22 +22,9 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
             studentTwoFirstNames: juryAppointment?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo?.firstNames || '',
             observations: juryAppointment?.observations || '',
             meetRequirements: juryAppointment?.meetRequirements ? 'yes' : 'no',
-            hour: juryAppointment?.hour || '',
-            futDate: juryAppointment?.futDate || '',
-            numberFolio: juryAppointment?.numberFolio || '',
-            numberDeanResolution: juryAppointment?.numberDeanResolution || '',
-            secondNumberDeanResolution: juryAppointment?.secondNumberDeanResolution || '',
             deanResolution: juryAppointment?.deanResolution || '',
-            secondDeanResolution: juryAppointment?.secondDeanResolution || '',
-            actDate: juryAppointment?.actDate || '',
-            secondActDate: juryAppointment?.secondActDate || '',
-            actTime: juryAppointment?.actTime || '',
-            articleNumber: juryAppointment?.articleNumber || '',
-            secondArticleNumber: juryAppointment?.secondArticleNumber || '',
-            refDateMCart: juryAppointment?.refDateMCart || '',
-            reg: juryAppointment?.reg || '',
             additionalInputs: juryAppointment?.additionalInputs?.split(', ') || [''],
-            textattached: juryAppointment?.textattached?.split(', ') || [''],
+            reg: juryAppointment?.reg || '',
         }),
         [juryAppointment]
     );
@@ -61,44 +45,18 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                     initialValues={initialValues}
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
-                                        let fut = ''
-                                        if (values.futDate) {
-                                            const d = new Date(values.futDate)
-                                            d.setDate(d.getDate() + 1)
-                                            fut = d.toISOString().slice(0, 10)
-                                        }
-                                        const formatDate = (dateStr) => {
-                                            if (!dateStr) return '';
-                                            const d = new Date(dateStr);
-                                            d.setDate(d.getDate());
-                                            return d.toISOString().slice(0, 10);
-                                        };
-
                                         const transformedValues = {
                                             meetRequirements: values.meetRequirements === 'yes' ? true : false,
                                             observations: values.observations || '',
-                                            hour: values.hour,
-                                            futDate: fut,
-                                            numberFolio: values.numberFolio,
-                                            numberDeanResolution: values.numberDeanResolution,
-                                            secondNumberDeanResolution: values.secondNumberDeanResolution,
                                             deanResolution: values.deanResolution,
-                                            secondDeanResolution: values.secondDeanResolution,
-                                            actDate: formatDate(values.actDate),
-                                            secondActDate: formatDate(values.secondActDate),
-                                            actTime: values.actTime,
-                                            articleNumber: values.articleNumber,
-                                            secondArticleNumber: values.secondArticleNumber,
-                                            refDateMCart: formatDate(values.refDateMCart),
                                             reg: values.reg || '',
                                             additionalInputs: values.additionalInputs.join(', '),
-                                            textattached: values.textattached.join(', '),
                                         };
                                         onSave(transformedValues, juryAppointment?.id);
                                     }}
                                     enableReinitialize
                                 >
-                                    {({ setFieldValue, values  }) => {
+                                    {({ setFieldValue, values }) => {
                                         return (
 
                                             <Form className="grid gap-6 grid-cols-2 w-[100%]">
@@ -108,14 +66,9 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                     <ErrorMessage name="deanResolution" component="div" className="text-danger mt-1" />
                                                 </div>
                                                 <div className="col-span-1">
-                                                    <label htmlFor="reg">Número de Registro</label>
+                                                    <label htmlFor="">Número de Registro</label>
                                                     <Field name="reg" type="number" id="reg" placeholder="000" className="form-input" />
                                                     <ErrorMessage name="reg" component="div" className="text-danger mt-1" />
-                                                </div>
-                                                <div className="col-span-1">
-                                                    <label htmlFor="articleNumber">Número de Artículo</label>
-                                                    <Field name="articleNumber" type="text" id="articleNumber" placeholder="Ingrese el Número de Aríiculo" className="form-input" />
-                                                    <ErrorMessage name="articleNumber" component="div" className="text-danger mt-1" />
                                                 </div>
                                                 {!juryAppointment.meetRequirements && (<div className="col-span-1">
                                                     <label htmlFor="meetRequirements">Cumple Requisitos</label>
@@ -140,18 +93,18 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                 {values.meetRequirements === 'no' && (
                                                     <div className="col-span-2">
                                                         <label htmlFor="observations">Observaciones</label>
-                                                        <Field 
-                                                            as="textarea" 
-                                                            name="observations" 
-                                                            id="observations" 
+                                                        <Field
+                                                            as="textarea"
+                                                            name="observations"
+                                                            id="observations"
                                                             rows="4"
-                                                            placeholder="Ingrese las observaciones" 
-                                                            className="form-textarea" 
+                                                            placeholder="Ingrese las observaciones"
+                                                            className="form-textarea"
                                                         />
                                                         <ErrorMessage name="observations" component="div" className="text-danger mt-1" />
                                                     </div>
                                                 )}
-                                                 
+
                                                 <FieldArray name="additionalInputs">
                                                     {({ push, remove }) => (
                                                         values.additionalInputs.map((_, index) => (
@@ -201,7 +154,7 @@ const JuryModal = ({ isOpen, onClose, onSave, juryAppointment, isLoading }) => {
                                                             'Guardar'
                                                         )}
                                                     </button>
-                                                </div> 
+                                                </div>
 
                                             </Form>
                                         );

@@ -18,7 +18,7 @@ const PdfThree = ({ infoStep, institutionalInfo }) => {
     const deanName = institutionalInfo?.deanName;
     const commemorativeText = institutionalInfo?.commemorativeText;
     const cartNumber = `${formatNumberWithZero(infoStep?.deanResolution)}-${anio}`;
-    const articleNumber = infoStep?.articleNumber;
+    const articleNumber = institutionalInfo?.paso3NumeroArticulo;
     const additionalInputsList =
         typeof infoStep?.additionalInputs === 'string' && infoStep.additionalInputs.length > 0
             ? infoStep.additionalInputs

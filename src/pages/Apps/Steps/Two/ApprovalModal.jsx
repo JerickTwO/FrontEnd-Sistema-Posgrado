@@ -2,13 +2,12 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { HandleMode } from '../../styles/selectStyles';
-import { useSelector } from 'react-redux';
 import IconX from '../../../../components/Icon/IconX';
 
 const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
-    const isDarkMode = useSelector((state) => state.themeConfig.theme === 'dark');
-    const styles = HandleMode(isDarkMode);
+    const hasPDFs = () => {
+        return project?.pdfDocument || project?.docDocument;
+    };
 
     const validationSchema = Yup.object({
         studentCode: Yup.string().required('El primer estudiante es obligatorio'),
@@ -22,7 +21,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
             }
         ),
         reg: Yup.string().required('El número de constancia es obligatorio'),
-        articleNumber: Yup.string().required('El número de artículo es obligatorio'),
         secondArticleNumber: Yup.number()
             .typeError('Debe ser un número')
             .required('El porcentaje de similitud es obligatorio')
@@ -51,9 +49,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                 }
                 : null,
             meetRequirements: project?.meetRequirements ? 'yes' : 'no',
-            articleNumber: project?.articleNumber || '',
             secondArticleNumber: project?.secondArticleNumber || '',
-            referenceDate: project?.referenceDate || '',
             reg: project?.reg || '',
         }),
         [project]
@@ -82,12 +78,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                     validationSchema={validationSchema}
                                     enableReinitialize
                                     onSubmit={(values) => {
-                                        let ref = ''
-                                        if (values.referenceDate) {
-                                            const d = new Date(values.referenceDate)
-                                            d.setDate(d.getDate())
-                                            ref = d.toISOString().slice(0, 10)
-                                        }
                                         const transformedValues = {
                                             titleReservationStepOne: { id: values.titleReservationStepOne },
                                             engineeringFaculty: values.engineeringFaculty
@@ -95,9 +85,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                 : null,
                                             observations: values.observation || '',
                                             meetRequirements: values.meetRequirements === 'yes',
-                                            articleNumber: values.articleNumber || '',
                                             secondArticleNumber: values.secondArticleNumber || '',
-                                            referenceDate: ref,
                                             reg: values.reg || '',
                                         };
                                         onSave(transformedValues, project.id);
@@ -155,22 +143,6 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                     className="text-danger mt-1"
                                                 />
                                             </div>
-                                            {/* Número de Artículos */}
-                                            <div className="col-span-1">
-                                                <label htmlFor="articleNumber">Número de Artículo</label>
-                                                <Field
-                                                    name="articleNumber"
-                                                    type="text"
-                                                    id="articleNumber"
-                                                    placeholder="Ingrese el número de artículo"
-                                                    className="form-input"
-                                                />
-                                                <ErrorMessage
-                                                    name="articleNumber"
-                                                    component="div"
-                                                    className="text-danger mt-1"
-                                                />
-                                            </div>
                                             <div className="col-span-1">
                                                 <label htmlFor="secondArticleNumber">
                                                     Porcentaje de Similitud
@@ -181,30 +153,8 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                     id="secondArticleNumber"
                                                     placeholder="Ingrese el porcentaje de similitud"
                                                     className="form-input"
-                                                    pattern="^\d+(\.\d{1,2})?$"
                                                     title="Solo se permiten números y máximo 2 decimales. Valor máximo: 24"
-                                                    onChange={(e) => {
-                                                        let value = e.target.value;
-                                                        // Solo permitir números y un punto
-                                                        value = value.replace(/[^0-9.]/g, '');
-                                                        // Evitar múltiples puntos
-                                                        const parts = value.split('.');
-                                                        if (parts.length > 2) {
-                                                            value = parts[0] + '.' + parts[1];
-                                                        }
-                                                        // Limitar a máximo 2 decimales
-                                                        if (parts[1] && parts[1].length > 2) {
-                                                            value = parts[0] + '.' + parts[1].slice(0, 2);
-                                                        }
-                                                        // Validar que no sea mayor a 24
-                                                        if (value && !isNaN(value)) {
-                                                            const numValue = parseFloat(value);
-                                                            if (numValue > 24) {
-                                                                value = '24';
-                                                            }
-                                                        }
-                                                        setFieldValue('secondArticleNumber', value);
-                                                    }}
+
                                                 />
                                                 <ErrorMessage
                                                     name="secondArticleNumber"
@@ -222,6 +172,7 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                                 name="meetRequirements"
                                                                 value="yes"
                                                                 className="form-radio"
+                                                                disabled={!hasPDFs()}
                                                                 onChange={() => {
                                                                     setFieldValue('meetRequirements', 'yes');
                                                                     setFieldValue('observation', '');
@@ -239,6 +190,11 @@ const ApprovalModal = ({ isOpen, onClose, onSave, project }) => {
                                                             No
                                                         </label>
                                                     </div>
+                                                    {!hasPDFs() && (
+                                                        <p className="text-warning text-sm mt-2">
+                                                            ⚠️ Debe subir y revisar los PDFs primero para marcar como "Sí cumple requisitos"
+                                                        </p>
+                                                    )}
                                                     <ErrorMessage name="meetRequirements" component="div" className="text-danger mt-1" />
                                                 </div>)
                                             }
