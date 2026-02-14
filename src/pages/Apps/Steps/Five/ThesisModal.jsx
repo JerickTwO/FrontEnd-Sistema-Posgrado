@@ -71,21 +71,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             then: (schema) => schema.required('La fecha de sorteo de jurados es obligatoria'),
             otherwise: (schema) => schema.notRequired(),
         }),
-        numeroArticulo: Yup.number().when('includeAdditionalDocs', {
-            is: true,
-            then: (schema) => schema.required('El número de artículo es obligatorio'),
-            otherwise: (schema) => schema.notRequired(),
-        }),
-        numeroResolucion: Yup.string().when('includeAdditionalDocs', {
-            is: true,
-            then: (schema) => schema.required('El número de resolución es obligatorio'),
-            otherwise: (schema) => schema.notRequired(),
-        }),
-        segundoNumeroResolucion: Yup.string().when('includeAdditionalDocs', {
-            is: true,
-            then: (schema) => schema.required('El segundo número de resolución es obligatorio'),
-            otherwise: (schema) => schema.notRequired(),
-        }),
         horaSorteoJurados: Yup.string().when('includeAdditionalDocs', {
             is: true,
             then: (schema) => schema.required('La hora de sorteo de jurados es obligatoria'),
@@ -100,11 +85,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
         segundaFechaCarta: Yup.string().when('includeAdditionalDocs', {
             is: true,
             then: (schema) => schema.required('La segunda fecha de carta es obligatoria'),
-            otherwise: (schema) => schema.notRequired(),
-        }),
-        segundoNumeroArticulo: Yup.number().when('includeAdditionalDocs', {
-            is: true,
-            then: (schema) => schema.required('El segundo número de artículo es obligatorio'),
             otherwise: (schema) => schema.notRequired(),
         }),
         president: Yup.object().nullable().when('includeAdditionalDocs', {
@@ -152,7 +132,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             lineOfResearch: thesis?.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch
                 ? { value: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.id, label: thesis.reportReviewStepFour.juryAppointmentStepThree.projectApprovalStepTwo.lineOfResearch.name }
                 : null,
-            projectSimilarity: thesis?.projectSimilarity || '',
             cartNumber: thesis?.cartNumber || '',
             segundoCartNumber: thesis?.segundoCartNumber || '',
             regNumber: thesis?.regNumber || '',
@@ -165,10 +144,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             fechaActaSorteo: thesis?.fechaActaSorteo || '',
             fechaSorteoJurados: thesis?.fechaSorteoJurados || '',
             segundaFechaCarta: thesis?.segundaFechaCarta || '',
-            numeroArticulo: thesis?.numeroArticulo || '',
-            segundoNumeroArticulo: thesis?.segundoNumeroArticulo || '',
-            numeroResolucion: thesis?.numeroResolucion || '',
-            segundoNumeroResolucion: thesis?.segundoNumeroResolucion || '',
             horaSorteoJurados: from12To24(thesis?.horaSorteoJurados),
             president: mapTeacherToOption(thesis?.president) || null,
             firstMember: mapTeacherToOption(thesis?.firstMember) || null,
@@ -215,10 +190,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
             fechaActaSorteo: values.fechaActaSorteo,
             fechaSorteoJurados: values.fechaSorteoJurados,
             segundaFechaCarta: values.segundaFechaCarta,
-            numeroArticulo: values.numeroArticulo,
-            segundoNumeroArticulo: values.segundoNumeroArticulo,
-            numeroResolucion: values.numeroResolucion,
-            segundoNumeroResolucion: values.segundoNumeroResolucion,
             horaSorteoJurados: to12WithSuffix(values.horaSorteoJurados),
             president: values.president ? { id: values.president.value } : null,
             firstMember: values.firstMember ? { id: values.firstMember.value } : null,
@@ -419,42 +390,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         <ErrorMessage name="horaSorteoJurados" component="div" className="text-danger mt-1" />
                                                     </div>
 
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="numeroArticulo">Número de Artículo</label>
-                                                        <Field
-                                                            name="numeroArticulo"
-                                                            type="number"
-                                                            id="numeroArticulo"
-                                                            placeholder="Ingrese el número de artículo"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="numeroArticulo" component="div" className="text-danger mt-1" />
-                                                    </div>
-
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="numeroResolucion">Número de Resolución</label>
-                                                        <Field
-                                                            name="numeroResolucion"
-                                                            type="text"
-                                                            id="numeroResolucion"
-                                                            placeholder="Ingrese el número de resolución"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="numeroResolucion" component="div" className="text-danger mt-1" />
-                                                    </div>
-
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="segundoNumeroResolucion">Segundo Número de Resolución Decanal</label>
-                                                        <Field
-                                                            name="segundoNumeroResolucion"
-                                                            type="text"
-                                                            id="segundoNumeroResolucion"
-                                                            placeholder="Ingrese el segundo número"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="segundoNumeroResolucion" component="div" className="text-danger mt-1" />
-                                                    </div>
-
                                                     <div className="col-span-4 text-lg font-semibold  border-b border-gray-300 dark:border-gray-700">
                                                         Tercer Documento - Carta
                                                     </div>
@@ -482,17 +417,6 @@ const ThesisModal = ({ isOpen, onClose, onSave, thesis }) => {
                                                         <ErrorMessage name="segundaFechaCarta" component="div" className="text-danger mt-1" />
                                                     </div>
 
-                                                    <div className="col-span-1">
-                                                        <label htmlFor="segundoNumeroArticulo">Número de Artículo</label>
-                                                        <Field
-                                                            name="segundoNumeroArticulo"
-                                                            type="number"
-                                                            id="segundoNumeroArticulo"
-                                                            placeholder="Ingrese el segundo número de artículo"
-                                                            className="form-input"
-                                                        />
-                                                        <ErrorMessage name="segundoNumeroArticulo" component="div" className="text-danger mt-1" />
-                                                    </div>
                                                     <div className="col-span-1">
                                                         <label htmlFor="regNumber">Reg</label>
                                                         <Field

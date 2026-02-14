@@ -6,7 +6,6 @@ export const getThesisDetails = (thesis = {}) => {
     const studentTwo = thesis?.reportReviewStepFour?.juryAppointmentStepThree?.projectApprovalStepTwo?.titleReservationStepOne?.studentTwo ?? null;
 
     const observations = thesis?.observations ?? null;
-    const projectSimilarity = thesis?.projectSimilarity ?? null;
     const meetsRequirements = thesis?.meetsRequirements ?? null;
     const updatedAt = thesis?.updatedAt ?? null;
 
@@ -15,7 +14,6 @@ export const getThesisDetails = (thesis = {}) => {
         student,
         studentTwo,
         meetsRequirements,
-        projectSimilarity,
         observations,
         updatedAt,
     };

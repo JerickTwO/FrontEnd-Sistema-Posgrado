@@ -77,7 +77,7 @@ const PdfFiveThree = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <Text style={[styles.justify, { fontSize: 11, lineHeight: 1.5 }]}>
                     Es grato dirigirme a usted para saludarlo cordialmente y por medio del presente, en mérito al documento de la referencia, se realizó el sorteo de jurados, en cumplimiento al Art.{' '}
-                    {FIVE_STEP_INFO.segundoNumeroArticulo} del Reglamento de Investigación, por lo que, solicito emitir la resolución correspondiente de la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text> sorteo que se
+                    {institutionalInfo?.paso53NumeroArticulo} del Reglamento de Investigación, por lo que, solicito emitir la resolución correspondiente de la tesis titulada: <Text style={styles.bold}>"{title}"</Text>, presentado por <Text style={styles.bold}>{combinedNamesOnly}</Text> sorteo que se
                     realizó el día {fechaSorteo}, quedando conformado de la siguiente manera:
                 </Text>
             </View>

@@ -15,12 +15,9 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
     const horaInicio = infoStep?.horaActaSorteo;
     const fechaActa = getWrittenDateFromInput(infoStep?.fechaActaSorteo);
     const cartaMultiple = infoStep.cartNumber;
-    const segundoCartaMultiple = infoStep.cartNumber;
-    const segundaCartaFecha = getWrittenDateFromInput(infoStep?.segundaFechaCarta);
-    const articleNumber = infoStep?.numeroArticulo;
-    // const segundoArticleNumber = infoStep?.segundoNumeroArticulo;
-    const numeroResolucion = infoStep?.numeroResolucion;
-    const segundoNumeroResolucion = infoStep?.segundoNumeroResolucion;
+    const articleNumber = institutionalInfo?.paso52NumeroArticulo;
+    const numeroResolucion = institutionalInfo?.paso52NumeroResolucion;
+    const segundoNumeroResolucion = institutionalInfo?.paso52SegundoNumeroResolucion;
     const horaSorteo = infoStep?.horaSorteoJurados;
 
     const { studentsNames, title } = extractStudentsInfo(FIRST_STEP_INFO);
@@ -51,8 +48,7 @@ const PdfFiveTwo = ({ infoStep, institutionalInfo }) => {
             <View style={styles.section}>
                 <Text style={styles.justify}>
                     Acto seguido, el Director encargado de la Unidad de Investigación, en cumplimiento de sus funciones, tomando en consideración el artículo {articleNumber}° 
-                    {/* y artículo{' '}{segundoArticleNumber}°  */}
-                    del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, aprobado con Resolución Nº {numeroResolucion}-CU-UNAMBA, y la
+                     del Reglamento de Investigación 2024 de la Universidad Nacional Micaela Bastidas de Apurímac, aprobado con Resolución Nº {numeroResolucion}-CU-UNAMBA, y la
                     Resolución Decanal Nº {segundoNumeroResolucion}-D-FA-UNAMBA, se procede con el sorteo de jurados evaluadores y; en estricto orden de precedencia, queda conformado de la siguiente
                     manera:
                 </Text>
