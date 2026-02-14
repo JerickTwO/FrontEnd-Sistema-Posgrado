@@ -13,7 +13,6 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
             .required('El porcentaje de similitud es obligatorio')
             .min(0, 'El porcentaje no puede ser negativo')
             .max(24, 'El porcentaje no puede ser mayor a 24'),
-        resolutionNumber: Yup.string().required('El número de resolución es obligatorio'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
@@ -44,7 +43,6 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
             meetRequirements: resolution?.meetRequirements ? 'yes' : 'no',
             constancyNumber: resolution?.constancyNumber || '',
             similarityPercent: resolution?.similarityPercent || '',
-            resolutionNumber: resolution?.resolutionNumber || '',
             observations: resolution?.observations || '',
         }),
         [resolution]
@@ -71,7 +69,6 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
                                         const transformedValues = {
                                             constancyNumber: values.constancyNumber,
                                             similarityPercent: values.similarityPercent,
-                                            resolutionNumber: values.resolutionNumber,
                                             observations: values.observations,
                                         };
                                         transformedValues.meetRequirements = values.meetRequirements === 'yes';
@@ -105,12 +102,6 @@ const ResolutionModal = ({ isOpen, onClose, onSave, resolution }) => {
                                                 <label htmlFor="similarityPercent">Porcentaje de Similitud</label>
                                                 <Field name="similarityPercent" type="number" step="0.01" id="similarityPercent" className="form-input" />
                                                 <ErrorMessage name="similarityPercent" component="div" className="text-danger mt-1" />
-                                            </div>
-
-                                            <div className="col-span-1">
-                                                <label htmlFor="resolutionNumber">Número de Resolución</label>
-                                                <Field name="resolutionNumber" type="number" id="resolutionNumber" className="form-input" />
-                                                <ErrorMessage name="resolutionNumber" component="div" className="text-danger mt-1" />
                                             </div>
 
                                             {!resolution?.meetRequirements && (

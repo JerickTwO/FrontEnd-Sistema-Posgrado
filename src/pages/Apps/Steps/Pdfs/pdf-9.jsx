@@ -4,7 +4,7 @@ import styles from './styles/style-9';
 import { formatNumberWithZero, getWrittenDate, getYear } from '../utils/Dates';
 import { extractStudentsInfo } from '../utils/StringUtils';
 
-const PdfNineOne = ({ infoStep }) => {
+const PdfNineOne = ({ infoStep, institutionalInfo }) => {
     const anio = getYear();
     const actualDate = getWrittenDate();
 
@@ -20,7 +20,7 @@ const PdfNineOne = ({ infoStep }) => {
     const constanciaNumero = formatNumberWithZero(infoStep?.constancyNumber);
     const tesista = combinedNamesOnly;
     const porcentajeSimilitud = infoStep?.similarityPercent;
-    const resolucionReglamento = formatNumberWithZero(infoStep?.resolutionNumber);
+    const resolucionReglamento = formatNumberWithZero(institutionalInfo?.paso9NumeroResolucion); 
 
     return (
         <PdfBase 
