@@ -20,14 +20,11 @@ const ReportModal = ({ isOpen, onClose, onSave, report, adviserOptions }) => {
         meetRequirements: Yup.string().required('Selecciona una opción'),
         deanResolution: Yup.string().required('El número de constancia es obligatorio'),
         articleNumber: Yup.string().required('El número de artículo es obligatorio'),
-        secondArticleNumber: Yup.string()
+        secondArticleNumber: Yup.number()
+            .typeError('Debe ser un número')
             .required('El porcentaje de similitud es obligatorio')
-            .matches(/^\d+(\.\d{1,2})?$/, 'Solo se permiten números y máximo 2 decimales')
-            .test('max-value', 'El porcentaje no puede ser mayor a 24', function(value) {
-                if (!value) return true;
-                const numValue = parseFloat(value);
-                return numValue <= 24;
-            }),
+            .min(0, 'El porcentaje no puede ser negativo')
+            .max(24, 'El porcentaje no puede ser mayor a 24'),
         observations: Yup.string().when('meetRequirements', {
             is: 'no',
             then: (schema) => schema.required('Las observaciones son obligatorias cuando no cumple requisitos'),
