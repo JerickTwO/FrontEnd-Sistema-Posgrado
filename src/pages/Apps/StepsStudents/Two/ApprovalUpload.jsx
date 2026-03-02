@@ -62,9 +62,9 @@ const ApprovalUpload = ({ projectId, meetsRequirements, observations }) => {
                     Swal.showValidationMessage('Debes seleccionar un archivo');
                 } else if (file.type !== 'application/pdf') {
                     Swal.showValidationMessage('El archivo debe ser un PDF');
-                } else if (file.size > 1048576) {
-                    // 1MB
-                    Swal.showValidationMessage('El archivo no debe superar los 1 MB');
+                } else if (file.size > 5242880) {
+                    // 5MB
+                    Swal.showValidationMessage('El archivo no debe superar los 5 MB');
                 } else {
                     return file;
                 }
@@ -140,9 +140,9 @@ const ApprovalUpload = ({ projectId, meetsRequirements, observations }) => {
                     Swal.showValidationMessage('Debes seleccionar un archivo');
                 } else if (!file.name.match(/\.(doc|docx)$/i)) {
                     Swal.showValidationMessage('El archivo debe ser DOC o DOCX');
-                } else if (file.size > 2097152) {
-                    // 2MB para documentos
-                    Swal.showValidationMessage('El archivo no debe superar los 2 MB');
+                } else if (file.size > 5242880) {
+                    // 5MB para documentos
+                    Swal.showValidationMessage('El archivo no debe superar los 5 MB');
                 } else {
                     return file;
                 }
@@ -190,13 +190,23 @@ const ApprovalUpload = ({ projectId, meetsRequirements, observations }) => {
             .viewPdfBase64(projectId)
             .then((response) => {
                 const { fileData } = response;
-                const base64PDF = `data:application/pdf;base64,${fileData}`;
+                const byteCharacters = atob(fileData);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'application/pdf' });
+                const blobUrl = URL.createObjectURL(blob);
 
                 Swal.fire({
                     title: 'Vista Previa del PDF',
-                    html: `<iframe src="${base64PDF}" width="100%" height="500px" style="border:none;"></iframe>`,
-                    width: '600px',
+                    html: `<iframe src="${blobUrl}" width="100%" height="500px" style="border:none;"></iframe>`,
+                    width: '750px',
                     confirmButtonText: 'Cerrar',
+                    didClose: () => {
+                        URL.revokeObjectURL(blobUrl);
+                    },
                 });
             })
             .catch((error) => {

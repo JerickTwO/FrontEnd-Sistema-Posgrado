@@ -61,13 +61,23 @@ const ApprovalView = ({ approvalId }) => {
                         }
                     });
                 } else {
-                    // Para PDF, mostrar en iframe
-                    const base64PDF = `data:application/pdf;base64,${fileData}`;
+                    const byteCharacters = atob(fileData);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], { type: 'application/pdf' });
+                    const blobUrl = URL.createObjectURL(blob);
+
                     Swal.fire({
                         title: 'Vista Previa del PDF',
-                        html: `<iframe src="${base64PDF}" width="100%" height="500px" style="border:none;"></iframe>`,
-                        width: '600px',
+                        html: `<iframe src="${blobUrl}" width="100%" height="500px" style="border:none;"></iframe>`,
+                        width: '750px',
                         confirmButtonText: 'Cerrar',
+                        didClose: () => {
+                            URL.revokeObjectURL(blobUrl);
+                        },
                     });
                 }
             })
