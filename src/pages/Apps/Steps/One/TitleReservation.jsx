@@ -37,9 +37,9 @@ const TitleReservation = () => {
         try {
             const students = await studentService.getStudents();
             const options = students.map((student) => ({
-                value: `${student.id}`,
-                label: `${student.studentCode} - ${student.firstNames ?? ''} ${student.lastName ?? ''}`,
-                careerId: student.career ? student.career.id : null,
+                value: `${student?.id}`,
+                label: `${student?.studentCode} - ${student?.firstNames ?? ''} ${student?.lastName ?? ''}`,
+                careerId: student?.career ? student?.career.id : null,
                 data: student,
             }));
             setStudentOptions(options);
@@ -64,8 +64,8 @@ const TitleReservation = () => {
 
    
     const filterStudents = (students) => {
-        const reservedStudentIds = titleReservations.map((reservation) => reservation.student.id);
-        const filtered = students.filter((student) => !reservedStudentIds.includes(parseInt(student.value)));
+        const reservedStudentIds = titleReservations.map((reservation) => reservation.student?.id);
+        const filtered = students.filter((student) => !reservedStudentIds.includes(parseInt(student?.value)));
         setFilteredStudentOptions(filtered);
     };
 
@@ -75,9 +75,9 @@ const TitleReservation = () => {
             setLineOptions([]);
         } else {
             const reservedStudentIds = new Set(
-                titleReservations.flatMap((reservation) => [reservation.student.id.toString(), reservation.studentTwo ? reservation.studentTwo.id.toString() : null].filter(Boolean))
+                titleReservations.flatMap((reservation) => [reservation.student?.id.toString(), reservation.studentTwo ? reservation.studentTwo.id.toString() : null].filter(Boolean))
             );
-            const filteredByCareer = studentOptions.filter((student) => student.careerId === careerId && !reservedStudentIds.has(student.value));
+            const filteredByCareer = studentOptions.filter((student) => student?.careerId === careerId && !reservedStudentIds.has(student?.value));
             setFilteredStudentOptions(filteredByCareer);
             fetchResearchLines(careerId);
         }
@@ -201,7 +201,7 @@ const TitleReservation = () => {
 
     // Editar reservación
     const editReservation = (reservation) => {
-        const careerId = reservation.student.career.id;
+        const careerId = reservation.student?.career.id;
         fetchResearchLines(careerId);
         setEditingReservation(reservation);
         setAddContactModal(true);
