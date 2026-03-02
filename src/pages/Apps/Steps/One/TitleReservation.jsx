@@ -95,8 +95,9 @@ const TitleReservation = () => {
             if (!response) {
                 Swal.fire('Error', 'Error al agregar la Reservación ', 'error');
             } else {
-                Swal.fire('Éxito', 'Reservación agregada satisfactoriamente', 'success');
-                await fetchTitleReservations();
+                // Actualizar la UI inmediatamente con la respuesta del servidor
+                setTitleReservations((prev) => [response, ...prev]);
+                fetchTitleReservations();
             }
         } catch (error) {
             if (error.response && error.response.data.includes('Ya existe una reserva con este título')) {
